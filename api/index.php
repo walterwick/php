@@ -175,7 +175,7 @@ if (preg_match('/<div class="program-name">([^<]+)/', $response, $matches)) {
 <p class="eur"> EUR/TL Kuru: <?php echo $eurRate; ?></p>
 <p class="gbp"> GBP/TL Kuru: <?php echo $gbpRate; ?></p>
 <p class="btc"> BTC/USD Kuru: <?php echo $btcRate; ?></p>
-<p class="au"> ALTIN Kuru: <?php echo $goldRate; ?></p>
+<p class="au">Ç. ALTIN Kuru: <?php echo $goldRate; ?></p>
 <p class="dmax"> DMAX: <a href="https://www.dmax.com.tr/canli-izle"><?php echo $dmaxRate; ?></a></p>
 <p class="tlc"> TLC:<a href="https://tlctv.com.tr/canli-izle"><?php echo $tlcRate; ?></a></p>
     
