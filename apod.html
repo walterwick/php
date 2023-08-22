@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Apod Api </title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+  <h1>NASA API Örneği</h1>
+  <div id="apod"></div>
+
+  <script>
+    $(document).ready(function () {
+      // API anahtarınızı buraya yazın
+      var apiKey = "tMpzstRJHRaOhnF5tzODhNDupCtbNCwX8iYzaW2Z";
+
+      // API'den veri çekme işlemi
+      $.ajax({
+        url: "https://api.nasa.gov/planetary/apod",
+        method: "GET",
+        data: {
+          api_key: apiKey,
+          count: 1 // sadece 1 resim çekmek için
+        },
+        success: function (response) {
+          console.log(response);
+          $("#apod").html("<img src='" + response[0].url + "'><p>" + response[0].explanation + "</p>");
+        },
+        error: function (error) {
+          console.log(error);
+          $("#apod").html("<p>Bir hata oluştu</p>");
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
