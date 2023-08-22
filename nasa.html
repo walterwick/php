@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Mars Rover Photos</title>
+</head>
+<body>
+	<h1>Mars Rover Photos</h1>
+
+	<button onclick="getRandomPhoto()">Get Random Photo</button>
+
+	<img id="photo" src="">
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+	<script>
+		function getRandomPhoto() {
+			var url = "https://api.nasa.gov/mars-photos/api/v1/rovers/curiosity/photos?sol=1000&api_key=tMpzstRJHRaOhnF5tzODhNDupCtbNCwX8iYzaW2Z";
+
+			$.getJSON(url, function(data) {
+				var photos = data.photos;
+
+				var randomIndex = Math.floor(Math.random() * photos.length);
+
+				var photo = photos[randomIndex];
+
+				var imgSrc = photo.img_src;
+
+				$("#photo").attr("src", imgSrc);
+			});
+		}
+	</script>
+</body>
+</html>

@@ -1,0 +1,295 @@
+<!-- 
+  written by walterwick tüm hakları saklıdır.
+-->
+
+<!DOCTYPE html>
+<html lang="tr-TR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Walterwick portfolio</title>
+  <meta name="keywords" content="walterwick portfolio Website">
+  <meta name="description" content="walterwick portfolio. walterwick portfolio sites, walterwick developer, walterwick full-stack, walterwick.de,by walterwick ">
+  <meta name="author" content="walterwick">
+  <meta name="theme-color" content="#2ba8be;">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css">
+  <link rel="shortcut icon" href="https://upload.wikimedia.org/wikipedia/tr/a/a2/Hitler_Paris.jpg" type="image/x-icon">
+  
+</head>
+
+<body>
+
+  <header class="header">
+    <a href="#">
+      <h2 class="logo">logo's</h2>
+    </a>
+    <nav class="link">
+      <div class="mode-toggle">
+        <i class="fas fa-sun" style="display: none;"></i>
+        <i class="fas fa-moon"></i>
+      </div>
+      <script>
+        const modeToggle = document.querySelector('.mode-toggle');
+        const body = document.body;
+
+        function enableNightMode() {
+          body.classList.add('night-mode');
+          modeToggle.querySelector('.fa-sun').style.display = 'inline';
+          modeToggle.querySelector('.fa-moon').style.display = 'none';
+        }
+
+        function disableNightMode() {
+          body.classList.remove('night-mode');
+          modeToggle.querySelector('.fa-sun').style.display = 'none';
+          modeToggle.querySelector('.fa-moon').style.display = 'inline';
+        }
+
+        modeToggle.addEventListener('click', () => {
+          body.classList.toggle('night-mode');
+          const isNightMode = body.classList.contains('night-mode');
+
+          if (isNightMode) {
+            enableNightMode();
+          } else {
+            disableNightMode();
+          }
+        });
+
+        // Night mode by default
+        enableNightMode();
+      </script>
+    </nav>
+  </header>
+
+  <main class="main">
+    <div class="root">
+      <h1>welocme to...</h1>
+      <p class="lorem">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa suscipit ratione vitae qui quidem.
+        Ea?</p>
+      <div class="moving">
+        <h2 id="moving-text"></h2>
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11/lib/typed.min.js"></script>
+        <script>
+          var typed = new Typed('#moving-text', {
+            strings: ["Hoşgeldiniz...", "welcome...", "are you ready??"], //metin//
+            typeSpeed: 50,
+            backSpeed: 50,
+            startDelay: 1000,
+            loop: true,
+            showCursor: false,
+          });
+        </script>
+      </div>
+      <a  href="https://walterwick.de">
+        <button class="buton">Redirect Me!</button>
+      </a>
+    </div>
+    <div class="center">
+      <img class="cen"  src="https://i.redd.it/8jwf3lgqv7j41.jpg" alt="mountain f15">
+      <!-- <video controls src="https://upload.wikimedia.org/wikipedia/commons/d/da/Adolf_Hitler-_Speech_at_Krupp_Factory_in_Germany_%281935%29_-_British_Path%C3%A9.webm"></video> -->
+    </div>
+  </main>
+  <script>
+
+  </script>
+  <style>
+    :root {
+      --bg-color: #f2f2f2;
+      --text-color: #000000;
+    }
+
+    @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+    }
+
+    .logo {
+      transition: 1s;
+    }
+
+    .center {
+      height: 60%;
+    }
+
+    .logo:hover {
+      color: aqua;
+    }
+
+    .center img {
+      height: 100%;
+      width: 100%;
+    }
+
+    .fas {
+      margin: 10px;
+      color: #ffffff;
+      font-size: 1.5rem;
+    }
+
+    .link a:hover {
+      border-bottom: 2px solid rgb(187, 47, 47);
+    }
+
+    .cen {
+      border-radius: 50%;
+    }
+
+    .header {
+      display: flex;
+      background: #712cf9;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      padding: .5rem;
+      height: 10vh;
+      transition: all .2s ease-in-out;
+      position: relative;
+    }
+
+
+    header a {
+      text-decoration: none;
+      padding: .2rem;
+      color: rgb(255, 255, 255);
+    }
+
+    main {
+      background: #ffffff;
+      height: 90vh;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap-reverse !important;
+      transition: all 1s;
+    }
+
+    .lorem {
+      margin: 0 2rem 0 0;
+      max-width: clamp(400px, 500px, 600px);
+      font-size: 1.4rem;
+
+    }
+
+    .moving {
+      margin: .4rem 0 0 0;
+      height: 50px;
+    }
+
+    /* gece modu */
+
+    .night-mode {
+      --bg-color: #212121;
+      --text-color: #ffffff;
+    }
+
+    main {
+      background: var(--bg-color);
+      color: var(--text-color);
+      transition: background-color 0.5s ease, color 0.5s ease;
+    }
+
+    .night-mode .buton {
+      border: 2px solid white;
+    }
+
+    .night-mode .buton:hover {
+      box-shadow: 1px 1px 1.5rem rgb(255, 255, 255);
+    }
+
+    .night-mode {
+      --bg-color: #212121;
+      --text-color: #ffffff;
+    }
+
+
+
+    .mode-toggle header {
+      cursor: pointer;
+      top: 20px;
+      right: 20px;
+      font-size: 30px;
+    }
+
+    /* gece modu bitiş */
+
+    .buton {
+      padding: .4rem .6rem;
+      cursor: pointer;
+      border-radius: 2rem;
+      background: #03593C;
+      color: #ffffff;
+      transition: all ease-in-out .3s;
+    }
+
+    .buton:hover {
+      background: aquamarine;
+      transform: scale(1.05);
+      box-shadow: 2px 2px 1.1rem black;
+      color: #000000;
+    }
+
+    .buton:active {
+      transform: scale(0.99)
+    }
+  </style>
+
+  <style>
+    @media screen and (max-width: 768px) {
+      .header {
+        height: 10vh;
+      }
+
+      .center {
+        width: 65%;
+        height: 40%;
+        margin: 0 auto;
+      }
+
+      .root {
+        margin: 0 auto;
+      }
+
+      .lorem {
+        font-size: 1rem;
+
+      }
+
+      header {
+        justify-content: space-evenly;
+      }
+
+      .root {
+        text-align: center;
+      }
+    }
+  </style>
+  <style>
+    @media screen and (max-width: 920px) {
+      .root {
+        font-size: .7rem;
+      }
+
+      .center {
+        width: 45%;
+        height: 40%;
+        margin: 0 auto;
+      }
+    }
+
+    @media print {
+      body {
+        display: none;
+      }
+    }
+  </style>
+
+</body>
+
+</html>
