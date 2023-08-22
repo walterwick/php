@@ -2,7 +2,6 @@ User-agent: *
 Disallow:
 Allow: /
 
-
 Disallow: /ip/
 
 Sitemap: https://walterwick.de/sitemap.xml
