@@ -15,7 +15,7 @@ if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
     echo "Veri çekilemedi.";
 }
 // cURL bağlantısını kapatın
-curl_close($ch);
+
 //usd bitti
 
 
@@ -37,7 +37,7 @@ if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
     echo "Veri çekilemedi.";
 }
 // cURL bağlantısını kapatın
-curl_close($ch);
+
 //eur bitti
 
 
@@ -59,7 +59,7 @@ if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
     echo "Veri çekilemedi.";
 }
 // cURL bağlantısını kapatın
-curl_close($ch);
+
 //gbp bitti
 
 
@@ -81,7 +81,7 @@ if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
     echo "Veri çekilemedi.";
 }
 // cURL bağlantısını kapatın
-curl_close($ch);
+
 //btc bitti
 
 
