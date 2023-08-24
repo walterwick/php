@@ -167,6 +167,8 @@ if (preg_match('/<div class="program-name">([^<]+)/', $response, $matches)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doviz kuru</title>
+      <link rel="shortcut icon" href="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" type="image/x-icon">
+
 </head>
 <body>
 <div class="finance">
