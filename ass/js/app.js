@@ -26,10 +26,10 @@ document.addEventListener("DOMContentLoaded", function() {
       }
   });
   
-  // Check if dark mode is preferred
+ /* // Check if dark mode is preferred
   const isDarkMode = window.matchMedia("(prefers-color-scheme: dark)").matches;
   console.log("Dark mode detected:", isDarkMode);
-  
+  */
   // Apply dark mode by default if preferred
   if (isDarkMode) {
       enableNightMode();
