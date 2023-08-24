@@ -167,7 +167,7 @@ if (preg_match('/<div class="program-name">([^<]+)/', $response, $matches)) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Doviz kuru</title>
-      <link rel="shortcut icon" href="https://www.google.com/images/branding/googleg/1x/googleg_standard_color_128dp.png" type="image/x-icon">
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
 
 </head>
 <body>
@@ -179,7 +179,7 @@ if (preg_match('/<div class="program-name">([^<]+)/', $response, $matches)) {
 <p class="btc"> BTC/USD Kuru: <?php echo $btcRate; ?></p>
 <p class="au">Ç. ALTIN Kuru: <?php echo $goldRate; ?></p>
 <p class="dmax"> DMAX: <a href="https://www.dmax.com.tr/canli-izle"><?php echo $dmaxRate; ?></a></p>
-<p class="tlc"> TLC:<a href="https://tlctv.com.tr/canli-izle"><?php echo $tlcRate; ?></a></p>
+<p class="tlc"> TLC:<a href="https://tlctv.com.tr/canli-izle"><?php echo $tlcRate;?></a></p>
     
 </div>
 
