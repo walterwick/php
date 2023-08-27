@@ -112,7 +112,38 @@ if ($target_element->length > 0) {
 }
 
 // cURL bağlantısını kapatın
+//curl_close($ch);
+
+
+$ggoldRate = '';
+
+// URL'yi belirleyin
+$url = "https://bigpara.hurriyet.com.tr/altin/gram-altin-fiyati/";
+
+// cURL ile sayfayı çekin
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+
+// XPath ile hedef elementi bulma
+$doc = new DOMDocument();
+@$doc->loadHTML($response);
+$xpath = new DOMXPath($doc);
+$xpath_expression = '//*[@id="content"]/div[2]/div/div[2]/div[3]/span[2]';
+$target_element = $xpath->query($xpath_expression);
+
+// Eğer hedef element bulunursa içeriğini alabilirsiniz
+if ($target_element->length > 0) {
+    $ggoldRate = $target_element->item(0)->nodeValue;
+    
+} else {
+    echo "Veri çekilemedi.";
+}
+
+// cURL bağlantısını kapatın
 curl_close($ch);
+
+
 
 
 // dmax döviz kuru için değişken tanımı
@@ -178,6 +209,7 @@ if (preg_match('/<div class="program-name">([^<]+)/', $response, $matches)) {
 <p class="gbp"> GBP/TL Kuru: <?php echo $gbpRate; ?></p>
 <p class="btc"> BTC/USD Kuru: <?php echo $btcRate; ?></p>
 <p class="au">Ç. ALTIN Kuru: <?php echo $goldRate; ?></p>
+<p class="gau">G. ALTIN Kuru: <?php echo $ggoldRate; ?></p>
 <p class="dmax"> DMAX: <a href="https://www.dmax.com.tr/canli-izle"><?php echo $dmaxRate; ?></a></p>
 <p class="tlc"> TLC:<a href="https://tlctv.com.tr/canli-izle"><?php echo $tlcRate;?></a></p>
     
