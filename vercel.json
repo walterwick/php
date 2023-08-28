@@ -7,14 +7,10 @@
   "rewrites": [
     { "source": "/api/(.*\\.php)$", "destination": "/api/$1" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/m/(.*)", "destination": "/m/$1" },
+    { "source": "/(.*)", "destination": "/$1" },
     {
-      "source": "/m/:path*\\.html",
-      "destination": "/m/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "/$1"
+      "source": "/:path*\\.html",
+      "destination": "/:path*"
     }
   ]
 }
