@@ -7,7 +7,7 @@
   "rewrites": [
     { "source": "/api/(.*\\.php)$", "destination": "/api/$1" },
     { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/(.*)\\.html$", "destination": "/$1" }, // .html uzantısını kaldır
+    { "source": "/(.*)\\.html$", "destination": "/$1" }, 
     { "source": "/(.*)", "destination": "/$1" }
   ]
 }
