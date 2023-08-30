@@ -41,7 +41,7 @@ $tlc = fetchValue("https://www.tlctv.com.tr/", '/<div class="program-name">([^<]
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KUR V2</title>
+    <title>KUR V1.2</title>
 
 </head>
 
