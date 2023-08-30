@@ -1,4 +1,39 @@
+
 <?php
+
+
+
+$goldRate = '';
+
+// URL'yi belirleyin
+$url = "https://bigpara.hurriyet.com.tr/altin/ceyrek-altin-fiyati/";
+
+// cURL ile sayfayı çekin
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+
+// XPath ile hedef elementi bulma
+$doc = new DOMDocument();
+@$doc->loadHTML($response);
+$xpath = new DOMXPath($doc);
+$xpath_expression = '//*[@id="content"]/div[2]/div/div[2]/div[3]/span[2]';
+$target_element = $xpath->query($xpath_expression);
+
+// Eğer hedef element bulunursa içeriğini alabilirsiniz
+if ($target_element->length > 0) {
+    $goldRate = $target_element->item(0)->nodeValue;
+    
+} else {
+    echo "Veri çekilemedi.";
+}
+
+//1//
+
+
+
+
+
 function fetchValue($url, $regex, $index)
 {
     $response = file_get_contents($url);
@@ -258,35 +293,6 @@ $tlc = fetchValue("https://www.tlctv.com.tr/", '/<div class="program-name">([^<]
         color: white;
     }
 </style>
-    <?php
-$goldRate = '';
-
-// URL'yi belirleyin
-$url = "https://bigpara.hurriyet.com.tr/altin/ceyrek-altin-fiyati/";
-
-// cURL ile sayfayı çekin
-$ch = curl_init($url);
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$response = curl_exec($ch);
-
-// XPath ile hedef elementi bulma
-$doc = new DOMDocument();
-@$doc->loadHTML($response);
-$xpath = new DOMXPath($doc);
-$xpath_expression = '//*[@id="content"]/div[2]/div/div[2]/div[3]/span[2]';
-$target_element = $xpath->query($xpath_expression);
-
-// Eğer hedef element bulunursa içeriğini alabilirsiniz
-if ($target_element->length > 0) {
-    $goldRate = $target_element->item(0)->nodeValue;
-    
-} else {
-    echo "Veri çekilemedi.";
-}
-
-// cURL bağlantısını kapatın
-curl_close($ch);
 
 
-?>
 </html>
