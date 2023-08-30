@@ -17,7 +17,7 @@ $usdRate = fetchValue("https://www.google.com/finance/quote/USD-TRY", '/<div cla
 $eurRate = fetchValue("https://www.google.com/finance/quote/EUR-TRY", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
 $gbpRate = fetchValue("https://www.google.com/finance/quote/GBP-TRY", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
 $btcRate = fetchValue("https://www.google.com/finance/quote/BTC-USD", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
-$goldRate = fetchValue("https://bigpara.hurriyet.com.tr/altin/ceyrek-altin-fiyati/", '/<span class="value up">([^<]+)/', 1);
+$goldRate = fetchValue("https://php--midyeli63.repl.co/", '/<p class="au">([^<]+)/', 0);
 $ggRate = fetchValue("https://bigpara.hurriyet.com.tr/altin/gram-altin-fiyati", '/<span class="value up">([^<]+)/', 0);
 
 //sayı hangi classı alacağımı seçer 0 ilk clası seçer
