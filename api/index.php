@@ -21,7 +21,7 @@ if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
 
 
 
-// EUR döviz kuru için değişken tanımı
+// EU.R döviz kuru için değişken tanımı
 $eurRate = '';
 // URL'yi belirleyin
 $url = "https://www.google.com/finance/quote/EUR-TRY";
@@ -43,7 +43,7 @@ if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
 
 
 
-// GBP döviz kuru için değişken tanımı
+// GB.P döviz kuru için değişken tanımı
 $gbpRate = '';
 // URL'yi belirleyin
 $url = "https://www.google.com/finance/quote/GBP-TRY";
@@ -65,7 +65,7 @@ if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
 
 
 $btcRate = '';
-// BTC döviz kuru için değişken tanımı
+// BT.C döviz kuru için değişken tanımı
 // URL'yi belirleyin
 $url = "https://www.google.com/finance/quote/BTC-USD";
 // Veriyi çekmek için cURL kullanın
