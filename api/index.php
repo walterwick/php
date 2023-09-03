@@ -1,5 +1,5 @@
 <?php
-// Us.D döviz kuru için değişken tanımı
+// USD döviz kuru için değişken tanımı
 $usdRate = '';
 // URL'yi belirleyin
 $url = "https://www.google.com/finance/quote/USD-TRY";
