@@ -1,46 +1,220 @@
 <?php
-function fetchValue($url, $regex, $index) {
-    $response = file_get_contents($url);
-    if (preg_match_all($regex, $response, $matches)) {
-        if (isset($matches[1][$index])) {
-            return $matches[1][$index];
-        } else {
-            return "Veri çekilemedi.";
-        }
-    } else {
-        return "Veri çekilemedi.";
-    }   
+// Us.D döviz kuru için değişken tanımı
+$usdRate = '';
+// URL'yi belirleyin
+$url = "https://www.google.com/finance/quote/USD-TRY";
+// Veriyi çekmek için cURL kullanın
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+// Gerekli veriyi ayrıştırın
+if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
+    $usdRate = $matches[1]; // Döviz kuru
+   /*  echo "Dolar / Türk Lirası kuru: " . $usdRate; */
+} else {
+    echo "Veri çekilemedi.";
 }
-//sayı hangi classı alacağımı seçer 0 ilk clası seçer
-$q = fetchValue("https://www.google.com/finance/quote/USD-TRY", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
-$w = fetchValue("https://www.google.com/finance/quote/EUR-TRY", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
-$e = fetchValue("https://www.google.com/finance/quote/GBP-TRY", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
-$r = fetchValue("https://www.google.com/finance/quote/BTC-USD", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
-$ön2 = fetchValue("https://bigpara.hurriyet.com.tr/altin/gram-altin-fiyati/", '/<span class="value up">([^<]+)/', 0);
-$ön3 = fetchValue("https://php--midyeli63.repl.co/", '/<p class="au">([^<]+)/', 0);
+// cURL bağlantısını kapatın
 
-$dmax = fetchValue("https://www.dmax.com.tr/canli-izle/", '/<div class="program-name">([^<]+)/', 0);
-$tlc = fetchValue("https://www.tlctv.com.tr/", '/<div class="program-name">([^<]+)/', 0);
+//usd bitti
+
+
+
+
+// EUR döviz kuru için değişken tanımı
+$eurRate = '';
+// URL'yi belirleyin
+$url = "https://www.google.com/finance/quote/EUR-TRY";
+// Veriyi çekmek için cURL kullanın
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+// Gerekli veriyi ayrıştırın
+if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
+    $eurRate = $matches[1]; // Döviz kuru
+   /*  echo "Euro / Türk Lirası kuru: " . $eurRate; */
+} else {
+    echo "Veri çekilemedi.";
+}
+// cURL bağlantısını kapatın
+
+//eur bitti
+
+
+
+
+// GBP döviz kuru için değişken tanımı
+$gbpRate = '';
+// URL'yi belirleyin
+$url = "https://www.google.com/finance/quote/GBP-TRY";
+// Veriyi çekmek için cURL kullanın
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+// Gerekli veriyi ayrıştırın
+if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
+    $gbpRate = $matches[1]; // Döviz kuru
+   /*  echo "Euro / Türk Lirası kuru: " . $eurRate; */
+} else {
+    echo "Veri çekilemedi.";
+}
+// cURL bağlantısını kapatın
+
+//gbp bitti
+
+
+
+$btcRate = '';
+// BTC döviz kuru için değişken tanımı
+// URL'yi belirleyin
+$url = "https://www.google.com/finance/quote/BTC-USD";
+// Veriyi çekmek için cURL kullanın
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+// Gerekli veriyi ayrıştırın
+
+if (preg_match('/<div class="YMlKec fxKbKc">([^<]+)/', $response, $matches)) {
+    $btcRate = $matches[1]; // Döviz kuru
+   /*  echo "Euro / Türk Lirası kuru: " . $eurRate; */
+} else {
+    echo "Veri çekilemedi.";
+}
+// cURL bağlantısını kapatın
+
+//btc bitti
+
+
+
+$goldRate = '';
+
+// URL'yi belirleyin
+$url = "https://bigpara.hurriyet.com.tr/altin/ceyrek-altin-fiyati/";
+
+// cURL ile sayfayı çekin
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+
+// XPath ile hedef elementi bulma
+$doc = new DOMDocument();
+@$doc->loadHTML($response);
+$xpath = new DOMXPath($doc);
+$xpath_expression = '//*[@id="content"]/div[2]/div/div[2]/div[3]/span[2]';
+$target_element = $xpath->query($xpath_expression);
+
+// Eğer hedef element bulunursa içeriğini alabilirsiniz
+if ($target_element->length > 0) {
+    $goldRate = $target_element->item(0)->nodeValue;
+    
+} else {
+    echo "Veri çekilemedi.";
+}
+
+// cURL bağlantısını kapatın
+//curl_close($ch);
+
+
+$ggoldRate = '';
+
+// URL'yi belirleyin
+$url = "https://bigpara.hurriyet.com.tr/altin/gram-altin-fiyati/";
+
+// cURL ile sayfayı çekin
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+
+// XPath ile hedef elementi bulma
+$doc = new DOMDocument();
+@$doc->loadHTML($response);
+$xpath = new DOMXPath($doc);
+$xpath_expression = '//*[@id="content"]/div[2]/div/div[2]/div[3]/span[2]';
+$target_element = $xpath->query($xpath_expression);
+
+// Eğer hedef element bulunursa içeriğini alabilirsiniz
+if ($target_element->length > 0) {
+    $ggoldRate = $target_element->item(0)->nodeValue;
+    
+} else {
+    echo "Veri çekilemedi.";
+}
+
+// cURL bağlantısını kapatın
+curl_close($ch);
+
+
+
+
+// dmax döviz kuru için değişken tanımı
+$dmaxRate = '';
+// URL'yi belirleyin
+$url = "https://www.dmax.com.tr/canli-izle";
+// Veriyi çekmek için cURL kullanın
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+// Gerekli veriyi ayrıştırın
+if (preg_match('/<div class="program-name">([^<]+)/', $response, $matches)) {
+    $dmaxRate = $matches[1]; // Döviz kuru
+   /*  echo "Euro / Türk Lirası kuru: " . $eurRate; */
+} else {
+    echo "Veri çekilemedi.";
+}
+// cURL bağlantısını kapatın
+//dmax bitti
+
+
+// dmax döviz kuru için değişken tanımı
+$tlcRate = '';
+// URL'yi belirleyin
+$url = "https://www.tlctv.com.tr/";
+// Veriyi çekmek için cURL kullanın
+$ch = curl_init($url);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$response = curl_exec($ch);
+// Gerekli veriyi ayrıştırın
+if (preg_match('/<div class="program-name">([^<]+)/', $response, $matches)) {
+    $tlcRate = $matches[1]; // Döviz kuru
+   /*  echo "Euro / Türk Lirası kuru: " . $eurRate; */
+} else {
+    echo "Veri çekilemedi.";
+}
+// cURL bağlantısını kapatın
+//dmax bitti
+
+
+
+
+
 
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document 
-    </title>
+    <title>Doviz kuru</title>
+      <link rel="shortcut icon" href="favicon.ico" type="image/x-icon">
+
 </head>
 <body>
-    <p class="gbp"> Dünkü Kapanış <?php echo $q; ?></p>
-    <p class="gbp"> Dünkü Kapanış <?php echo $w; ?></p>
-    <p class="gbp"> Dünkü Kapanış <?php echo $e; ?></p>
-    <p class="gbp"> Dünkü Kapanış <?php echo $r; ?></p>
-    <p class="gbp"> Dünkü Kapanış <?php echo $ön2; ?></p>
-    <p class="gbp"> Dünkü Kapanış <?php echo $ön3; ?></p>
-    <p class="dmax"> DMAX: <a href="https://www.dmax.com.tr/canli-izle"><?php echo $dmax; ?></a></p>
-    <p class="tlc"> TLC:<a href="https://tlctv.com.tr/canli-izle"><?php echo $tlc; ?></a></p>
+<div class="finance">
+
+<p class="usd"> USD/TL Kuru: <?php echo $usdRate; ?></p>
+<p class="eur"> EUR/TL Kuru: <?php echo $eurRate; ?></p>
+<p class="gbp"> GBP/TL Kuru: <?php echo $gbpRate; ?></p>
+<p class="btc"> BTC/USD Kuru: <?php echo $btcRate; ?></p>
+<p class="au">Ç. ALTIN Kuru: <?php echo $goldRate; ?></p>
+<p class="gau">G. ALTIN Kuru: <?php echo $ggoldRate; ?></p>
+<p class="dmax"> DMAX: <a href="https://www.dmax.com.tr/canli-izle"><?php echo $dmaxRate; ?></a></p>
+<p class="tlc"> TLC:<a href="https://tlctv.com.tr/canli-izle"><?php echo $tlcRate;?></a></p>
+    
+</div>
+
 
 </body>
 </html>
