@@ -1,0 +1,297 @@
+:root {
+    --bg-color: #d8d8d8;
+    --text-color: #000000;
+  }
+
+  @import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+  }
+    
+    .header {
+       /*  position: fixed;
+        top: 0;
+        left: 0; */
+        width: 100%;
+        padding: 1.3rem .2rem 1.3rem 0%;
+        /* background: rgba(0, 0, 0, 0.13);   dropfilter 'den dolayı olmuyor before eklemeık lazım'
+        backdrop-filter: blur(50px); */
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background: #712cf9;
+        z-index: 100;
+        height: 10vh;
+    }
+
+    
+
+    .logo {
+        font-size: 2rem;
+        color: #fff;
+        text-decoration: none;
+        font-weight: bolder;
+
+    }
+
+    .navbar a {
+        font-size: 1.15rem;
+        color: #fff;
+        text-decoration: none;
+        margin-left: 2.2rem;
+    }
+
+    .icons {
+        position: absolute;
+        font-size: 2.2rem;
+        color: #fff;
+        cursor: pointer;
+        display: none;
+        right: 5%;
+    }
+
+
+    /* //breakponits menu */
+
+    #check {
+        display: none;
+
+    }
+
+
+    @media screen and (max-width: 992px) {
+        .header {
+            padding: 1.3rem 5%;
+        }
+    }
+
+
+    @media screen and (max-width: 768px) {
+        .icons {
+            display: block;
+            display: inline-flex;
+        }
+
+        #check:checked~.icons #menu-icon {
+            display: none;
+        }
+
+        .icons #close-icons {
+            display: none;
+        }
+
+
+        #check:checked~.icons #close-icons {
+            display: block;
+        }
+
+        .navbar {
+            position: absolute;
+            top: 10%;
+            left: 0;
+            width: 100%;
+            height: 0;
+            background: rgba(0, 0, 0, 0.13);
+            backdrop-filter: blur(20px);
+            overflow: hidden;
+            transition: .3s ease;
+        }
+
+
+        #check:checked~.navbar {
+            display: block;
+            height: 17.7rem;/* auto */
+            background: rgb(171 0 255 / 20%);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+            
+        }
+
+        .navbar a {
+        display: block;
+        font-size: 1.1rem;
+        margin: 1.1rem 0;
+        text-align: center;
+        /*linkler için animasyon bu satırı ve aldakini sil */
+        transform: translateY(-50px);
+        transition: .3s ease;
+        opacity: 0;
+        }
+
+        #check:checked~.navbar a {
+            /* link animasyonu silinebilier ve tmldeki --i ler kalsıır*/
+            transform: translateY(0);
+            transition-delay: calc(.15s * var(--i));
+            opacity: 1;
+        }
+
+    }
+
+    /* || */
+    
+    .logo {
+        transition: 1s;
+      }
+  
+      .center {
+        height: 60%;
+      }
+  
+      .logo:hover {
+        color: aqua;
+      }
+  
+      .center img {
+        height: 100%;
+        width: 100%;
+      }
+
+      .cen {
+        border-radius: 50%;
+      }
+      main {
+        background: #ffffff;
+        height: 90vh;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+        flex-wrap: wrap-reverse !important;
+        transition: all 1s;
+      }
+  
+      .lorem {
+        margin: 0 2rem 0 0;
+        max-width: clamp(400px, 500px, 600px);
+        font-size: 1.4rem;
+        opacity: 1;
+        animation:2s ease-in  lorem ; 
+         
+      }
+  @keyframes lorem {
+    0%{opacity: 0;}
+    100%{opacity: 1;}
+  }
+      .moving {
+        margin: .4rem 0 0 0;
+        height: 50px;
+      }
+  
+      /* gece modu */
+  
+      .night-mode {
+        --bg-color: #212121;
+        --text-color: #ffffff;
+      }
+      
+      @media (prefers-color-scheme:light){
+        main{
+        display: none;}
+        }
+
+        main {
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.5s ease, color 0.5s ease;
+          }
+      
+          .night-mode .buton {
+            border: 2px solid white;
+          }
+      
+          .night-mode .buton:hover {
+            box-shadow: 1px 1px 1.5rem rgb(255, 255, 255);
+          }
+      
+          .night-mode {
+            --bg-color: #212121;
+            --text-color: #ffffff;
+          }
+      
+      
+      
+          .mode-toggle header {
+            cursor: pointer;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+          }
+      
+          /* gece modu bitiş */
+      
+          .buton {
+            padding: .4rem .6rem;
+            cursor: pointer;
+            border-radius: 2rem;
+            background: #03593C;
+            color: #ffffff;
+            transition: all ease-in-out .3s;
+          }
+      
+          .buton:hover {
+            background: aquamarine;
+            transform: scale(1.05);
+            box-shadow: 2px 2px 1.1rem black;
+            color: #000000;
+          }
+      
+          .buton:active {
+            transform: scale(0.99)
+          }
+        
+      
+    @media screen and (max-width: 768px) {
+        .header {
+          height: 10vh;
+        }
+  
+        .center {
+          width: 65%;
+          height: 40%;
+          margin: 0 auto ;
+         
+        }
+  
+        .root {
+          margin: 0 auto;
+        }
+  
+        .lorem {
+          font-size: 1rem;
+  
+        }
+  
+        header {
+          justify-content: space-evenly;
+        }
+  
+        .root {
+          text-align: center;
+        }
+      }
+    
+   
+      @media screen and (max-width: 920px) {
+        .root {
+          font-size: .7rem;
+        }
+  
+        .center {
+          width: 45%;
+          height: 40%;
+          margin: 0 auto;
+        }
+      }
+      .fas {
+        margin: 10px;
+        color: #ffffff;
+        font-size: 1.5rem;
+      }  
+
+      #mode{
+    display: inline-block;
+    padding: 0 1rem 0 2.1rem;
+    }
