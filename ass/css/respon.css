@@ -17,7 +17,7 @@
         top: 0;
         left: 0; */
         width: 100%;
-        padding: 1.3rem .2rem 1.3rem 0%;
+        padding:1.6rem;
         /* background: rgba(0, 0, 0, 0.13);   dropfilter 'den dolayı olmuyor before eklemeık lazım'
         backdrop-filter: blur(50px); */
         display: flex;
@@ -188,8 +188,8 @@
       }
       
       @media (prefers-color-scheme:light){
-        main{
-        display: none;}
+        .logo{
+        color: wheat;}
         }
 
         main {
