@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+/*@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');*/
 :root {
     --bg-color: #d8d8d8;
     --text-color: #000000;
@@ -246,7 +246,11 @@
         .header {
           height: 10vh;
         }
-  
+          #mode{
+              display:block;
+              padding:0;
+              text-align:center;
+          }
         .center {
           width: 65%;
           height: 60%;
