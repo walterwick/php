@@ -3,7 +3,6 @@
   --bg-color: #d8d8d8;
   --text-color: #000000;
 }
-
 * {
   margin: 0;
   padding: 0;
@@ -18,7 +17,7 @@
   width: 100%;
   padding: 1.6rem;
   /* background: rgba(0, 0, 0, 0.13);   dropfilter 'den dolayı olmuyor before eklemeık lazım'
-      backdrop-filter: blur(50px); */
+  backdrop-filter: blur(50px); */
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -82,7 +81,7 @@ main {
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  flex-wrap: wrap-reverse !important;
+  flex-wrap: wrap-reverse ;
   transition: all 1s;
 }
 
@@ -155,9 +154,7 @@ main {
   right: 20px;
   font-size: 30px;
 }
-
 /* gece modu bitiş */
-
 .buton {
   padding: .4rem .6rem;
   cursor: pointer;
@@ -178,7 +175,11 @@ main {
 }
 
 
-
+.fas {
+  margin: 10px;
+  color: #ffffff;
+  font-size: 1.5rem;
+}
 
 /* //breakponits menu */
 @media screen and (max-width: 992px) {
