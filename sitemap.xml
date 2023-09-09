@@ -4,46 +4,46 @@
 
   <url>
     <loc>https://walterwick.de</loc>
-    <lastmod>2023-08-29T10:00:00+00:00</lastmod>
+    <lastmod>2023-09-09T10:00:00+00:00</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   
-  
   <url>
-    <loc>https://walterwick.de/pic</loc>
-    <lastmod>2023-08-29T10:00:00+00:00</lastmod>
+    <loc>https://walterwick.de/api</loc>
+    <lastmod>2023-09-09T10:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
-  <!-- Sitemap'a diğer sayfaları buraya ekleyin -->
-
+  <!-- Diğer sayfaları buraya ekleyin -->
 
   <url>
-    <loc>https://walterwick.de/api/</loc>
-    <lastmod>2023-08-29T10:00:00+00:00</lastmod>
+    <loc>https://walterwick.de/api/x/1</loc>
+    <lastmod>2023-09-09T10:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
   </url>
   
   <url>
-    <loc>https://walterwick.de/fuild/</loc>
-    <lastmod>2023-08-29T10:00:00+00:00</lastmod>
+    <loc>https://walterwick.de/music/</loc>
+    <lastmod>2023-09-09T10:00:00+00:00</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.9</priority>
+  </url>
+ 
+  <url>
+    <loc>https://walterwick.de/matrix</loc>
+    <lastmod>2023-09-09T10:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
- 
   
   <url>
-    <loc>https://walterwick.de/nasa.html</loc>
-    <lastmod>2023-08-29T10:00:00+00:00</lastmod>
+    <loc>https://walterwick.de/apod</loc>
+    <lastmod>2023-09-09T10:00:00+00:00</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
-  
- 
-  
-  
   
 </urlset>
