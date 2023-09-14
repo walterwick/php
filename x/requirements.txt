@@ -1,2 +1,0 @@
-Flask==2.2.2
-instaloader==4.8.3
