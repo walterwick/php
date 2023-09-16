@@ -13,7 +13,7 @@
 
     <div class="container mt-5">
         <h1>İletişim Formu</h1>
-        <form action="send_message.php" method="post" enctype="multipart/form-data">
+        <form action="api/send/send_message.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
                 <label for="name">Ad Soyad:</label>
                 <input type="text" class="form-control" id="name" name="name" required>
