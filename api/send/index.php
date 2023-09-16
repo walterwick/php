@@ -11,7 +11,6 @@
 <body>
 
 <?php
-
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -31,22 +30,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit;
     }
 
-    // Dosyayı belirli bir klasöre taşı
-    $upload_dir = 'uploads/'; // Bu klasörün oluşturulduğundan emin olun
-    $upload_path = $upload_dir . $attachment_name;
-    move_uploaded_file($attachment_temp, $upload_path);
-
     // Telegram'a bildirim gönderme işlemi
     $token = '6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I'; // Telegram bot tokeninizi buraya ekleyin
     $chat_id = '2090459804'; // Kullanıcı veya grup chat ID'nizi buraya ekleyin
     $message_text = "Yeni iletişim mesajı!\n\nAd Soyad: $name\nE-posta: $email\nKonu: $subject\nMesaj: $message";
 
-    // Eğer dosya varsa, Telegram'a dosya gönder
+    // Dosya varsa Telegram'a dosya gönder
     if (!empty($attachment_name)) {
         $file_url = "https://api.telegram.org/bot$token/sendDocument";
         $file_params = [
             'chat_id' => $chat_id,
-            'document' => new CURLFile(realpath($upload_path))
+            'document' => new CURLFile($attachment_temp, mime_content_type($attachment_temp), $attachment_name)
         ];
 
         $ch_file = curl_init($file_url);
@@ -85,6 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 }
 ?>
 
+
 <div class="container mt-5">
     <h1>İletişim Formu</h1>
     <form action="" method="post" enctype="multipart/form-data">
@@ -112,9 +107,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </form>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
 </body>
 </html>
