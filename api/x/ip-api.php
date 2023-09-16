@@ -1,22 +1,27 @@
-<!-- Code by walterwick | walterwick.de -->
-
 <?php
+// Kullanıcının gerçek IP adresini almak için kullanılacak değişken
+$user_real_ip = '';
 
-// şuanki  IP Addressi alır
-$user_ip = $_SERVER['REMOTE_ADDR'];
-
-if (isset($_POST['search'])) {
-    
-  $user_ip = $_POST['ip'];
+// HTTP isteği üzerindeki kullanıcının gerçek IP adresini almak için
+if (!empty($_SERVER['HTTP_CLIENT_IP'])) {
+    $user_real_ip = $_SERVER['HTTP_CLIENT_IP'];
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
+    $user_real_ip = $_SERVER['HTTP_X_FORWARDED_FOR'];
+} else {
+    $user_real_ip = $_SERVER['REMOTE_ADDR'];
 }
 
+// İlk defa sayfa açıldığında veya arama yapılmadan önce, $user_ip değişkenini başlatın
+$user_ip = $user_real_ip;
 
- 
-//ip-api.com den verilieri al
-$data = file_get_contents("http://ip-api.com/json/$user_ip?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,currency,isp,org,as,query");
+// Arama yapıldığında kullanıcının girdiği IP adresini alın
+if (isset($_POST['search'])) {
+    $user_ip = $_POST['ip'];
+}
+
+// Şimdi IP sorgusu için kullanabilirsiniz
+$data = file_get_contents("http://ip-api.com/json/{$user_ip}?fields=status,message,country,countryCode,region,regionName,city,zip,lat,lon,timezone,currency,isp,org,as,query");
 $json = json_decode($data, true);
-
-
 ?>
 
 <!DOCTYPE html>
