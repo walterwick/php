@@ -40,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $file_url = "https://api.telegram.org/bot$token/sendDocument";
         $file_params = [
             'chat_id' => $chat_id,
+            'caption' => $message_text,
             'document' => new CURLFile($attachment_temp, mime_content_type($attachment_temp), $attachment_name)
         ];
 
@@ -49,20 +50,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         curl_setopt($ch_file, CURLOPT_RETURNTRANSFER, true);
         $response_file = curl_exec($ch_file);
         curl_close($ch_file);
+    } else {
+        // Dosya eklenmemişse sadece metin mesajını gönder
+        $telegram_url = "https://api.telegram.org/bot$token/sendMessage";
+        $telegram_params = [
+            'chat_id' => $chat_id,
+            'text' => $message_text
+        ];
+
+        $ch = curl_init($telegram_url);
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $telegram_params);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        $response = curl_exec($ch);
+        curl_close($ch);
     }
-
-    $telegram_url = "https://api.telegram.org/bot$token/sendMessage";
-    $telegram_params = [
-        'chat_id' => $chat_id,
-        'text' => $message_text
-    ];
-
-    $ch = curl_init($telegram_url);
-    curl_setopt($ch, CURLOPT_POST, 1);
-    curl_setopt($ch, CURLOPT_POSTFIELDS, $telegram_params);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $response = curl_exec($ch);
-    curl_close($ch);
 
     // Bildirim gönderildiğini kontrol et
     if ($response === false) {
@@ -72,7 +74,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         echo "<script>
                 swal('Mesajınız Gönderildi', 'Teşekkür ederiz!', 'success')
                 .then((value) => {
-                    window.location.href = 'index.php'; // Anasayfaya yönlendir
+                    window.location.href = 'https://walterwick.de'; // Anasayfaya yönlendir
                 });
               </script>";
     }
