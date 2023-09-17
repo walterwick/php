@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Your description">
+    <meta name="author" content="Your name">
+    <meta property="og:site_name" content="" /> <!-- website name -->
+    <meta property="og:site" content="" /> <!-- website link -->
+    <meta property="og:title" content="" /> <!-- title shown in the actual shared post -->
+    <meta property="og:description" content="" /> <!-- description shown in the actual shared post -->
+    <meta property="og:image" content="" /> <!-- image link, make sure it's jpg -->
+    <meta property="og:url" content="" /> <!-- where do you want your post to link to -->
+    <meta name="twitter:card" content="summary_large_image"> <!-- to have large image post format in Twitter -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css">
+    <title>walterwick timer</title>
+    <link rel="icon" href="https://upload.wikimedia.org/wikipedia/tr/a/a2/Hitler_Paris.jpg">
+</head>
+<body data-spy="scroll" data-target=".fixed-top">
+    <header class="header">
+        <a class="logo-image"  href="https://walterwick.de">Logo's</a>
+        <div class="contact-container">
+            <ul class="list-unstyled li-space-lg">
+                <li><a href="https://walterwick.de"><i class="fas fa-envelope"></i>Websites link</a></li>
+                <li><a href="https://walterwick.de"><i class="fas fa-phone"></i>Websites link</a></li>
+            </ul>
+        </div> <!-- end of contact-container -->
+        <!-- end of contact links -->
+
+        <!-- Main Content -->
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="countdown">
+                        <span id="clock"></span>
+                    </div> <!-- end of countdown -->
+                    <h1>TYT-AYT Kaç gün kaldı...</h1>
+                    <p class="p-heading">TYT-AYT sınavına bu kadar süre kaldı, sınav tarihi 2024/06/22</p>
+                    <a class="btn-solid-lg popup-with-move-anim" href="#header-details-lightbox">Contact Us</a>
+                </div> <!-- end of col -->
+            </div> <!-- end of row -->
+        </div> <!-- end of container -->
+       
+        <video autoplay loop muted id="video-background"  >
+            <source src="https://packaged-media.redd.it/003gw1tyfvwa1/pb/m2-res_536p.mp4?m=DASHPlaylist.mpd&v=1&e=1694786400&s=a5c822a77a809d317f54ac6069e9aebfcee34ae2#t=0" type="video/mp4" />
+        </video>
+
+    </header> 
+    
+
+<style>
+    .btn-solid-lg,.btn-solid-reg{background-color:#27ae60;transition:.2s}.form-control-input,.form-control-select,.form-control-textarea{width:100%;display:block;padding-left:1.3125rem;background-color:#fff}body,html{width:100%;height:100vh;overflow:hidden}body,p{color:#fff;font:400 1rem/1.75rem "Open Sans",sans-serif}h1,h2,h3,h4,h5{font-weight:700}h1{font-size:3rem;line-height:3.75rem}h2{font-size:2.25rem;line-height:3rem}h3{font-size:1.75rem;line-height:2.375rem}h4{font-size:1.25rem;line-height:1.75rem}h5{font-size:1.125rem;line-height:1.625rem}.testimonial-author,h6{font-weight:700;font-size:1rem;line-height:1.5rem}.p-large{font-size:1.25rem;line-height:2.125rem}.btn-outline-lg,.btn-outline-reg,.btn-solid-lg,.btn-solid-reg,.p-small{font-size:.875rem}.p-small{line-height:1.5rem}.btn-outline-lg,.btn-outline-reg,.btn-outline-sm,.btn-solid-lg,.btn-solid-reg{display:inline-block;color:#fff;line-height:0;text-decoration:none;font-weight:700}.p-heading{margin-bottom:4rem;text-align:center}.testimonial-text{font-style:italic}.li-space-lg li{margin-bottom:.625rem}a,a:hover{color:#fff;text-decoration:underline}a.pink{color:#ff5784}.btn-solid-reg{padding:1.1875rem 2.125rem;border:.125rem solid #27ae60;border-radius:2rem}.btn-solid-lg:hover,.btn-solid-reg:hover{border:.125rem solid #27ae60;background-color:transparent;color:#27ae60;text-decoration:none}.btn-solid-lg{padding:1.5rem 2.375rem;border:.125rem solid #27ae60;border-radius:2rem}.btn-outline-reg{padding:1.1875rem 2.125rem;border:.125rem solid #fff;border-radius:2rem;background-color:transparent;transition:.2s}.btn-outline-lg:hover,.btn-outline-reg:hover,.btn-outline-sm:hover{border:.125rem solid #fff;background-color:#fff;color:#333;text-decoration:none}.btn-outline-lg{padding:1.5rem 2.375rem;border:.125rem solid #fff;border-radius:2rem;background-color:transparent;transition:.2s}.btn-outline-sm{padding:1rem 1.5rem;border:.125rem solid #fff;border-radius:2rem;background-color:transparent;font-size:.875rem;transition:.2s}.form-control-input,.form-control-select,.form-control-textarea,.label-control{color:#777;font-size:.875rem;transition:.2s}.form-group{position:relative;margin-bottom:1.25rem}.label-control{position:absolute;top:.87rem;left:1.375rem;opacity:1;line-height:1.375rem;cursor:text}.form-control-input.notEmpty+.label-control,.form-control-input:focus+.label-control,.form-control-textarea.notEmpty+.label-control,.form-control-textarea:focus+.label-control{top:.125rem;opacity:1;font-size:.75rem;font-weight:700}.form-control-input,.form-control-select{padding-top:1.0625rem;padding-bottom:.0625rem;border:1px solid #c4d8dc;border-radius:.25rem;line-height:1.875rem}.form-control-select{padding-top:.5rem;padding-bottom:.5rem;height:3rem}select{-webkit-appearance:none;-moz-appearance:none;-ms-appearance:none;-o-appearance:none;appearance:none;background-image:url('../images/down-arrow.png');background-position:96% 50%;background-repeat:no-repeat;outline:0}.form-control-textarea{height:8rem;padding-top:1.25rem;border:1px solid #c4d8dc;border-radius:.25rem;line-height:1.75rem}.form-control-input:focus,.form-control-select:focus,.form-control-textarea:focus{border:1px solid #a1a1a1;outline:0}.form-control-input:hover,.form-control-select:hover,.form-control-textarea:hover{border:1px solid #a1a1a1}input[type=checkbox]{vertical-align:-10%;margin-right:.5rem}.form-control-submit-button{display:inline-block;width:100%;height:3.125rem;border:.125rem solid #27ae60;border-radius:1.5rem;background-color:#27ae60;color:#fff;font-weight:700;font-size:.875rem;line-height:0;cursor:pointer;transition:.2s}.form-control-submit-button:hover{border:.125rem solid #27ae60;background-color:transparent;color:#27ae60}.my-mfp-slide-bottom .zoom-anim-dialog{opacity:0;transition:.2s ease-out;-webkit-transform:translateY(-1.25rem) perspective(37.5rem) rotateX(10deg);-ms-transform:translateY(-1.25rem) perspective(37.5rem) rotateX(10deg);transform:translateY(-1.25rem) perspective(37.5rem) rotateX(10deg)}.my-mfp-slide-bottom.mfp-ready .zoom-anim-dialog{opacity:1;-webkit-transform:translateY(0) perspective(37.5rem) rotateX(0);-ms-transform:translateY(0) perspective(37.5rem) rotateX(0);transform:translateY(0) perspective(37.5rem) rotateX(0)}.my-mfp-slide-bottom.mfp-removing .zoom-anim-dialog{opacity:0;-webkit-transform:translateY(-.625rem) perspective(37.5rem) rotateX(10deg);-ms-transform:translateY(-.625rem) perspective(37.5rem) rotateX(10deg);transform:translateY(-.625rem) perspective(37.5rem) rotateX(10deg)}.my-mfp-slide-bottom.mfp-bg{opacity:0;transition:opacity .2s ease-out}.my-mfp-slide-bottom.mfp-ready.mfp-bg{opacity:.8}.my-mfp-slide-bottom.mfp-removing.mfp-bg{opacity:0}@-webkit-keyframes fadeIn{from{opacity:0}to{opacity:1}}@keyframes fadeIn{from{opacity:0}to{opacity:1}}.fadeIn{-webkit-animation:.6s fadeIn;animation:.6s fadeIn}@-webkit-keyframes fadeOut{from{opacity:1}to{opacity:0}}@keyframes fadeOut{from{opacity:1}to{opacity:0}}.fadeOut{-webkit-animation:.8s fadeOut;animation:.8s fadeOut}.spinner-wrapper{position:fixed;z-index:999999;top:0;right:0;bottom:0;left:0;background:#070507}.spinner{position:absolute;top:50%;left:50%;width:3.75rem;height:1.25rem;margin:-.625rem 0 0 -1.875rem;text-align:center}.spinner>div{display:inline-block;width:1rem;height:1rem;border-radius:100%;background-color:#fff;-webkit-animation:1.4s ease-in-out infinite both sk-bouncedelay;animation:1.4s ease-in-out infinite both sk-bouncedelay}.spinner .bounce1{-webkit-animation-delay:-.32s;animation-delay:-.32s}.spinner .bounce2{-webkit-animation-delay:-.16s;animation-delay:-.16s}@-webkit-keyframes sk-bouncedelay{0%,100%,80%{-webkit-transform:scale(0)}40%{-webkit-transform:scale(1)}}@keyframes sk-bouncedelay{0%,100%,80%{-webkit-transform:scale(0);-ms-transform:scale(0);transform:scale(0)}40%{-webkit-transform:scale(1);-ms-transform:scale(1);transform:scale(1)}}.header{position:relative;min-height:100%;text-align:center;background-color:rgba(0,0 ,0 ,.3)}.header #video-background{position:absolute;right:0;bottom:0;width:auto;min-width:100%;height:auto;min-height:100%;z-index:-100}.header .logo-image{width:7.125rem;height:2.75rem;margin-top:2.5rem;margin-bottom:1.5rem}.header .logo-text{display:inline-block;margin-top:2.5rem;margin-bottom:1.75rem;color:#fff;font-weight:700;font-size:2.5rem;line-height:1rem;text-decoration:none}.header .contact-container{margin-bottom:3.5rem}.header .contact-container .list-unstyled li{display:inline-block;margin-right:.5rem;margin-left:.5rem}.header .contact-container .list-unstyled a{text-decoration:none}.header .contact-container .list-unstyled .fas{margin-right:.5rem;color:#27ae60}.header .countdown{margin-bottom:2.25rem}.header .countdown #clock .counter-number{display:inline-block;width:6.5rem;height:6.5rem;margin-right:.5rem;margin-bottom:1.25rem;margin-left:.5rem;padding-top:2rem;border-radius:.5rem;background-color:rgba(255,255,255,.16);font-weight:700;font-size:2.25rem;line-height:1.25rem;text-align:center}.header .countdown #clock .counter-number .timer-text{font-weight:400;font-size:.75rem;line-height:1rem;text-align:center}.header h1{margin-bottom:.75rem;font-size:2.5rem;line-height:3.375rem}.header .p-heading{margin-bottom:1.75rem}.header .btn-solid-lg{margin-bottom:8rem}.header .social-container{position:absolute;right:0;bottom:1rem;left:0}.header .fa-stack{width:2em;margin-bottom:.75rem;margin-right:.375rem;font-size:1.25rem}.header .social-container .fa-stack:last-child{margin-right:0}.header .fa-stack .fa-stack-1x{color:#fff;transition:.2s}.header .fa-stack .fa-stack-2x{color:#0e0e06;transition:.2s}.header .fa-stack:hover .fa-stack-2x{color:#27ae60}.lightbox-form{max-width:37.125rem;margin:2.5rem auto;padding:2.5rem 1.5rem 2rem;border-radius:.25rem;background:#2c2a2b;text-align:left}.lightbox-form .container{padding-right:0;padding-left:0}.lightbox-form p{margin-bottom:1.5rem;text-align:center}.lightbox-form button.mfp-close.x-button{position:absolute;top:-.125rem;right:-.125rem;width:2.75rem;height:2.75rem;color:#fff}@media (min-width:768px){.header{position:relative;display:flex;align-items:center;flex-direction:column;justify-content:center;height:100%;min-height:50rem;text-align:center}.header .logo-image{position:absolute;top:1.875rem;left:1rem;margin-top:0}.header .logo-text{position:absolute;top:2.875rem;left:2rem;margin-top:0}.header .contact-container{position:absolute;top:2.625rem;right:2rem;margin-bottom:0}.header .contact-container .list-unstyled li{margin-right:1rem;margin-left:0}.header .contact-container .list-unstyled li:last-of-type{margin-right:0}.header .countdown{margin-bottom:2.75rem}.header .countdown #clock .counter-number{width:7.75rem;height:7.75rem;margin-bottom:0;padding-top:2.5rem;font-size:3rem;line-height:1.5rem}.header .countdown #clock .counter-number .timer-text{font-size:.875rem;line-height:1.25rem}.header .btn-solid-lg{margin-bottom:2.5rem}}@media (min-width:992px){.p-heading{width:80%;margin-right:auto;margin-left:auto}.header h1,h1{font-size:3.5rem;line-height:4.5rem}h2{font-size:2.5rem;line-height:3.25rem}.header .countdown #clock .counter-number{width:9rem;height:9rem;padding-top:3.125rem;font-size:3.25rem}.lightbox-form{padding:2.5rem 2.25rem 2rem}}@media (min-width:1200px){.header .logo-image,.header .logo-text{left:2rem}}
+</style>
+
+    
+    <script src="https://code.jquery.com/jquery-3.7.1.slim.js" integrity="sha256-UgvvN8vBkgO0luPSUl2s8TIlOSYRoGFAX4jlCIm9Adc=" crossorigin="anonymous"></script>    <script src="js/jquery.easing.min.js"></script> <!-- jQuery Easing for smooth scrolling between anchors -->
+    <script>!function(a){"use strict";"function"==typeof define&&define.amd?define(["jquery"],a):a(jQuery)}(function(a){"use strict";function b(a){if(a instanceof Date)return a;if(String(a).match(g))return String(a).match(/^[0-9]*$/)&&(a=Number(a)),String(a).match(/\-/)&&(a=String(a).replace(/\-/g,"/")),new Date(a);throw new Error("Couldn't cast `"+a+"` to a date object.")}function c(a){var b=a.toString().replace(/([.?*+^$[\]\\(){}|-])/g,"\\$1");return new RegExp(b)}function d(a){return function(b){var d=b.match(/%(-|!)?[A-Z]{1}(:[^;]+;)?/gi);if(d)for(var f=0,g=d.length;f<g;++f){var h=d[f].match(/%(-|!)?([a-zA-Z]{1})(:[^;]+;)?/),j=c(h[0]),k=h[1]||"",l=h[3]||"",m=null;h=h[2],i.hasOwnProperty(h)&&(m=i[h],m=Number(a[m])),null!==m&&("!"===k&&(m=e(l,m)),""===k&&m<10&&(m="0"+m.toString()),b=b.replace(j,m.toString()))}return b=b.replace(/%%/,"%")}}function e(a,b){var c="s",d="";return a&&(a=a.replace(/(:|;|\s)/gi,"").split(/\,/),1===a.length?c=a[0]:(d=a[0],c=a[1])),Math.abs(b)>1?c:d}var f=[],g=[],h={precision:100,elapse:!1,defer:!1};g.push(/^[0-9]*$/.source),g.push(/([0-9]{1,2}\/){2}[0-9]{4}( [0-9]{1,2}(:[0-9]{2}){2})?/.source),g.push(/[0-9]{4}([\/\-][0-9]{1,2}){2}( [0-9]{1,2}(:[0-9]{2}){2})?/.source),g=new RegExp(g.join("|"));var i={Y:"years",m:"months",n:"daysToMonth",d:"daysToWeek",w:"weeks",W:"weeksToMonth",H:"hours",M:"minutes",S:"seconds",D:"totalDays",I:"totalHours",N:"totalMinutes",T:"totalSeconds"},j=function(b,c,d){this.el=b,this.$el=a(b),this.interval=null,this.offset={},this.options=a.extend({},h),this.instanceNumber=f.length,f.push(this),this.$el.data("countdown-instance",this.instanceNumber),d&&("function"==typeof d?(this.$el.on("update.countdown",d),this.$el.on("stoped.countdown",d),this.$el.on("finish.countdown",d)):this.options=a.extend({},h,d)),this.setFinalDate(c),this.options.defer===!1&&this.start()};a.extend(j.prototype,{start:function(){null!==this.interval&&clearInterval(this.interval);var a=this;this.update(),this.interval=setInterval(function(){a.update.call(a)},this.options.precision)},stop:function(){clearInterval(this.interval),this.interval=null,this.dispatchEvent("stoped")},toggle:function(){this.interval?this.stop():this.start()},pause:function(){this.stop()},resume:function(){this.start()},remove:function(){this.stop.call(this),f[this.instanceNumber]=null,delete this.$el.data().countdownInstance},setFinalDate:function(a){this.finalDate=b(a)},update:function(){if(0===this.$el.closest("html").length)return void this.remove();var b,c=void 0!==a._data(this.el,"events"),d=new Date;b=this.finalDate.getTime()-d.getTime(),b=Math.ceil(b/1e3),b=!this.options.elapse&&b<0?0:Math.abs(b),this.totalSecsLeft!==b&&c&&(this.totalSecsLeft=b,this.elapsed=d>=this.finalDate,this.offset={seconds:this.totalSecsLeft%60,minutes:Math.floor(this.totalSecsLeft/60)%60,hours:Math.floor(this.totalSecsLeft/60/60)%24,days:Math.floor(this.totalSecsLeft/60/60/24)%7,daysToWeek:Math.floor(this.totalSecsLeft/60/60/24)%7,daysToMonth:Math.floor(this.totalSecsLeft/60/60/24%30.4368),weeks:Math.floor(this.totalSecsLeft/60/60/24/7),weeksToMonth:Math.floor(this.totalSecsLeft/60/60/24/7)%4,months:Math.floor(this.totalSecsLeft/60/60/24/30.4368),years:Math.abs(this.finalDate.getFullYear()-d.getFullYear()),totalDays:Math.floor(this.totalSecsLeft/60/60/24),totalHours:Math.floor(this.totalSecsLeft/60/60),totalMinutes:Math.floor(this.totalSecsLeft/60),totalSeconds:this.totalSecsLeft},this.options.elapse||0!==this.totalSecsLeft?this.dispatchEvent("update"):(this.stop(),this.dispatchEvent("finish")))},dispatchEvent:function(b){var c=a.Event(b+".countdown");c.finalDate=this.finalDate,c.elapsed=this.elapsed,c.offset=a.extend({},this.offset),c.strftime=d(this.offset),this.$el.trigger(c)}}),a.fn.countdown=function(){var b=Array.prototype.slice.call(arguments,0);return this.each(function(){var c=a(this).data("countdown-instance");if(void 0!==c){var d=f[c],e=b[0];j.prototype.hasOwnProperty(e)?d[e].apply(d,b.slice(1)):null===String(e).match(/^[$A-Z_][0-9A-Z_$]*$/i)?(d.setFinalDate.call(d,e),d.start()):a.error("Method %s does not exist on jQuery.countdown".replace(/\%s/gi,e))}else new j(this,b[0],b[1])})}});</script> <!-- The Final Countdown plugin for jQuery -->
+    <script>
+
+
+        (function($) {
+            "use strict"; 
+            
+            /* Countdown Timer - The Final Countdown */
+            $('#clock').countdown('2024/06/22 08:50:56') /* change here your "countdown to" date */
+            .on('update.countdown', function(event) {
+                var format = '<span class="counter-number">%D<br><span class="timer-text">Days</span></span><span class="counter-number">%H<br><span class="timer-text">Hours</span></span><span class="counter-number">%M<br><span class="timer-text">Minutes</span></span><span class="counter-number">%S<br><span class="timer-text">Seconds</span></span>';
+                $(this).html(event.strftime(format));
+            })
+            .on('finish.countdown', function(event) {
+            $(this).html('This offer has expired!')
+                .parent().addClass('disabled');
+            });
+        
+            
+            /* Rotating Text - Morphtext */
+            $("#js-rotating").Morphext({
+                // The [in] animation type. Refer to Animate.css for a list of available animations.
+                animation: "fadeIn",
+                // An array of phrases to rotate are created based on this separator. Change it if you wish to separate the phrases differently (e.g. So Simple | Very Doge | Much Wow | Such Cool).
+                separator: ",",
+                // The delay between the changing of each phrase in milliseconds.
+                speed: 2000,
+                complete: function () {
+                    // Called after the entrance animation is executed.
+                }
+            });
+            
+        
+            /* Details Lightbox - Magnific Popup */
+            $('.popup-with-move-anim').magnificPopup({
+                type: 'inline',
+                fixedContentPos: false, /* keep it false to avoid html tag shift with margin-right: 17px */
+                fixedBgPos: true,
+                overflowY: 'auto',
+                closeBtnInside: true,
+                preloader: false,
+                midClick: true,
+                removalDelay: 300,
+                mainClass: 'my-mfp-slide-bottom'
+            });
+            
+        
+            /* Move Form Fields Label When User Types */
+            // for input and textarea fields
+            $("input, textarea").keyup(function(){
+                if ($(this).val() != '') {
+                    $(this).addClass('notEmpty');
+                } else {
+                    $(this).removeClass('notEmpty');
+                }
+            });
+            
+        
+            /* Removes Long Focus On Buttons */
+            $(".button, a, button").mouseup(function() {
+                $(this).blur();
+            });
+        
+        })(jQuery);
+    </script>
+</body>
+</html>
