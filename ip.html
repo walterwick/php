@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/whoisstyle.css" />
+  <title>FindIT Whois IP Lookup PHP Script</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://pub-7d2ddbb6d23b48e7ae69d8ab5d738afa.r2.dev/1.css">
+</head>
+
+<body class="bg-default">
+  <div class="container">
+    <!-- Arama kutusu -->
+    <div class="search">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 mx-auto">
+            <div class="txt text-center">
+              <div class="country-flag">
+                <img id="url" src="" height="200px"  width="200px"/>
+              </div>
+              <h1 class="main-heading">FindIT Whois IP Lookup PHP Script</h1>
+              <p class="sub-heading">Search any IP address/domain</p>
+            </div>
+            <form class="form" id="ip-search-form">
+              <input type="text" class="input me-2 bg-white" id="ip-search-input" name="ip" placeholder="IP Address" value="" required />
+              <button type="submit" name="search" class="btn bg-dark">
+                <i class="fa fa-search ms-1"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Arama sonu -->
+
+    <div class="row mt-5" id="home">
+
+      <!-- Veri Tablosu -->
+      <div class="col-md-6 shadow rounded p-3 bg-white m-auto">
+        <table class="item table h-100 p-4 first bg-white">
+          <tbody>
+            <tr>
+              <td>IP Address:</td>
+              <td id="ip-address"></td>
+            </tr>
+            <tr>
+              <td>Country:</td>
+              <td id="country"></td>
+            </tr>
+            <tr>
+              <td>Country Code:</td>
+              <td id="country-code"></td>
+            </tr>
+            <tr>
+              <td>State/Region:</td>
+              <td id="region"></td>
+            </tr>
+            <tr>
+              <td>City:</td>
+              <td id="city"></td>
+            </tr>
+            <tr>
+              <td>Zip/Postal Code:</td>
+              <td id="zip"></td>
+            </tr>
+            <tr>
+              <td>Latitude:</td>
+              <td id="latitude"></td>
+            </tr>
+            <tr>
+              <td>Longitude:</td>
+              <td id="longitude"></td>
+            </tr>
+            <tr>
+              <td>Timezone:</td>
+              <td id="timezone"></td>
+            </tr>
+            <tr>
+              <td>Currency:</td>
+              <td id="currency"></td>
+            </tr>
+            <tr>
+              <td>ISP:</td>
+              <td id="isp"></td>
+            </tr>
+            <tr>
+              <td>ORG:</td>
+              <td id="org"></td>
+            </tr>
+            <tr>
+              <td>AS:</td>
+              <td id="as"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Veri Tablosu Sonu -->
+
+    </div>
+
+    <!-- Reklam -->
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <img src="images/add-bottom.png" class="w-100" style="height:100px;object-fit:cover;">
+      </div>
+    </div>
+    <!-- Reklam Sonu -->
+  </div>
+
+  <!-- Uygulama Hakkında Bölümü -->
+  <div class="wrapper bg-light p-5" id="howtouse">
+    <div class="container">
+      <div class="row">
+        <h5>About the app:</h5>
+        <p>FindIT IP Lookup is a free online tool that is easy to use and lets you grab Location and Related Data of IP or Domain using API.</p>
+        <h5>How to Use?</h5>
+        <ul>
+          <li>1. Enter IP Address or Domain eg. www.google.com</li>
+          <li>2. Click the "Search" Button</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Altyazı -->
+  <footer class="page-footer bg-white font-small p-2">
+    <div class="footer-copyright text-center py-3">
+      <p>Copyright © 2022 <b>walterwick Whois IP Lookup</b> - All rights reserved</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript kodu buraya ekleniyor -->
+ <script>
+  function _0x219d(){var _0x57703f=['#timezone','log','error','code','latitude','country','city','#as','5632866NwqNgc','Hata:','organisation','#currency','https://ipapi.is/json/','#ip-search-form','951517OsVaaU','#region','6583908saDieh','1628GjZaTj','location','asn','#ip-search-input','user-ip:','currency','3925QbfbuU','19962070jthcKw','8Pewddd','?api_key=66f215fb0a2ed128b4f5139d623a8ebf7c9f2602','number','src','2JfiAsM','area','val','#country-code','#isp','2591932qGAYbd','#ip-address','Sonuçlar:','#org','text','#latitude','GET','submit','#city','ajax','name','1040847mwvfYQ','json','time','#longitude','postcode','file','longitude','#country','preventDefault','11QyJViI'];_0x219d=function(){return _0x57703f;};return _0x219d();}function _0x41c3(_0xe1ce33,_0x529041){var _0x219df6=_0x219d();return _0x41c3=function(_0x41c315,_0x281582){_0x41c315=_0x41c315-0xe2;var _0x2abaa4=_0x219df6[_0x41c315];return _0x2abaa4;},_0x41c3(_0xe1ce33,_0x529041);}var _0x46d7d4=_0x41c3;(function(_0x1590b8,_0x23f02d){var _0x4deb48=_0x41c3,_0x118a9=_0x1590b8();while(!![]){try{var _0xcc471a=-parseInt(_0x4deb48(0xfa))/0x1+parseInt(_0x4deb48(0x109))/0x2*(parseInt(_0x4deb48(0xe2))/0x3)+-parseInt(_0x4deb48(0xfd))/0x4*(-parseInt(_0x4deb48(0x103))/0x5)+-parseInt(_0x4deb48(0xfc))/0x6+parseInt(_0x4deb48(0x10e))/0x7*(-parseInt(_0x4deb48(0x105))/0x8)+parseInt(_0x4deb48(0xf4))/0x9+parseInt(_0x4deb48(0x104))/0xa*(parseInt(_0x4deb48(0xeb))/0xb);if(_0xcc471a===_0x23f02d)break;else _0x118a9['push'](_0x118a9['shift']());}catch(_0xdde949){_0x118a9['push'](_0x118a9['shift']());}}}(_0x219d,0xd4426),$(document)['ready'](function(){var _0x107894=_0x41c3;$[_0x107894(0x117)]({'url':_0x107894(0xf8),'method':'GET','dataType':_0x107894(0xe3),'success':function(_0x1e1b4e){var _0x260d30=_0x107894,_0x47e5cb=_0x1e1b4e['ip'];console[_0x260d30(0xed)](_0x260d30(0x101),_0x47e5cb),$('#ip-search-input')[_0x260d30(0x10b)](_0x47e5cb),$(_0x260d30(0xf9))[_0x260d30(0x115)]();},'error':function(_0x36c04e){var _0x4db83e=_0x107894;console[_0x4db83e(0xee)](_0x4db83e(0xf5),_0x36c04e);}});}),$(_0x46d7d4(0xf9))['on'](_0x46d7d4(0x115),function(_0x97f429){var _0x4951f3=_0x46d7d4;_0x97f429[_0x4951f3(0xea)]();var _0x54c403=$(_0x4951f3(0x100))['val'](),_0x499be3='https://api.getgeoapi.com/v2/ip/'+_0x54c403+_0x4951f3(0x106);$['ajax']({'url':_0x499be3,'method':_0x4951f3(0x114),'dataType':_0x4951f3(0xe3),'success':function(_0x1758b9){var _0x4e47fa=_0x4951f3;console[_0x4e47fa(0xed)](_0x4e47fa(0x110),_0x1758b9),$(_0x4e47fa(0x10f))[_0x4e47fa(0x112)](_0x1758b9['ip']),$(_0x4e47fa(0xe9))[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0xf1)]['name']),$(_0x4e47fa(0x10c))[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0xf1)][_0x4e47fa(0xef)]),$(_0x4e47fa(0xfb))['text'](_0x1758b9[_0x4e47fa(0x10a)][_0x4e47fa(0x118)]),$(_0x4e47fa(0x116))[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0xf2)][_0x4e47fa(0x118)]),$('#zip')[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0xe6)]),$(_0x4e47fa(0x113))[_0x4e47fa(0x112)](_0x1758b9['location'][_0x4e47fa(0xf0)]),$(_0x4e47fa(0xe5))[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0xfe)][_0x4e47fa(0xe8)]),$(_0x4e47fa(0xec))[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0xe4)]['timezone']),$(_0x4e47fa(0xf7))[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0x102)][_0x4e47fa(0xef)]+'\x20('+_0x1758b9[_0x4e47fa(0x102)]['name']+')'),$(_0x4e47fa(0x10d))[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0xff)][_0x4e47fa(0xf6)]),$(_0x4e47fa(0x111))[_0x4e47fa(0x112)](_0x1758b9['asn'][_0x4e47fa(0x107)]),$(_0x4e47fa(0xf3))[_0x4e47fa(0x112)](_0x1758b9[_0x4e47fa(0xff)][_0x4e47fa(0x107)]);var _0x3fab1a=_0x1758b9['country']['flag'][_0x4e47fa(0xe7)];$('#url')['attr'](_0x4e47fa(0x108),_0x3fab1a);},'error':function(_0x323252){var _0x57087a=_0x4951f3;console[_0x57087a(0xee)](_0x57087a(0xf5),_0x323252);}});}));
+ </script>
+</body>
+
+</html>
