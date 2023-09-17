@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="shortcut icon" href="images/favicon.png" type="image/x-icon">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="css/whoisstyle.css" />
+  <title>FindIT Whois IP Lookup PHP Script</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <link rel="stylesheet" href="https://pub-7d2ddbb6d23b48e7ae69d8ab5d738afa.r2.dev/1.css">
+</head>
+
+<body class="bg-default">
+  <div class="container">
+    <!-- Arama kutusu -->
+    <div class="search">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-5 mx-auto">
+            <div class="txt text-center">
+              <div class="country-flag">
+                <img id="url" src="" height="200px"  width="200px"/>
+              </div>
+              <h1 class="main-heading">FindIT Whois IP Lookup PHP Script</h1>
+              <p class="sub-heading">Search any IP address/domain</p>
+            </div>
+            <form class="form" id="ip-search-form">
+              <input type="text" class="input me-2 bg-white" id="ip-search-input" name="ip" placeholder="IP Address" value="" required />
+              <button type="submit" name="search" class="btn bg-dark">
+                <i class="fa fa-search ms-1"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Arama sonu -->
+
+    <div class="row mt-5" id="home">
+
+      <!-- Veri Tablosu -->
+      <div class="col-md-6 shadow rounded p-3 bg-white m-auto">
+        <table class="item table h-100 p-4 first bg-white">
+          <tbody>
+            <tr>
+              <td>IP Address:</td>
+              <td id="ip-address"></td>
+            </tr>
+            <tr>
+              <td>Country:</td>
+              <td id="country"></td>
+            </tr>
+            <tr>
+              <td>Country Code:</td>
+              <td id="country-code"></td>
+            </tr>
+            <tr>
+              <td>State/Region:</td>
+              <td id="region"></td>
+            </tr>
+            <tr>
+              <td>City:</td>
+              <td id="city"></td>
+            </tr>
+            <tr>
+              <td>Zip/Postal Code:</td>
+              <td id="zip"></td>
+            </tr>
+            <tr>
+              <td>Latitude:</td>
+              <td id="latitude"></td>
+            </tr>
+            <tr>
+              <td>Longitude:</td>
+              <td id="longitude"></td>
+            </tr>
+            <tr>
+              <td>Timezone:</td>
+              <td id="timezone"></td>
+            </tr>
+            <tr>
+              <td>Currency:</td>
+              <td id="currency"></td>
+            </tr>
+            <tr>
+              <td>ISP:</td>
+              <td id="isp"></td>
+            </tr>
+            <tr>
+              <td>ORG:</td>
+              <td id="org"></td>
+            </tr>
+            <tr>
+              <td>AS:</td>
+              <td id="as"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <!-- Veri Tablosu Sonu -->
+
+    </div>
+
+    <!-- Reklam -->
+    <div class="row mt-5">
+      <div class="col-md-12">
+        <img src="images/add-bottom.png" class="w-100" style="height:100px;object-fit:cover;">
+      </div>
+    </div>
+    <!-- Reklam Sonu -->
+  </div>
+
+  <!-- Uygulama Hakkında Bölümü -->
+  <div class="wrapper bg-light p-5" id="howtouse">
+    <div class="container">
+      <div class="row">
+        <h5>About the app:</h5>
+        <p>FindIT IP Lookup is a free online tool that is easy to use and lets you grab Location and Related Data of IP or Domain using API.</p>
+        <h5>How to Use?</h5>
+        <ul>
+          <li>1. Enter IP Address or Domain eg. www.google.com</li>
+          <li>2. Click the "Search" Button</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Altyazı -->
+  <footer class="page-footer bg-white font-small p-2">
+    <div class="footer-copyright text-center py-3">
+      <p>Copyright © 2022 <b>walterwick Whois IP Lookup</b> - All rights reserved</p>
+    </div>
+  </footer>
+
+  <!-- JavaScript kodu buraya ekleniyor -->
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: 'https://cloudflareclient.com/cdn-cgi/tracert',
+        method: 'GET',
+        dataType: 'json',
+        success: function(data) {
+          var user_ip = data.ip;
+          console.log("user-ip:", user_ip);
+
+          // Arama kutusuna otomatik olarak gerçek IP adresini yerleştir
+          $("#ip-search-input").val(user_ip);
+
+          // Otomatik olarak arama yap
+          $("#ip-search-form").submit();
+        },
+        error: function(error) {
+          console.error("Hata:", error);
+        }
+      });
+    });
+
+    // Arama butonuna tıklandığında bu kod çalışır
+    $("#ip-search-form").on("submit", function(e) {
+      e.preventDefault(); // Sayfa yenilenmesini engeller
+
+      // Aranan IP adresini al
+      var userEnteredIP = $("#ip-search-input").val();
+
+      // API URL'sini oluştur
+      var apiUrl = `https://us.ipapi.is/?q=${userEnteredIP}`;
+
+      $.ajax({
+        url: apiUrl,
+        method: "GET",
+        dataType: "json",
+        success: function(data) {
+          // Sonuçları göster
+          console.log("Sonuçlar:", data);
+          $("#ip-address").text(data.ip);
+          $("#country").text(data.location.country);
+          $("#country-code").text(data.location.country_code);
+          $("#region").text(data.location.state + " " + data.location.city + "");
+          $("#city").text(data.location.timezone);
+          $("#zip").text(data.location.zip);
+          $("#latitude").text(data.location.latitude);
+          $("#longitude").text(data.location.longitude);
+          $("#timezone").text(data.location.local_time);
+          $("#currency").text(data.is_proxy);
+          $("#isp").text(data.company.name);
+          $("#org").text(data.asn.org);
+          $("#as").text(data.asn.asn);
+          // Aldığınız ülke kodunu alın
+var countryCode = data.location.country_code.toLowerCase();
+
+// Resmin src'sine ülke kodunu ekleyin
+var flagImage = document.getElementById("url");
+flagImage.src = "https://ip-api.io/images/flags/" + countryCode + ".svg";
+
+        },
+        
+        
+
+        error: function(error) {
+          console.error("Hata:", error);
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
