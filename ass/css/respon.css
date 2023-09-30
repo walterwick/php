@@ -293,6 +293,9 @@ main {
     text-align: center;
   }
 }
+.navbar a{transition: .5s;}
+.navbar:hover > :not(:hover){opacity: .4;}
+
 /* || */
 
 
