@@ -1,18 +1,15 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<script src="https://js.hcaptcha.com/1/api.js" async defer></script>  <title>Document</title>
-</head>
-<body>
-  <form action="/login" method="POST">
-   <input type="text" placeholder="username"/>
-   <input type="password" placeholder="password"/>
-<div class="h-captcha" data-sitekey="88b7ecd3-a513-4484-a7a5-45ef108f08f7"></div>
-
-   <button type="submit" value="Submit">Log in</button>
-</form>
-
-</body>
+<html>
+  <head>
+    <title>hCaptcha Demo</title>
+    <script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+  </head>
+  <body>
+    <form action="" method="POST">
+      <input type="text" name="email" placeholder="Email" />
+      <input type="password" name="password" placeholder="Password" />
+      <div class="h-captcha" data-sitekey="88b7ecd3-a513-4484-a7a5-45ef108f08f7"></div>
+      <br />
+      <input type="submit" value="Submit" />
+    </form>
+  </body>
 </html>
