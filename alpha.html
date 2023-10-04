@@ -54,6 +54,8 @@ function submitForm() {
 
     if (attachment) {
         formData.append("photo", attachment);
+    } else {
+        formData.append("photo", null);
     }
 
     fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage", {
@@ -76,7 +78,6 @@ function submitForm() {
         swal("Hata", "Bir hata oluştu: " + error, "error");
     });
 }
-
 </script>
 
 </body>
