@@ -42,39 +42,41 @@
     </form>
 </div>
 <script>
-    function submitForm() {
-        var name = document.getElementById("name").value;
-        var email = document.getElementById("email").value;
-        var subject = document.getElementById("subject").value;
-        var message = document.getElementById("message").value;
-        var attachment = document.getElementById("attachment").files[0];
+function submitForm() {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var subject = document.getElementById("subject").value;
+    var message = document.getElementById("message").value;
+    var attachment = document.getElementById("attachment").files[0];
 
-        var formData = new FormData();
-        formData.append("caption", "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message);
+    var formData = new FormData();
+    formData.append("caption", "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message);
 
-        if (attachment) {
-            formData.append("photo", attachment);
-        }
+    if (attachment) {
+        formData.append("photo", attachment);
+    }
 
-        fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804&text=" + encodeURIComponent("Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message), {
-            method: "POST"
-        })
-        .then(function(response) {
-            if (response.ok) {
-                swal("Mesajınız Gönderildi", "Teşekkür ederiz!", "success")
+    fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage", {
+        method: "POST",
+        body: formData
+    })
+    .then(function(response) {
+        if (response.ok) {
+            swal("Mesajınız Gönderildi", "Teşekkür ederiz!", "success")
                 .then((value) => {
                     // İsterseniz başka bir işlem ekleyebilirsiniz.
                     // window.location.href = 'index.php'; // Anasayfaya yönlendir
                 });
-            } else {
-                swal("Hata", "Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
-                // İsterseniz hata durumlarına uygun işlemler ekleyebilirsiniz.
-            }
-        })
-        .catch(function(error) {
-            swal("Hata", "Bir hata oluştu: " + error, "error");
-        });
-    }
+        } else {
+            swal("Hata", "Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
+            // İsterseniz hata durumlarına uygun işlemler ekleyebilirsiniz.
+        }
+    })
+    .catch(function(error) {
+        swal("Hata", "Bir hata oluştu: " + error, "error");
+    });
+}
+
 </script>
 
 </body>
