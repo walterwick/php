@@ -15,26 +15,27 @@
 <div class="container mt-5">
     <h1>İletişim Formu</h1>
     <form action="javascript:void(0);" method="post" enctype="multipart/form-data" onsubmit="submitForm()">
-        <div class="form-group">
-            <label for="name">Ad Soyad:</label>
-            <input type="text" class="form-control" id="name" name="name" required>
-        </div>
-        <div class="form-group">
-            <label for="email">E-posta Adresi:</label>
-            <input type="email" class="form-label" id="email" name="email" required>
-        </div>
-        <div class="form-group">
-            <label for="subject">Konu:</label>
-            <input type="text" class="form-label" id="subject" name="subject" required>
-        </div>
-        <div class="form-group">
-            <label for="message">Mesaj:</label>
-            <textarea class="form-control" id="message" name="message" required></textarea>
-        </div>
-        <div class="form-group">
-            <label for="attachment">Dosya/Görsel Ekle (Maksimum 2MB):</label>
-            <input type="file" class="form-control-file" id="attachment" name="attachment">
-        </div>
+        <div class="mb-3">
+            <label for="formGroupExampleInput" class="form-label"> </label>
+            <input type="text" class="form-control" id="formGroupExampleInput name" placeholder="Ad Soyad:">
+          </div>
+        <div class="form-floating mb-3">
+            <input type="email" class="form-control" id="email" placeholder="name@example.com">
+            <label for="floatingInput">Email address</label>
+          </div>
+          <div class="mb-3">
+            <label for="formGroupExampleInput2" class="form-label"></label>
+            <input type="text" class="form-control" id="formGroupExampleInput2" placeholder="konu:">
+          </div>
+
+        <div class="form-floating">
+            <textarea class="form-control" id="message" placeholder="Leave a comment here" id="floatingTextarea2" style="height: 100px"></textarea>
+            <label for="floatingTextarea2">Mesaj:</label>
+          </div>
+          <div class="mb-3">
+            <label for="formFile" class="form-label">Dosya/Görsel Ekle (Maksimum 2MB):</label>
+            <input class="form-control" id="attachment"  type="file" id="formFile">
+          </div>
            <div style="margin:.4rem;" class="cf-turnstile" data-sitekey="0x4AAAAAAAK6BXEJrnlN5_Xr"></div>
 
         <button type="submit" class="btn btn-primary">Gönder</button>
