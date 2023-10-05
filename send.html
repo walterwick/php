@@ -45,11 +45,18 @@ function submitForm() {
     var email = document.getElementById("email").value;
     var subject = document.getElementById("subject").value;
     var message = document.getElementById("message").value;
+    var attachment = document.getElementById("attachment").files[0];
 
-    var textMessage = "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message;
+    var formData = new FormData();
+    formData.append("caption", "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message);
 
-    fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804&text=" + encodeURIComponent(textMessage), {
-        method: "POST"
+    if (attachment) {
+        formData.append("photo", attachment);
+    }
+
+    fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804", {
+        method: "POST",
+        body: formData
     })
     .then(function(response) {
         if (response.ok) {
@@ -67,6 +74,7 @@ function submitForm() {
         swal("Hata", "Bir hata oluştu: " + error, "error");
     });
 }
+
 </script>
 
 </body>
