@@ -1,3 +1,5 @@
+
+
 <!DOCTYPE html>
 <html lang="en"  data-bs-theme="dark">
 <head>
@@ -8,6 +10,7 @@
     integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
     <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+
 </head>
 <body>
 
@@ -33,74 +36,47 @@
         <div class="form-group">
             <label for="attachment">Dosya/Görsel Ekle (Maksimum 2MB):</label>
             <input type="file" class="form-control-file" id="attachment" name="attachment">
-            <div class="cf-turnstile" data-sitekey="0x4AAAAAAAK6BXEJrnlN5_Xr"></div>
+               <div class="cf-turnstile" data-sitekey="0x4AAAAAAAK6BXEJrnlN5_Xr"></div>
+
         </div>
         <button type="submit" class="btn btn-primary">Gönder</button>
     </form>
 </div>
 
 <script>
-function validateImage() {
-    var attachment = document.getElementById("attachment").files[0];
+    function submitForm() {
+        var name = document.getElementById("name").value;
+        var email = document.getElementById("email").value;
+        var subject = document.getElementById("subject").value;
+        var message = document.getElementById("message").value;
+        var attachment = document.getElementById("attachment").files[0];
 
-    if (attachment) {
-        // Resim dosyasının boyutunu kontrol edin
-        if (attachment.size > 2097152) {
-            return false;
+        var formData = new FormData();
+        formData.append("caption", "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message);
+
+        if (attachment) {
+            formData.append("photo", attachment);
         }
 
-        // Resim dosyasının formatını kontrol edin
-        var ext = attachment.name.split(".")[1];
-        if (ext != "jpg" && ext != "png" && ext != "gif") {
-            return false;
-        }
-
-        return true;
-    } else {
-        return false;
+        fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804&text=" + encodeURIComponent("Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message), {
+            method: "POST"
+        })
+        .then(function(response) {
+            if (response.ok) {
+                swal("Mesajınız Gönderildi", "Teşekkür ederiz!", "success")
+                .then((value) => {
+                    // İsterseniz başka bir işlem ekleyebilirsiniz.
+                    // window.location.href = 'index.php'; // Anasayfaya yönlendir
+                });
+            } else {
+                swal("Hata", "Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
+                // İsterseniz hata durumlarına uygun işlemler ekleyebilirsiniz.
+            }
+        })
+        .catch(function(error) {
+            swal("Hata", "Bir hata oluştu: " + error, "error");
+        });
     }
-}
-
-function submitForm() {
-    var name = document.getElementById("name").value;
-    var email = document.getElementById("email").value;
-    var subject = document.getElementById("subject").value;
-    var message = document.getElementById("message").value;
-    var attachment = document.getElementById("attachment").files[0];
-
-    if (!validateImage(attachment)) {
-        swal("Hata", "Resim dosyası geçersiz.", "error");
-        return;
-    }
-
-    var formData = new FormData();
-    formData.append("caption", "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message);
-
-    if (attachment) {
-        formData.append("photo", attachment);
-    }
-
-    fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804", {
-        method: "POST",
-        body: formData
-    })
-    .then(function(response) {
-        if (response.ok) {
-            swal("Mesajınız Gönderildi", "Teşekkür ederiz!", "success")
-            .then((value) => {
-                // İsterseniz başka bir işlem ekleyebilirsiniz.
-                // window.location.href = 'index.php'; // Anasayfaya yönlendir
-            });
-        } else {
-            swal("Hata", "Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
-            // İsterseniz hata durumlarına uygun işlemler ekleyebilirsiniz.
-        }
-    })
-    .catch(function(error) {
-        swal("Hata", "Bir hata oluştu: " + error, "error");
-    });
-}
-
 </script>
 
 </body>
