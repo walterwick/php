@@ -44,7 +44,7 @@
 </div>
 
 <script>
-    function submitForm() {
+     function submitForm() {
         var name = document.getElementById("name").value;
         var email = document.getElementById("email").value;
         var subject = document.getElementById("subject").value;
@@ -52,29 +52,49 @@
         var attachment = document.getElementById("attachment").files[0];
 
         var formData = new FormData();
-        formData.append("caption", "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message);
-
+        formData.append("name", name);
+        formData.append("email", email);
+        formData.append("subject", subject);
+        formData.append("message", message);
         if (attachment) {
-            formData.append("photo", attachment);
+            formData.append("attachment", attachment);
         }
 
-        fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804&text=" + encodeURIComponent("Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message), {
-            method: "POST"
+        fetch("YOUR_SERVER_ENDPOINT_URL", {
+            method: "POST",
+            body: formData
         })
         .then(function(response) {
             if (response.ok) {
+                // Send a message to Telegram using the Telegram Bot API
+                var telegramMessage = "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message;
+                sendTelegramMessage(telegramMessage);
+
                 swal("Mesajınız Gönderildi", "Teşekkür ederiz!", "success")
                 .then((value) => {
-                    // İsterseniz başka bir işlem ekleyebilirsiniz.
+                    // Redirect or perform other actions as needed
                     // window.location.href = 'index.php'; // Anasayfaya yönlendir
                 });
             } else {
                 swal("Hata", "Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
-                // İsterseniz hata durumlarına uygun işlemler ekleyebilirsiniz.
+                // Handle error cases as needed
             }
         })
         .catch(function(error) {
             swal("Hata", "Bir hata oluştu: " + error, "error");
+        });
+    }
+
+    function sendTelegramMessage(message) {
+        // Replace 'YOUR_BOT_TOKEN' and 'YOUR_CHAT_ID' with your actual Telegram bot token and chat ID
+        fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=chat_id=2090459804&text=" + encodeURIComponent(message), {
+            method: "GET"
+        })
+        .then(function(response) {
+            // Handle the response as needed
+        })
+        .catch(function(error) {
+            // Handle errors as needed
         });
     }
 </script>
