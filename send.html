@@ -40,12 +40,38 @@
 </div>
 
 <script>
+function validateImage() {
+    var attachment = document.getElementById("attachment").files[0];
+
+    if (attachment) {
+        // Resim dosyasının boyutunu kontrol edin
+        if (attachment.size > 2097152) {
+            return false;
+        }
+
+        // Resim dosyasının formatını kontrol edin
+        var ext = attachment.name.split(".")[1];
+        if (ext != "jpg" && ext != "png" && ext != "gif") {
+            return false;
+        }
+
+        return true;
+    } else {
+        return false;
+    }
+}
+
 function submitForm() {
     var name = document.getElementById("name").value;
     var email = document.getElementById("email").value;
     var subject = document.getElementById("subject").value;
     var message = document.getElementById("message").value;
     var attachment = document.getElementById("attachment").files[0];
+
+    if (!validateImage(attachment)) {
+        swal("Hata", "Resim dosyası geçersiz.", "error");
+        return;
+    }
 
     var formData = new FormData();
     formData.append("caption", "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message);
