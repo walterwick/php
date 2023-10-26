@@ -51,8 +51,9 @@
             formData.append("photo", attachment);
         }
 
-        fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804&text=" + encodeURIComponent("Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message), {
-            method: "POST"
+        fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendPhoto?chat_id=2090459804", {
+            method: "POST",
+            body: formData
         })
         .then(function(response) {
             if (response.ok) {
