@@ -71,10 +71,10 @@
                 const country = data.country;
 
                 var formData = new FormData();
-                var messageText = "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message;
+                var messageText = "Yeni mesaj: IP " + ip + "  " + country_code + "\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message;
 
                 // IP ve ülke bilgilerini iletişim mesajına ekleyin
-                messageText += "\nIP Adresi: " + ip + "\nÜlke: " + country;
+                messageText +=  "\nÜlke: " + country;
 
                 if (attachment) {
                     // Fotoğraf ekli ise ikinci gönderme seçeneğini kullan
