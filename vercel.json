@@ -11,8 +11,9 @@
   ],
   "crons": [
     {
-      "path": "/api/cron.php",
+      "path": "/api/cron",
       "schedule": "*/5 * * * *"
     }
   ]
 }
+
