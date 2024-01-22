@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ImgBB Image Upload</title>
+</head>
+<body>
+
+<h1>ImgBB Image Upload</h1>
+
+<form id="imageUploadForm">
+    <label for="image">Choose Image:</label>
+    <input type="file" id="image" accept="image/*">
+    <button type="button" onclick="uploadImage()">Upload Image</button>
+</form>
+
+<div id="resultContainer"></div>
+
+<script>
+    function uploadImage() {
+        var input = document.getElementById('image');
+        var file = input.files[0];
+
+        if (file) {
+            var formData = new FormData();
+            formData.append('key', 'f3501bbc5cf95f93af9651cae21db4af');
+            formData.append('image', file);
+
+            fetch('https://api.imgbb.com/1/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from ImgBB
+                console.log(data);
+
+                // Display the result on the page
+                var resultContainer = document.getElementById('resultContainer');
+                resultContainer.innerHTML = '<h2>Upload Result</h2>';
+                resultContainer.innerHTML += '<p>Image ID: ' + data.data.id + '</p>';
+                resultContainer.innerHTML += '<p>Image URL: <a href="'+ data.data.delete_url + '" target="_blank">' + data.data.url + '</a></p>';
+                resultContainer.innerHTML += '<p>Image URL: <a href="'+ data.data.url + '" target="_blank">' + data.data.url + '</a></p>';
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error uploading image. Please try again.');
+            });
+
+        } else {
+            alert('Please choose an image to upload.');
+        }
+    }
+</script>
+
+</body>
+</html>
