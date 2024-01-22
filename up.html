@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ImgBB Image Upload</title>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
 
@@ -19,46 +18,42 @@
 <div id="resultContainer"></div>
 
 <script>
-    function uploadImage(file) {
-        var formData = new FormData();
-        formData.append('key', 'f3501bbc5cf95f93af9651cae21db4af');
-        formData.append('image', file);
+    function uploadImage() {
+        var input = document.getElementById('image');
+        var file = input.files[0];
 
-        fetch('https://api.imgbb.com/1/upload', {
-            method: 'POST',
-            body: formData
-        })
-        .then(response => response.json())
-        .then(data => {
-            // Handle the response from ImgBB
-            console.log(data);
+        if (file) {
+            var formData = new FormData();
+            formData.append('key', 'f3501bbc5cf95f93af9651cae21db4af');
+            formData.append('image', file);
+
+            fetch('https://api.imgbb.com/1/upload', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response from ImgBB
+                console.log(data);
 
             // Display the result on the page
             var resultContainer = document.getElementById('resultContainer');
             resultContainer.innerHTML = '<h2>Upload Result</h2>';
             resultContainer.innerHTML += '<p>Image ID: ' + data.data.id + '</p>';
-            resultContainer.innerHTML += '<p>DELETE URL: <a href="'+ data.data.delete_url + '" target="_blank">' + data.data.delete_url + '</a></p>';
+            resultContainer.innerHTML += '<p>DELETE URL: <a href="'+ data.data.delete_url + '" target="_blank">' + data.data.url + '</a></p>';
             resultContainer.innerHTML += '<p>Image URL: <a href="'+ data.data.url + '" target="_blank">' + data.data.url + '</a></p>';
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert('Error uploading image. Please try again.');
-        });
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('Error uploading image. Please try again.');
+            });
+            
+        } else {
+            alert('Please choose an image to upload.');
+        }
     }
-
-    // Paste event listener using jQuery
-    $(document).ready(function() {
-        $("body").on('paste', function(e) {
-            var items = (e.clipboardData || e.originalEvent.clipboardData).items;
-            for (var i = 0; i < items.length; i++) {
-                if (items[i].type.indexOf('image') !== -1) {
-                    var file = items[i].getAsFile();
-                    uploadImage(file);
-                }
-            }
-        });
-    });
 </script>
 
 </body>
 </html>
+
