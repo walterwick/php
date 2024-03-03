@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <title>API Data</title>
+</head>
+<body>
+    <div id="apiData1"></div>
+    <div id="apiData2"></div>
+    <div id="apiData3"></div>
+
+    <script>
+      $(document).ready(function() {
+    // İlk API URL'si
+    var apiURL1 = "https://api.thingspeak.com/apps/thinghttp/send_request?api_key=650EX7YVESP7CK8D";
+    // İkinci API URL'si
+    var apiURL2 = "https://api.thingspeak.com/apps/thinghttp/send_request?api_key=3YCV394YBDDRYFOT";
+    // Üçüncü API URL'si
+    var apiURL3 = "https://api.thingspeak.com/apps/thinghttp/send_request?api_key=5FMI3HYCSL6ELITW";
+
+    // AJAX istekleri yap
+    $.when(
+        $.ajax({
+            url: apiURL1,
+            type: "GET"
+        }),
+        $.ajax({
+            url: apiURL2,
+            type: "GET"
+        }),
+        $.ajax({
+            url: apiURL3,
+            type: "GET"
+        })
+    ).done(function(response1, response2, response3) {
+        // API'lardan gelen veriyi tam sayıya dönüştürerek işlemleri yap
+        var result1 = parseFloat(response1[0]) * 45;
+        var result2 = parseFloat(response2[0]) * 4;
+        var result3 = parseFloat(response3[0]) * 3;
+
+        // Sonuçları ekrana yazdır
+        $("#apiData1").html("45 usd: " + result1.toFixed(4)); // Sonucu 2 ondalık basamakla göster
+        $("#apiData2").html("4 çeyrek: " + result2.toFixed(4)); // Sonucu 2 ondalık basamakla göster
+        $("#apiData3").html("3 gram: " + result3.toFixed(4)); // Sonucu 2 ondalık basamakla göster
+    }).fail(function(jqXHR, textStatus, errorThrown) {
+        console.error("AJAX Error: " + textStatus, errorThrown);
+        // Hata durumunda bir mesaj gösterilebilir
+        $("#apiData1").html("API'den veri alınamadı.");
+        $("#apiData2").html("API'den veri alınamadı.");
+        $("#apiData3").html("API'den veri alınamadı.");
+    });
+});
+
+    </script>
+</body>
+</html>
