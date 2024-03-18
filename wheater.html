@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather☀️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+</head>
+<style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;400;600&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(50deg, #91ffce 0%, #79e0ff 100%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    flex-direction: column;
+}
+
+header {
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    color: rgb(34, 104, 79);
+    padding: 0 0 1.25rem 0;
+}
+
+
+
+input {
+    padding: 1rem;
+    border-radius: 25px;
+    border: solid 0.3px #74f7da;
+    background-color: #fff;
+    font-family: inherit;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    min-width: 300px;
+    font-size: 1rem;
+}
+
+input:focus {
+    outline: none;
+}
+
+.search-box {
+    position: relative;
+    width: clamp(300px, 50vw, 600px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#search {
+    padding-right: 15vw;
+    width: clamp(300px, 50vw, 600px);
+}
+
+#search-btn {
+    position: absolute;
+    top: 50%;
+    right: -20px;
+    padding: 1.2rem;
+    transform: translateY(-50%);
+    border: none;
+    font-size: clamp(1rem, 4vw, 1.5rem);
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #55dfc1;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+}
+
+#search-btn:hover {
+    background: linear-gradient(#91f7d5, #61dbc1);
+    box-shadow: 0 4px 10px #74eed3ab;
+
+}
+
+#search-btn i {
+    color: #ffffff;
+}
+
+.weather {
+    text-align: center;
+    width: clamp(300px, 30vw, 600px);
+    font-size: 2rem;
+    margin-top: 2rem;
+    padding: 1rem;
+    border-radius: 30px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fff;
+}
+
+.weather h2 {
+    margin-bottom: 0;
+    font-weight: 600;
+    font-size: clamp(2rem, 6vw, 3rem);
+}
+
+.weather img {
+    margin-top: 1rem;
+    width: clamp(7.5rem, 25vw, 12rem);
+}
+
+.weather p {
+    margin: 1rem 0;
+    font-size: clamp(1rem, 3vw, 1.6rem);
+}
+
+.weather .temp {
+    font-size: clamp(2.5rem, 8vw, 4rem);
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+}
+
+.weather .conditions {
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    font-weight: 400;
+    color: #869691;
+    margin-bottom: 1rem;
+}
+
+.weather .location {
+    font-size: clamp(1rem, 3vw, 1.6rem);
+    font-weight: 400;
+    color: #869691;
+}
+</style>
+<body>
+    <header> Weather </header>
+    <form id="form">
+        <div class="search-box">
+            <input type="text" id="search" placeholder="Search By City/Location" autocomplete="on">
+            <button id="search-btn"><i class="fa fa-search"></i></button>
+        </div>
+    </form>
+    <main id="main">
+        <div class="weather">
+            <h2><span class="location"></span></h2>
+            <img class="icon"
+                src="https://cdn-icons-png.flaticon.com/512/661/661337.png?w=740&t=st=1687855179~exp=1687855779~hmac=97d94d0ee74c8b76a6155f54d783b8da2fb4e7d4d96ec1f2fc3e173350542e86">
+            <p class="conditions"></p>
+            <p class="temp"></p>
+        </div>
+    </main>
+    <script>
+        const apiKey = "088a1a3b7ac7a337e4d8a0dd442f57ab";
+
+const main = document.getElementById('main');
+const form = document.getElementById('form');
+const search = document.getElementById('search');
+const searchBtn = document.getElementById('search-btn');
+
+const url = (city) => `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}`;
+
+
+async function getWeatherByLocation(city) {
+
+    const resp = await fetch(url(city), {
+        origin: "cros"
+    });
+    const respData = await resp.json();
+
+    addWeatherToPage(respData);
+
+}
+
+function addWeatherToPage(data) {
+    const temp = Ktoc(data.main.temp);
+
+    const weather = document.createElement('div')
+    weather.classList.add('weather');
+
+    const location = document.createElement('span');
+    location.classList.add('location');
+    location.innerHTML = data.name;
+
+    const icon = document.createElement('img');
+    icon.classList.add('icon');
+    icon.src = `https://openweathermap.org/img/wn/${data.weather[0].icon}.png`;
+    icon.alt = data.weather[0].description;
+
+    const conditions = document.createElement('p');
+    conditions.classList.add('conditions');
+    conditions.innerHTML = data.weather[0].description;
+
+    const tempElem = document.createElement('p');
+    tempElem.classList.add('temp');
+    tempElem.innerHTML = `${temp}°C`;
+
+    weather.appendChild(location);
+    weather.appendChild(icon);
+    weather.appendChild(conditions);
+    weather.appendChild(tempElem);
+
+    //   cleanup 
+    main.innerHTML = "";
+    main.appendChild(weather);
+};
+
+
+function Ktoc(K) {
+    return Math.floor(K - 273.15);
+}
+
+searchBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    const city = search.value;
+
+    if (city) {
+        getWeatherByLocation(city);
+    }
+
+});
+    </script>
+</body>
+
+</html>
