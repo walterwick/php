@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Verileri</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #333;
+            color: white;
+        }
+
+        .server-container {
+            border: 2px solid #cccccc69;
+            padding: 10px;
+            margin: 10px;
+            border-radius: 5px;
+            height: 15vh;
+background:#343a40;
+        }
+
+        .server-name {
+            font-weight: bold;
+        }
+
+        #veriContainer {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr)
+        }
+        .last-updated{
+        color: rgba(235, 235, 235, 0.644);
+        }
+        .queue-position{
+        color:rgba(21, 255, 0, 0.651);
+        }
+        @media (min-width: 550px) {
+  #veriContainer { grid-template-columns: repeat(2, 1fr); }
+}
+        @media (min-width: 750px) {
+  #veriContainer { grid-template-columns: repeat(3, 1fr); }
+}
+a{color:white;padding:1rem;}
+    </style>
+</head>
+<body>
+    <div id="veriContainer"></div>
+    <script>
+ (async () => {
+    try {
+        const response = await fetch("https://api.printedwaste.com/gfn/queue/cors/");
+
+        if (response.ok) {
+            const data = await response.json();
+            const veriContainer = document.getElementById("veriContainer");
+
+            // Loop through each server key
+            for (const serverKey of Object.keys(data)) {
+                const serverData = data[serverKey]; // Get data for current server
+
+                const serverDiv = document.createElement("div");
+                serverDiv.className = "server-container";
+
+                const serverNameElement = document.createElement("p");
+                serverNameElement.className = "server-name";
+                serverNameElement.textContent = "Server Name: " + serverKey; // Use server key as server name
+
+                const lastUpdatedElement = document.createElement("p");
+                lastUpdatedElement.className = "last-updated";
+                lastUpdatedElement.textContent = "Last Updated: " + new Date(serverData["Last Updated"] * 1000).toLocaleString();
+
+                const queuePositionElement = document.createElement("p");
+                queuePositionElement.className = "queue-position";
+                queuePositionElement.textContent = "Queue Position: " + serverData["QueuePosition"];
+
+                serverDiv.appendChild(serverNameElement);
+                serverDiv.appendChild(lastUpdatedElement);
+                serverDiv.appendChild(queuePositionElement);
+                veriContainer.appendChild(serverDiv);
+            }
+        } else {
+            console.error("API'den veri alınamadı.");
+        }
+    } catch (error) {
+        console.error("Hata oluştu: ", error);
+    }
+})();
+
+    </script>
+    <a href="https://gfn.zortos.me/">Gfn zortos</a>
+</body>
+</html>
