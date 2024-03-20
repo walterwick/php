@@ -321,17 +321,17 @@ function weatherDetails(info){
 
      // api'nin bize verdiği kimliğe göre özel hava durumu simgesini kullanma
         if(id == 800){
-            wIcon.src = "icons/clear.svg";
+            wIcon.src = "wheater/icons/clear.svg";
         }else if(id >= 200 && id <= 232){
-            wIcon.src = "icons/storm.svg";  
+            wIcon.src = "wheater/icons/storm.svg";  
         }else if(id >= 600 && id <= 622){
-            wIcon.src = "icons/snow.svg";
+            wIcon.src = "wheater/icons/snow.svg";
         }else if(id >= 701 && id <= 781){
-            wIcon.src = "icons/haze.svg";
+            wIcon.src = "wheater/icons/haze.svg";
         }else if(id >= 801 && id <= 804){
-            wIcon.src = "icons/cloud.svg";
+            wIcon.src = "wheater/icons/cloud.svg";
         }else if((id >= 500 && id <= 531) || (id >= 300 && id <= 321)){
-            wIcon.src = "icons/rain.svg";
+            wIcon.src = "wheater/icons/rain.svg";
         }
         
       // belirli bir hava durumu bilgisini belirli bir elemente aktarma
