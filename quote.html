@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="tr" dir="ltr">
+    <head>
+        <meta charset="utf-8">  
+        <title>Random Quote Tool | Kodlama Dili</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+    </head>
+<style>
+/* Import Google Font - Poppins */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+}
+body{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: #59B4FF;
+}
+.wrapper{
+  width: 605px;
+  background: #fff;
+  border-radius: 15px;
+  padding: 30px 30px 25px;
+  box-shadow: 0 12px 35px rgba(0,0,0,0.1);
+}
+header, .content :where(i, p, span){
+  color: #202842;
+}
+.wrapper header{
+  font-size: 35px;
+  font-weight: 600;
+  text-align: center;
+}
+.wrapper .content{
+  margin: 35px 0;
+}
+.content .quote-area{
+  display: flex;
+  justify-content: center;
+}
+.quote-area i{
+  font-size: 15px;
+}
+.quote-area i:first-child{
+  margin: 3px 10px 0 0;
+}
+.quote-area i:last-child{
+  display: flex;
+  margin: 0 0 3px 10px;
+  align-items: flex-end;
+}
+.quote-area .quote{
+  font-size: 22px;
+  text-align: center;
+  word-break: break-all;
+}
+.content .author{
+  display: flex;
+  font-size: 18px;
+  margin-top: 20px;
+  font-style: italic;
+  justify-content: flex-end;
+}
+.author span:first-child{
+  margin: -7px 5px 0 0;
+  font-family: monospace;
+}
+.wrapper .buttons{
+  border-top: 1px solid #ccc;
+}
+.buttons .features{
+  display: flex;
+  margin-top: 20px;
+  align-items: center;
+  justify-content: space-between;
+}
+.features ul{
+  display: flex;
+}
+.features ul li{
+  margin: 0 5px;
+  height: 47px;
+  width: 47px;
+  display: flex;
+  cursor: pointer;
+  color: #59B4FF;
+  list-style: none;
+  border-radius: 50%;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #59B4FF;
+  transition: all 0.3s ease;
+}
+.features ul li:first-child{
+  margin-left: 0;
+}
+ul li:is(:hover, .active){
+  color: #fff;
+  background: #59B4FF;
+}
+ul .speech.active{
+  pointer-events: none;
+}
+
+/* Follow my Instagram: @kodlama.dili */
+.buttons button{
+  border: none;
+  color: #fff;
+  outline: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 13px 22px;
+  border-radius: 30px;
+  background: #59B4FF;
+}
+.buttons button.loading{
+  opacity: 0.7;
+  pointer-events: none;
+}   
+
+
+::selection {
+    background-color: rgb(0, 0, 0);
+    color: white;  
+}
+
+
+footer{
+  position: absolute;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 100%;
+  height: 6vh;
+  text-align: center;
+  font-weight: 600;
+font-size: 20px;
+}
+
+footer a{
+  text-decoration: none;
+  background: -webkit-linear-gradient(65deg,#ffa952, #8345ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: .3s ease;
+  scale: 1;
+}
+
+footer a:hover{
+  transition: .3s ease;
+  scale: 1.1;
+}
+</style>
+    <body>
+        <div class="wrapper">
+            <header> > Random English Quote</header>
+            <div class="content">
+                <div class="quote-area">
+                    <i class="fas fa-quote-left"></i>
+                    <p class="quote">Speak low, if you speak love.</p>
+                    <i class="fas fa-quote-right"></i>
+                </div>
+                <div class="author">
+                    <span>__</span>
+                    <span class="name">William Shakespeare</span>
+                </div>
+            </div>
+            <div class="buttons">
+                <div class="features">
+                    <ul>
+                        <li class="speech"><i class="fas fa-volume-up"></i></li>
+                        <li class="copy"><i class="fas fa-copy"></i></li>
+                        <li class="twitter"><i class="fab fa-twitter"></i></li>
+                    </ul>
+                    <button>Yeni Alıntı</button>
+                </div>
+            </div>
+            
+        </div>
+             <script>
+const quoteText = document.querySelector(".quote"),
+quoteBtn = document.querySelector("button"),
+authorName = document.querySelector(".name"),
+speechBtn = document.querySelector(".speech"),
+copyBtn = document.querySelector(".copy"),
+// Follow my Instagram: @kodlama.dili
+twitterBtn = document.querySelector(".twitter"),
+synth = speechSynthesis;
+
+function randomQuote(){
+    quoteBtn.classList.add("loading");
+    quoteBtn.innerText = "Yükleniyor...";
+    fetch("http://api.quotable.io/random").then(response => response.json()).then(result => {
+        quoteText.innerText = result.content;
+        authorName.innerText = result.author;
+        quoteBtn.classList.remove("loading");
+        quoteBtn.innerText = "Yeni Alıntı";
+    });
+}
+
+speechBtn.addEventListener("click", ()=>{
+    if(!quoteBtn.classList.contains("loading")){
+        let utterance = new SpeechSynthesisUtterance(`${quoteText.innerText} by ${authorName.innerText}`);
+        synth.speak(utterance);
+        setInterval(()=>{
+            !synth.speaking ? speechBtn.classList.remove("active") : speechBtn.classList.add("active");
+        }, 10);
+    }
+});
+
+copyBtn.addEventListener("click", ()=>{
+    navigator.clipboard.writeText(quoteText.innerText);
+});
+
+twitterBtn.addEventListener("click", ()=>{
+    let tweetUrl = `https://twitter.com/intent/tweet?url=${quoteText.innerText}`;
+    window.open(tweetUrl, "_blank");
+});
+
+
+quoteBtn.addEventListener("click", randomQuote);
+</script>
+        
+    </body>
+    </html>
+    
