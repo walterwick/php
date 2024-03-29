@@ -1,0 +1,25 @@
+<a name='6567861069694939452'></a>
+<h3 class='post-title entry-title' itemprop='name'>
+DMAX TV
+</h3>
+<div class='post-header'>
+<div class='post-header-line-1'></div>
+</div>
+<div class='post-body entry-content' id='post-body-6567861069694939452' itemprop='description articleBody'>
+<div class="HTML5Player">
+<video controls autoplay preload="metadata" style=" width:100%;  height:100%;" id="HTML5Player" 
+poster="https://blogger.googleusercontent.com/img/b/R29vZ2xl/AVvXsEgO-jDrMACYNFnJhg3-YLlyiQ6JL5FaZgZvUHy2LxAASrBvyPoIrEg25XOWQ9P300JQVpumLcM7cKgEDwSpWR9cQFvH-wlXMIJrLCdSwOj7LoFC5gNx57mVrfw9dhGvLTOvRPa5D5HP-Vkq/s1600/dmax.jpg">
+<source src="https://dogus-live.daioncdn.net/dmax/dmax_720p.m3u8" type="application/x-mpegURL"></video>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/hls.js/0.13.2/hls.light.min.js"></script>
+<script type="text/javascript">
+var video = document.getElementById('HTML5Player');
+if (Hls.isSupported()) {
+var hls = new Hls();
+hls.attachMedia(HTML5Player);
+hls.on(Hls.Events.MEDIA_ATTACHED, function () {
+console.log("hls loaded");
+hls.loadSource('https://dogus-live.daioncdn.net/dmax/dmax_720p.m3u8');
+hls.on(Hls.Events.MANIFEST_PARSED, function () {
+video.play();});});} 
+</script>
+</div>
