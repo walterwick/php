@@ -38,12 +38,12 @@
         // API'lardan gelen veriyi tam sayıya dönüştürerek işlemleri yap
         var result1 = parseFloat(response1[0]) * 45;
         var result2 = parseFloat(response2[0]) * 4;
-        var result3 = parseFloat(response3[0]) * 3;
+        var result3 = parseFloat(response3[0]) * 4;
 
         // Sonuçları ekrana yazdır
         $("#apiData1").html("45 usd: " + result1.toFixed()); // Sonucu 2 ondalık basamakla göster
         $("#apiData2").html("4 çeyrek: " + result2.toFixed(4)); // Sonucu 2 ondalık basamakla göster
-        $("#apiData3").html("3 gram: " + result3.toFixed(4)); // Sonucu 2 ondalık basamakla göster
+        $("#apiData3").html("4 gram: " + result3.toFixed(4)); // Sonucu 2 ondalık basamakla göster
 
         console.log("Toplam:+ 1500₺",  + result2 + result3) ; // "Toplam: 6" yazdırır
 
