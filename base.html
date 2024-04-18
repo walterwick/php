@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<h2>Resim Seçme ve Base64'e Dönüştürme</h2>
+
+<input type="file" id="dosyaSec" accept="image/*">
+<button onclick="resmiBase64eDonustur()">Resmi Base64'e Dönüştür</button>
+
+<textarea id="base64Cikti" readonly></textarea>
+
+<script>
+function resmiBase64eDonustur() {
+    var input = document.getElementById('dosyaSec');
+    var dosya = input.files[0];
+
+    if (dosya) {
+        var reader = new FileReader();
+        reader.readAsDataURL(dosya);
+
+        reader.onload = function() {
+            document.getElementById('base64Cikti').value = reader.result;
+        };
+    }
+}
+</script>
+
+</body>
+</html>
