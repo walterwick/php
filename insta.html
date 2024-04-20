@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+  <!-- Kullanıcı adını gösterecek div -->
+  <div id="username"></div>
+
+  <!-- Biyografiyi gösterecek div -->
+  <div id="biography"></div>
+
+  <!-- Profil resmini gösterecek img etiketi -->
+  <a id="profilePic" href="">pic1</a>
+
+  <script>
+    $(document).ready(function() {
+      // Veri çekme işlemi
+      $.ajax({
+        url: 'https://instagram243.p.rapidapi.com/userinfo/emineey41',
+        headers: {
+          'X-RapidAPI-Key': '2c2ae8bbcbmsh55a591d6de46d96p145a52jsn666205c8f7a7',
+          'X-RapidAPI-Host': 'instagram243.p.rapidapi.com'
+        },
+        success: function(response) {
+          // Gelen veriyi al
+          const data = response.data;
+
+          // Kullanıcı adını göster
+          $('#username').text(data.username);
+
+          // Biyografiyi göster
+          $('#biography').text(data.biography);
+
+          // Profil resmini göster
+          $('#profilePic').attr('href', data.profile_pic_url_hd);
+        },
+        error: function(xhr, status, error) {
+          console.error(error);
+		  
+        }
+      });
+    });
+	
+  </script>
+</body>
+</html>
