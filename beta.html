@@ -68,7 +68,7 @@ function submitForm(event) {
 
         const discordMessage = `\`\`\`arm
 IP Address: ${ip},  ${country_code}
-\`\`\`@everyone Yeni mesajı:\n\nAd Soyad: ${name}\nE-posta: ${email}\nKonu: ${subject}\nMesaj: ${message}`;
+\`\`\`@everyone Yeni form:\n\nAd-Soyad: ${name}\nE-posta: ${email}\nKonu: ${subject}\nMesaj: ${message}`;
 
         const formData = new FormData();
         formData.append("content", discordMessage);
@@ -93,12 +93,12 @@ IP Address: ${ip},  ${country_code}
                 });
             } else {
                 console.error('Webhook ile ilgili bir hata oluştu.');
-                swal("Hata", "Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
+                swal("Hata", "hatalı olan biziz, Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
             }
         })
         .catch(function(error) {
             console.error('Hata oluştu:', error);
-            swal("Hata", "Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
+            swal("Hata", "hatalı olan biziz, Mesajınız gönderilemedi. Lütfen daha sonra tekrar deneyin.", "error");
         });
     })
     .catch(error => console.error('Veri çekme hatası:', error));
