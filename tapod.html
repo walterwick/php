@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NASA Astronomy Picture of the Day</title>
+</head>
+<body>
+    <div id="apod-container">
+        <img id="apod-image" src="" alt="NASA Astronomy Picture of the Day">
+        <p id="apod-explanation"></p>
+        <p id="apod-date"></p>
+        <a id="apod-hdurl" href="" target="_blank">HD Image</a>
+    </div>
+
+    <script>
+        // API URL
+        const apiUrl = 'https://api.nasa.gov/planetary/apod?api_key=tMpzstRJHRaOhnF5tzODhNDupCtbNCwX8iYzaW2Z';
+
+        // Fetching data from NASA APOD API
+        fetch(apiUrl)
+            .then(response => response.json())
+            .then(data => {
+                // Update image source
+                document.getElementById('apod-image').src = data.url;
+
+                // Update explanation
+                document.getElementById('apod-explanation').textContent = data.explanation;
+
+                // Update date
+                document.getElementById('apod-date').textContent = data.date;
+
+                // Update HD image URL
+                document.getElementById('apod-hdurl').href = data.hdurl;
+            })
+            .catch(error => console.log('Error fetching data:', error));
+    </script>
+</body>
+</html>
