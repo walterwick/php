@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anlık Saat ve Tarih</title>
+</head>
+<body>
+    <div id="clock-container">
+        <p id="clock"></p>
+    </div>
+    <div id="date-container">
+        <p id="date"></p>
+    </div>
+
+    <script>
+        // Saat ve tarih güncelleme fonksiyonu
+        function updateTime() {
+            // Anlık zamanı al
+            const now = new Date();
+
+            // Saat, dakika ve saniye değerlerini al
+            const hours = now.getHours().toString().padStart(2, '0');
+            const minutes = now.getMinutes().toString().padStart(2, '0');
+            const seconds = now.getSeconds().toString().padStart(2, '0');
+
+            // Saati güncelle
+            document.getElementById('clock').textContent = hours + '.' + minutes + '.' + seconds;
+
+            // Yıl, ay ve gün değerlerini al
+            const year = now.getFullYear();
+            const month = (now.getMonth() + 1).toString().padStart(2, '0'); // Ay 0'dan başlar
+            const day = now.getDate().toString().padStart(2, '0');
+
+            // Tarihi güncelle
+            document.getElementById('date').textContent = year + '/' + month + '/' + day;
+        }
+
+        // Sayfa yüklendiğinde ve her saniye güncelleme yap
+        updateTime(); // İlk yüklenmede çağrılmak için
+        setInterval(updateTime, 1000); // Her saniyede bir güncelle
+
+    </script>
+</body>
+</html>
