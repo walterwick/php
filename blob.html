@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Document</title>
+</head>
+<body data-rsssl=1>
+
+<div>
+  <p>Aşağıdaki butona tıklayarak bir resim seçin. Seçilen resmin Blob URL'si oluşturulacak.</p>
+  <input type="file" id="image-input" accept="image/*">
+  <button id="btn" name="btn" onclick="showResult()">Blob URL Oluştur</button>
+</div>
+<div id="output"></div>
+
+<script>
+  function showResult() {
+    const fileInput = document.getElementById('image-input');
+    const file = fileInput.files[0];
+    
+    if (!file) {
+      alert("Lütfen bir resim seçin.");
+      return;
+    }
+    
+    const reader = new FileReader();
+    reader.onload = function(event) {
+      const blob = new Blob([event.target.result], { type: file.type });
+      const url = URL.createObjectURL(blob);
+      const img = new Image();
+      img.src = url;
+      const output = document.getElementById('output');
+      output.innerHTML = "";
+      output.innerHTML = `Blob URL: <a href="${url}" target="_blank">${url}</a>`;
+      output.appendChild(img);
+    };
+    reader.readAsArrayBuffer(file);
+  }
+</script>
+  
+</body>
+</html>
