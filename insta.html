@@ -16,6 +16,12 @@
   <!-- Profil resmini gösterecek img etiketi -->
   <a id="profilePic" href="">pic1</a>
 
+  <!-- Takipçi sayısını gösterecek div -->
+  <div id="followers"></div>
+
+  <!-- Takip edilen sayısını gösterecek div -->
+  <div id="following"></div>
+
   <script>
     $(document).ready(function() {
       // Veri çekme işlemi
@@ -37,14 +43,18 @@
 
           // Profil resmini göster
           $('#profilePic').attr('href', data.profile_pic_url_hd);
+
+          // Takipçi sayısını göster
+          $('#followers').text('Takipçi: ' + data.edge_followed_by.count);
+
+          // Takip edilen sayısını göster
+          $('#following').text('Takip: ' + data.edge_follow.count);
         },
         error: function(xhr, status, error) {
           console.error(error);
-		  
         }
       });
     });
-	
   </script>
 </body>
 </html>
