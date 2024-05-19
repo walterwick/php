@@ -17,7 +17,7 @@ $w = fetchValue("https://www.google.com/finance/quote/EUR-TRY", '/<div class="YM
 $e = fetchValue("https://www.google.com/finance/quote/GBP-TRY", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
 $r = fetchValue("https://www.google.com/finance/quote/BTC-USD", '/<div class="YMlKec fxKbKc">([^<]+)/', 0);
 $ön2 = fetchValue("https://bigpara.hurriyet.com.tr/altin/gram-altin-fiyati/", '/<span class="value up">([^<]+)/', 0);
-$ön3 = fetchValue("https://php--midyeli63.repl.co/", '/<p class="au">([^<]+)/', 0);
+$ön3 = fetchValue("https://bigpara.hurriyet.com.tr/altin/gram-altin-fiyati/", '/<span class="value up">([^<]+)/', 0);
 
 $dmax = fetchValue("https://www.dmax.com.tr/canli-izle/", '/<div class="program-name">([^<]+)/', 0);
 $tlc = fetchValue("https://www.tlctv.com.tr/", '/<div class="program-name">([^<]+)/', 0);
