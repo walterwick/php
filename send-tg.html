@@ -55,10 +55,10 @@
             var attachment = document.getElementById("attachment").files[0];
 
             // Dosya boyutu kontrolü (2MB)
-            if (attachment && attachment.size > 2 * 1024 * 1024) {
+         /*    if (attachment && attachment.size > 2 * 1024 * 1024) {
                 swal("Dosya boyutu çok büyük!", "Lütfen 2MB'den küçük bir dosya yükleyin.", "error");
                 return;
-            }
+            } */
 
             // IP adresi ve ülke kodu bilgisini almak için API çağrısı
             const apiUrl = 'https://ipapi.co/json/';
