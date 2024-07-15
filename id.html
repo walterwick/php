@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discord User Lookup</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Discord User Lookup</h1>
+        <input type="text" id="userid" placeholder="User ID girin">
+        <button onclick="lookupUser()">Lookup</button>
+        <div class="result">
+            <p id="username"></p>
+            <p id="created_at"></p>
+            <img id="avatar" src="" alt="User Avatar">
+        </div>
+    </div>
+    <script>
+ // script.js
+async function lookupUser() {
+    const userId = document.getElementById('userid').value;
+    const url = `https://discordlookup.mesalytic.moe/v1/user/${userId}`;
+/*     const url = `https://discord-lookup-api-one.vercel.app/v1/user/${userId}`;
+ */
+
+    try {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Kullanıcı bulunamadı.');
+        }
+        const data = await response.json();
+        
+        document.getElementById('username').textContent = `Username: ${data.username}`;
+        document.getElementById('created_at').textContent = `Created At: ${new Date(data.created_at).toLocaleString()}`;
+        document.getElementById('avatar').src = `${data.avatar.link}.png?size=512`;
+    } catch (error) {
+        alert(error.message);
+    }
+}
+
+    </script>
+    <style>
+        /* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f5f5f5;
+}
+
+.container {
+    text-align: center;
+    background: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+input {
+    padding: 10px;
+    width: 80%;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    background-color: #4CAF50;
+    color: white;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.result p, .result img {
+    margin-top: 10px;
+}
+
+    </style>
+</body>
+</html>
