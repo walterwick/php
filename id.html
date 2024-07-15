@@ -13,8 +13,11 @@
         <div class="result">
             <p id="username"></p>
             <p id="created_at"></p>
-            <img id="avatar" src="" alt="User Avatar">
+            <a id="avatarLink" href="#" target="_blank">
+                <img id="avatar" src="" alt="User Avatar">
+            </a>
         </div>
+    </div>
     </div>
     <script>
  // script.js
@@ -24,7 +27,7 @@ async function lookupUser() {
 /*     const url = `https://discord-lookup-api-one.vercel.app/v1/user/${userId}`;
  */
 
-    try {
+ try {
         const response = await fetch(url);
         if (!response.ok) {
             throw new Error('Kullanıcı bulunamadı.');
@@ -33,12 +36,14 @@ async function lookupUser() {
         
         document.getElementById('username').textContent = `Username: ${data.username}`;
         document.getElementById('created_at').textContent = `Created At: ${new Date(data.created_at).toLocaleString()}`;
-        document.getElementById('avatar').src = `${data.avatar.link}.png?size=512`;
+        
+        const avatarLink = `${data.avatar.link}.png?size=512`;
+        document.getElementById('avatar').src = avatarLink;
+        document.getElementById('avatarLink').href = avatarLink;
     } catch (error) {
         alert(error.message);
     }
 }
-
     </script>
     <style>
         /* styles.css */
