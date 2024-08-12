@@ -27,7 +27,7 @@ $message = urlencode("USD-TRY: $q\nEUR-TRY: $w\nGBP-TRY: $e\nBTC-USD: $r\nGram A
 $chat_id = '2090459804'; // Replace this with your actual chat ID
 
 // Telegram API endpoint
-$telegram_endpoint = "https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804&text=$message";
+$telegram_endpoint = "https://api.telegram.org/bot7010838445:AAHT2qsRo1U3jDkacdpJQhIB4zRb2IYjTS0/sendMessage?chat_id=2090459804&text=$message";
 
 // Send data to Telegram
 $response = file_get_contents($telegram_endpoint);
