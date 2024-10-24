@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leaflet Map with Geolocation and IP Fallback</title>
+    <!-- Leaflet CSS -->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <style>
+        #map {
+            height: 450px;
+            width: 600px;
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+
+<h1>My Location with Leaflet.js</h1>
+
+<!-- Haritanın yerleştirileceği div -->
+<div id="map"></div>
+
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+
+<script>
+    // Harita ve marker değişkenleri
+    let map;
+    let marker;
+
+    // Haritayı ve marker'ı güncelleyen fonksiyon
+    function updateMap(latitude, longitude) {
+        // İlk seferde harita oluşturulmamışsa yeni bir harita oluştur
+        if (!map) {
+            map = L.map('map').setView([latitude, longitude], 13);  // Zoom 13 seviyesinde
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            }).addTo(map);
+        } else {
+            // Harita zaten varsa, harita merkezini yeni konuma kaydır
+            map.setView([latitude, longitude], 13);
+        }
+
+        // Marker ekle veya mevcut marker'ı taşı
+        if (!marker) {
+            marker = L.marker([latitude, longitude]).addTo(map);
+        } else {
+            marker.setLatLng([latitude, longitude]);
+        }
+    }
+
+    // Tarayıcıdan gerçek zamanlı konum izni iste
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+            (position) => {
+                const latitude = position.coords.latitude;
+                const longitude = position.coords.longitude;
+                updateMap(latitude, longitude);  // Gerçek konum ile haritayı güncelle
+            },
+            (error) => {
+                console.error('Error fetching geolocation, falling back to IP-based location', error);
+                // Konum izni reddedildiğinde IPAPI ile konumu al
+                fetch('https://ipapi.co/json/')
+                    .then(response => response.json())
+                    .then(data => {
+                        const latitude = data.latitude;
+                        const longitude = data.longitude;
+                        updateMap(latitude, longitude);  // IP tabanlı konum ile haritayı güncelle
+                    })
+                    .catch(ipError => console.error('Error fetching location from IPAPI:', ipError));
+            }
+        );
+    } else {
+        console.error('Geolocation is not supported by this browser.');
+    }
+</script>
+
+</body>
+</html>
