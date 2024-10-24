@@ -7,7 +7,7 @@
 </head>
 <body>
 
-<h1>My Location</h1>
+<h1>My Location loca iframe</h1>
 
 <div id="map">
     <iframe 
@@ -36,18 +36,6 @@
                 const latitude = position.coords.latitude;
                 const longitude = position.coords.longitude;
                 updateMap(latitude, longitude);  // Gerçek konum ile haritayı güncelle
-            },
-            (error) => {
-                console.error('Error fetching geolocation, falling back to IP-based location', error);
-                // Konum izni reddedildiğinde IPAPI ile konumu al
-                fetch('https://ipapi.co/json/')
-                    .then(response => response.json())
-                    .then(data => {
-                        const latitude = data.latitude;
-                        const longitude = data.longitude;
-                        updateMap(latitude, longitude);  // IP tabanlı konum ile haritayı güncelle
-                    })
-                    .catch(ipError => console.error('Error fetching location from IPAPI:', ipError));
             }
         );
     } else {
