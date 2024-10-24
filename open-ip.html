@@ -3,56 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OpenStreetMap with Geolocation and IP Fallback</title>
+    <title>Leaflet Map in Iframe with IP-based Location</title>
 </head>
 <body>
 
-<h1>My Location ip and iframe</h1>
+<h1>IP Tabanlı Konum ile OpenStreetMap Iframe</h1>
 
-<div id="map">
-    <iframe 
-       id="osmMap"
-       width="600" 
-       height="450" 
-       frameborder="0" 
-       scrolling="no" 
-       marginheight="0" 
-       marginwidth="0" 
-       style="border: 1px solid black">
-    </iframe>
-</div>
+<!-- Iframe with OpenStreetMap -->
+<iframe id="mapIframe" width="600" height="450" style="border: 1px solid black;"></iframe>
 
 <script>
-    // Haritayı güncelleyen fonksiyon
-    function updateMap(latitude, longitude) {
-        const osmMap = document.getElementById('osmMap');
-        osmMap.src = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.01},${latitude-0.01},${longitude+0.01},${latitude+0.01}&layer=mapnik&marker=${latitude},${longitude}`;
-    }
+    // IP tabanlı konum almak için IPAPI kullan
+    fetch('https://ipapi.co/json/')
+        .then(response => response.json())
+        .then(data => {
+            const latitude = data.latitude;
+            const longitude = data.longitude;
+            
+            // OpenStreetMap iframe URL'sini oluştur
+            const osmUrl = `https://www.openstreetmap.org/export/embed.html?bbox=${longitude-0.05},${latitude-0.05},${longitude+0.05},${latitude+0.05}&layer=mapnik&marker=${latitude},${longitude}`;
 
-    // Tarayıcıdan gerçek zamanlı konum izni iste
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(
-            (position) => {
-                const latitude = position.coords.latitude;
-                const longitude = position.coords.longitude;
-                updateMap(latitude, longitude);  // Gerçek konum ile haritayı güncelle
-            },
-            (error) => {
-                console.error('Error fetching geolocation, falling back to IP-based location', error);
-                // Konum izni reddedildiğinde IPAPI ile konumu al
-                fetch('https://ipapi.co/json/')
-                    .then(response => response.json())
-                    .then(data => {
-                        const latitude = data.latitude;
-                        const longitude = data.longitude;
-                        updateMap(latitude, longitude);  // IP tabanlı konum ile haritayı güncelle
-                    })
-                    .catch(ipError => console.error('Error fetching location from IPAPI:', ipError));
-            }
-        );
-    } else {
-        console.error('Geolocation is not supported by this browser.');
-    }
+            // Iframe'in src'sini OpenStreetMap URL'si ile güncelle
+            document.getElementById('mapIframe').src = osmUrl;
+        })
+        .catch(error => console.error('Error fetching location from IPAPI:', error));
 </script>
 
 </body>
