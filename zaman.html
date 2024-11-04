@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sıradaki Yarış Bilgileri</title>
+</head>
+<body>
+  <h1>Sıradaki Yarış Bilgileri</h1>
+  <p><strong>Yarış Adı:</strong> <span id="raceName"></span></p>
+  <p><strong>Tarih:</strong> <span id="localDateTime"></span></p>
+  <p><strong>Geriye Kalan Süre:</strong> <span id="timeLeft"></span></p>
+  <p><strong>Round:</strong> <span id="round"></span></p>
+  <p><strong>Pist:</strong> <span id="circuitName"></span></p>
+
+  <script>
+    async function fetchRaceData() {
+      try {
+        const response = await fetch('https://ergast.com/api/f1/2024/next.json');
+        const data = await response.json();
+
+        const raceInfo = data.MRData.RaceTable.Races[0];
+        
+        const raceName = raceInfo.raceName;
+        const round = raceInfo.round;
+        const circuitName = raceInfo.Circuit.circuitName;
+        const utcDateTime = new Date(`${raceInfo.date}T${raceInfo.time}`);
+        
+        const localDateTime = utcDateTime.toLocaleString();
+        const currentDate = new Date();
+        
+        // Gün, saat ve dakika cinsinden kalan süre hesaplama
+        const totalTimeLeft = utcDateTime - currentDate;
+        const daysLeft = Math.floor(totalTimeLeft / (1000 * 60 * 60 * 24));
+        const hoursLeft = Math.floor((totalTimeLeft % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minutesLeft = Math.floor((totalTimeLeft % (1000 * 60 * 60)) / (1000 * 60));
+        
+        document.getElementById('raceName').textContent = raceName;
+        document.getElementById('localDateTime').textContent = localDateTime;
+        document.getElementById('timeLeft').textContent = `${daysLeft} gün ${hoursLeft} saat ${minutesLeft} dakika`;
+        document.getElementById('round').textContent = round;
+        document.getElementById('circuitName').textContent = circuitName;
+      } catch (error) {
+        console.error('Veri alınamadı:', error);
+      }
+    }
+
+    fetchRaceData();
+  </script>
+</body>
+</html>
