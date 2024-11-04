@@ -4,14 +4,66 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Sıradaki Yarış Bilgileri</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f0f0f0;
+      color: #333;
+      transition: background-color 0.3s, color 0.3s;
+    }
+
+    h1 {
+      color: #007bff;
+      text-align: center;
+    }
+
+    p {
+      font-size: 18px;
+      margin: 10px 0;
+    }
+
+    strong {
+      font-weight: bold;
+    }
+
+    /* Dark mode ayarları */
+    @media (prefers-color-scheme: dark) {
+      body {
+        background-color: #181818;
+        color: #f0f0f0;
+      }
+
+      h1 {
+        color: #00bfff;
+      }
+
+      p {
+        color: #e0e0e0;
+      }
+    }
+
+    /* Kart stili */
+    .card {
+      background: white;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      padding: 20px;
+      margin: 20px auto;
+      max-width: 600px;
+    }
+  </style>
 </head>
 <body>
-  <h1>Sıradaki Yarış Bilgileri</h1>
-  <p><strong>Yarış Adı:</strong> <span id="raceName"></span></p>
-  <p><strong>Tarih:</strong> <span id="localDateTime"></span></p>
-  <p><strong>Geriye Kalan Süre:</strong> <span id="timeLeft"></span></p>
-  <p><strong>Round:</strong> <span id="round"></span></p>
-  <p><strong>Pist:</strong> <span id="circuitName"></span></p>
+  <div class="card">
+    <h1>Sıradaki Yarış Bilgileri</h1>
+    <p><strong>Yarış Adı:</strong> <span id="raceName"></span></p>
+    <p><strong>Tarih:</strong> <span id="localDateTime"></span></p>
+    <p><strong>Geriye Kalan Süre:</strong> <span id="timeLeft"></span></p>
+    <p><strong>Round:</strong> <span id="round"></span></p>
+    <p><strong>Pist:</strong> <span id="circuitName"></span></p>
+  </div>
 
   <script>
     async function fetchRaceData() {
