@@ -1,0 +1,164 @@
+
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kripto Fiyatları</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        /* Temaya göre renk ayarları */
+        :root {
+            --background-color: #ffffff;
+            --text-color: #000000;
+            --neutral-color: #808080; /* Nötr renk */
+            --positive-color: #008000; /* Yeşil */
+            --negative-color: #FF0000; /* Kırmızı */
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-color: #121212;
+                --text-color: #ffffff;
+                --neutral-color: #b0b0b0;
+            }
+        }
+
+        #prices {
+            width: 90%;
+            max-width: 500px;
+            background-color: var(--card-background);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        
+        h1 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+        
+        .price-card {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background-color: var(--card-background);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+            font-size: 1.2em;
+            transition: transform 0.2s;
+        }
+        
+        .price-card:hover {
+            transform: scale(1.02);
+        }
+
+        /* Kart İçin Tema Renkleri */
+        :root {
+            --card-background: #f3f3f3;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --card-background: #1f1f1f;
+            }
+        }
+
+        /* Fiyat Değişim Renkleri */
+        .positive { color: var(--positive-color); }
+        .negative { color: var(--negative-color); }
+        .neutral { color: var(--neutral-color); }
+    </style>
+</head>
+<body>
+    <div id="prices">
+        <h1>Kripto Fiyatları</h1>
+        <div class="price-card" id="usdt-try">USDT/TRY: Yükleniyor...</div>
+        <div class="price-card" id="usdt-try-change">1 Günde Değişim: Yükleniyor...</div>
+        
+        <div class="price-card" id="btc-usd">BTC/USD: Yükleniyor...</div>
+        <div class="price-card" id="btc-usd-change">1 Günde Değişim: Yükleniyor...</div>
+        
+        <div class="price-card" id="doge-usd">DOGE/USD: Yükleniyor...</div>
+        <div class="price-card" id="doge-usd-change">1 Günde Değişim: Yükleniyor...</div>
+    </div>
+
+    <script>
+        const usdtTryElement = document.getElementById('usdt-try');
+        const usdtTryChangeElement = document.getElementById('usdt-try-change');
+        const btcUsdElement = document.getElementById('btc-usd');
+        const btcUsdChangeElement = document.getElementById('btc-usd-change');
+        const dogeUsdElement = document.getElementById('doge-usd');
+        const dogeUsdChangeElement = document.getElementById('doge-usd-change');
+
+        const socket = new WebSocket('wss://stream.binance.com:9443/ws/usdttry@trade/btcusdt@trade/dogeusdt@trade');
+
+        socket.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            const symbol = message.s;
+            const price = message.p;
+
+            switch (symbol) {
+                case 'USDTTRY':
+                    usdtTryElement.innerText = `USDT/TRY: ${price} TRY`;
+                    break;
+                case 'BTCUSDT':
+                    btcUsdElement.innerText = `BTC/USD: ${price} USD`;
+                    break;
+                case 'DOGEUSDT':
+                    dogeUsdElement.innerText = `DOGE/USD: ${price} USD`;
+                    break;
+            }
+        };
+
+        function getDailyChange(symbol, changeElement) {
+            fetch(`https://api.binance.com/api/v3/ticker/24hr?symbol=${symbol}`)
+                .then(response => response.json())
+                .then(data => {
+                    const priceChange = parseFloat(data.priceChange);
+                    const priceChangePercent = parseFloat(data.priceChangePercent);
+                    
+                    // Fiyat değişimini göster ve uygun rengi ayarla
+                    if (priceChange > 0) {
+                        changeElement.innerText = 
+                            `1 Günde Değişim: +${priceChange} ${symbol.endsWith('TRY') ? 'TRY' : 'USD'} (%+${priceChangePercent})`;
+                        changeElement.className = 'price-card positive';
+                    } else if (priceChange < 0) {
+                        changeElement.innerText = 
+                            `1 Günde Değişim: ${priceChange} ${symbol.endsWith('TRY') ? 'TRY' : 'USD'} (%${priceChangePercent})`;
+                        changeElement.className = 'price-card negative';
+                    } else {
+                        changeElement.innerText = 
+                            `1 Günde Değişim: ${priceChange} ${symbol.endsWith('TRY') ? 'TRY' : 'USD'} (%${priceChangePercent})`;
+                        changeElement.className = 'price-card neutral';
+                    }
+                })
+                .catch(error => console.error('API hatası:', error));
+        }
+
+        function updateAllChanges() {
+            getDailyChange('USDTTRY', usdtTryChangeElement);
+            getDailyChange('BTCUSDT', btcUsdChangeElement);
+            getDailyChange('DOGEUSDT', dogeUsdChangeElement);
+        }
+
+        // Sayfa yüklendiğinde günlük değişimi al
+        updateAllChanges();
+    </script>
+</body>
+</html>
