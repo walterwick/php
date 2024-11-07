@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kripto Fiyatları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #prices {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kripto Fiyatları</h1>
+    <div id="prices">
+        <div id="usdt-try">USDT/TRY: Yükleniyor...</div>
+        <div id="doge-usd">DOGE/USD: Yükleniyor...</div>
+        <div id="btc-usd">BTC/USD: Yükleniyor...</div>
+    </div>
+
+    <script>
+        const usdtTryElement = document.getElementById('usdt-try');
+        const dogeUsdElement = document.getElementById('doge-usd');
+        const btcUsdElement = document.getElementById('btc-usd');
+
+        const socket = new WebSocket('wss://stream.binance.com:9443/ws/usdttry@trade/dogeusdt@trade/btcusdt@trade');
+
+        socket.onmessage = function(event) {
+            const message = JSON.parse(event.data);
+            const symbol = message.s;
+            const price = message.p;
+
+            switch (symbol) {
+                case 'USDTTRY':
+                    usdtTryElement.innerText = `USDT/TRY: ${price} TRY`;
+                    break;
+                case 'DOGEUSDT':
+                    dogeUsdElement.innerText = `DOGE/USD: ${price} USD`;
+                    break;
+                case 'BTCUSDT':
+                    btcUsdElement.innerText = `BTC/USD: ${price} USD`;
+                    break;
+            }
+        };
+
+        socket.onopen = function() {
+            console.log('WebSocket bağlantısı açıldı.');
+        };
+
+        socket.onclose = function() {
+            console.log('WebSocket bağlantısı kapandı.');
+        };
+
+        socket.onerror = function(error) {
+            console.error('WebSocket hatası:', error);
+        };
+    </script>
+</body>
+</html>
