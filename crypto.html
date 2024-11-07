@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kripto Fiyatları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #prices {
+            font-size: 24px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kripto Fiyatları</h1>
+    <div id="prices">
+        <div id="usdt-try">USDT/TRY: Yükleniyor...</div>
+        <div id="doge-usd">DOGE/USD: Yükleniyor...</div>
+        <div id="btc-usd">BTC/USD: Yükleniyor...</div>
+    </div>
+
+    <script>
+        async function getPrice(symbol) {
+            const url = `https://api.binance.com/api/v3/ticker/price?symbol=${symbol}`;
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                return data.price;
+            } catch (error) {
+                console.error('Hata:', error);
+                return 'Fiyat alınamadı.';
+            }
+        }
+
+        async function displayPrices() {
+            const usdtTryPrice = await getPrice('USDTTRY');
+            const dogeUsdPrice = await getPrice('DOGEUSDT'); // DOGE/USD için DOGEUSDT kullanılır
+            const btcUsdPrice = await getPrice('BTCUSDT'); // BTC/USD için BTCUSDT kullanılır
+            document.getElementById('usdt-try').innerText = `USDT/TRY: ${usdtTryPrice} TRY`;
+            document.getElementById('doge-usd').innerText = `DOGE/USD: ${dogeUsdPrice} USD`;
+            document.getElementById('btc-usd').innerText = `BTC/USD: ${btcUsdPrice} USD`;
+        }
+
+        // Sayfa yüklendiğinde fiyatları al
+        window.onload = displayPrices;
+    </script>
+</body>
+</html>
