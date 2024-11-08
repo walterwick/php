@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>F1 Reaction Timer</title>
+  <style>
+    /* Basic styling */
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      font-family: Arial, sans-serif;
+      background-color: #f3f3f3;
+      margin: 0;
+      text-align: center;
+    }
+
+    .help {
+      margin-bottom: 20px;
+      font-style: italic;
+    }
+
+    .time {
+      font-size: 3.5rem;
+      font-weight: bold;
+    }
+
+    /* Light container styling */
+    .light-strip {
+      display: flex;
+      gap: 20px;
+    }
+
+    /* Each light group */
+    .light-group {
+      width: 40px;
+      height: 160px;
+      background: black;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 5px;
+      gap: 10px;
+    }
+
+    /* Each circle inside the light group */
+    .circle {
+      width: 100%;
+      height: 20%;
+      background: gray;
+      border-radius: 50%;
+    }
+
+    /* Lit up circle (only for the bottom two lights) */
+    .circle.on {
+      background: red;
+    }
+
+    .result {
+      margin-top: 20px;
+      font-size: 1.5rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="help">Click or press Space to start. Click again when lights go off.</div>
+
+  <div class="light-strip">
+    <!-- Five light groups with four circles in each (only bottom two will light up) -->
+    <div class="light-group">
+      <div class="circle"></div> <!-- Placeholder (unlit) -->
+      <div class="circle"></div> <!-- Placeholder (unlit) -->
+      <div class="circle"></div> <!-- Lights up -->
+      <div class="circle"></div> <!-- Lights up -->
+    </div>
+    <div class="light-group">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+    <div class="light-group">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+    <div class="light-group">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+    <div class="light-group">
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+      <div class="circle"></div>
+    </div>
+  </div>
+
+  <div class="result" id="result">00.000 s</div>
+  <div>Your best: <span id="best-time">0.000 s</span></div>
+
+  <script>
+    // Constants
+    const LIGHT_ON_INTERVAL = 1000; // Interval between each light group in milliseconds
+    const MIN_RANDOM_DELAY = 1000; // Minimum random delay in milliseconds
+    const MAX_RANDOM_DELAY = 2000; // Maximum random delay in milliseconds
+
+    // State variables
+    let state = 'IDLE'; // Possible states: 'IDLE', 'RUNNING', 'WAITING'
+    let lightGroups = Array.from(document.querySelectorAll('.light-group'));
+    let startTime, timerId, randomDelayId;
+    let bestTime = localStorage.getItem('bestTime') || Infinity;
+    document.getElementById('best-time').textContent = formatTime(bestTime);
+
+    // Event listeners
+    document.body.addEventListener('click', handleAction);
+    document.body.addEventListener('keydown', (e) => {
+      if (e.code === 'Space') handleAction();
+    });
+
+    function handleAction() {
+      if (state === 'IDLE') {
+        startLightsSequence();
+      } else if (state === 'RUNNING') {
+        // Early click
+        resetGame("Too soon! Wait for lights to go off.");
+      } else if (state === 'WAITING') {
+        // Successful reaction
+        const reactionTime = Date.now() - startTime;
+        const formattedTime = formatTime(reactionTime);
+        document.getElementById('result').textContent = formattedTime;
+        updateBestTime(reactionTime);
+        state = 'IDLE';
+      }
+    }
+
+    function startLightsSequence() {
+      clearLights();
+      document.getElementById('result').textContent = "00.000 s";
+      state = 'RUNNING';
+
+      let currentLight = 0;
+      timerId = setInterval(() => {
+        if (currentLight < lightGroups.length) {
+          turnOnBottomLights(lightGroups[currentLight]);
+          currentLight++;
+        } else {
+          clearInterval(timerId);
+          triggerRandomDelay();
+        }
+      }, LIGHT_ON_INTERVAL);
+    }
+
+    function turnOnBottomLights(group) {
+      const bottomLights = group.querySelectorAll('.circle');
+      bottomLights[2].classList.add('on'); // Third (bottom) light
+      bottomLights[3].classList.add('on'); // Fourth (bottom-most) light
+    }
+
+    function triggerRandomDelay() {
+      const randomDelay = Math.random() * (MAX_RANDOM_DELAY - MIN_RANDOM_DELAY) + MIN_RANDOM_DELAY;
+      randomDelayId = setTimeout(() => {
+        clearLights();
+        startTime = Date.now();
+        state = 'WAITING';
+      }, randomDelay);
+    }
+
+    function clearLights() {
+      document.querySelectorAll('.circle').forEach(light => light.classList.remove('on'));
+    }
+
+    function resetGame(message) {
+      clearInterval(timerId);
+      clearTimeout(randomDelayId);
+      clearLights();
+      document.getElementById('result').textContent = message;
+      state = 'IDLE';
+    }
+
+    function formatTime(ms) {
+      return `${(ms / 1000).toFixed(3)} s`;
+    }
+
+    function updateBestTime(currentTime) {
+      if (currentTime < bestTime) {
+        bestTime = currentTime;
+        localStorage.setItem('bestTime', bestTime);
+        document.getElementById('best-time').textContent = formatTime(bestTime);
+      }
+    }
+  </script>
+</body>
+</html>
