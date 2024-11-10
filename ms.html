@@ -21,10 +21,11 @@
     .help {
       margin-bottom: 20px;
       font-style: italic;
+      font-size: 1.2rem;
     }
 
     .time {
-      font-size: 3.5rem;
+      font-size: 4rem;
       font-weight: bold;
     }
 
@@ -36,21 +37,21 @@
 
     /* Each light group */
     .light-group {
-      width: 40px;
-      height: 160px;
+      width: 55px; /* Increased width */
+      height: 250px;
       background: black;
       border-radius: 10px;
       display: flex;
       flex-direction: column;
       justify-content: flex-end;
-      padding: 5px;
+      padding: 8px;
       gap: 10px;
     }
 
     /* Each circle inside the light group */
     .circle {
       width: 100%;
-      height: 20%;
+      height: 25%;
       background: gray;
       border-radius: 50%;
     }
@@ -58,11 +59,12 @@
     /* Lit up circle (only for the bottom two lights) */
     .circle.on {
       background: red;
+      transform: scale(1.1); /* Enlarge the red circles slightly */
     }
 
     .result {
       margin-top: 20px;
-      font-size: 1.5rem;
+      font-size: 1.7rem;
     }
   </style>
 </head>
@@ -108,12 +110,12 @@
 
   <script>
     // Constants
-    const LIGHT_ON_INTERVAL = 1000; // Interval between each light group in milliseconds
+    const FAST_LIGHT_INTERVAL = 800; // Faster interval for the first five lights
     const MIN_RANDOM_DELAY = 1000; // Minimum random delay in milliseconds
     const MAX_RANDOM_DELAY = 2000; // Maximum random delay in milliseconds
 
     // State variables
-    let state = 'IDLE'; // Possible states: 'IDLE', 'RUNNING', 'WAITING'
+    let state = 'IDLE';
     let lightGroups = Array.from(document.querySelectorAll('.light-group'));
     let startTime, timerId, randomDelayId;
     let bestTime = localStorage.getItem('bestTime') || Infinity;
@@ -129,10 +131,8 @@
       if (state === 'IDLE') {
         startLightsSequence();
       } else if (state === 'RUNNING') {
-        // Early click
         resetGame("Too soon! Wait for lights to go off.");
       } else if (state === 'WAITING') {
-        // Successful reaction
         const reactionTime = Date.now() - startTime;
         const formattedTime = formatTime(reactionTime);
         document.getElementById('result').textContent = formattedTime;
@@ -148,20 +148,20 @@
 
       let currentLight = 0;
       timerId = setInterval(() => {
-        if (currentLight < lightGroups.length) {
+        if (currentLight < 5) {
           turnOnBottomLights(lightGroups[currentLight]);
           currentLight++;
         } else {
           clearInterval(timerId);
           triggerRandomDelay();
         }
-      }, LIGHT_ON_INTERVAL);
+      }, FAST_LIGHT_INTERVAL);
     }
 
     function turnOnBottomLights(group) {
       const bottomLights = group.querySelectorAll('.circle');
-      bottomLights[2].classList.add('on'); // Third (bottom) light
-      bottomLights[3].classList.add('on'); // Fourth (bottom-most) light
+      bottomLights[2].classList.add('on');
+      bottomLights[3].classList.add('on');
     }
 
     function triggerRandomDelay() {
