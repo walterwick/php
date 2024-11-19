@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gofile Dosya Yükleme</title>
+    <style>
+        /* Koyu Tema */
+        body {
+            background-color: #181818;
+            color: #f5f5f5;
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            margin: 0;
+        }
+
+        h1 {
+            color: #f5f5f5;
+            text-align: center;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin: 20px auto;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            border: 1px solid #444;
+            border-radius: 5px;
+        }
+
+        button {
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            background-color: #5e5eff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4d4dff;
+        }
+
+        #response {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .error {
+            color: #ff4d4d;
+        }
+
+        .success {
+            color: #66ff66;
+        }
+
+        /* Yükleme göstergesi */
+        .loading {
+            display: none;
+            color: #ffcc00;
+            text-align: center;
+        }
+
+        .loading.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Gofile Dosya Yükleme</h1>
+    <input type="file" id="fileInput">
+    <button id="uploadButton">Yükle</button>
+    <div class="loading" id="loading">Yükleniyor...</div>
+    <div id="response"></div>
+
+    <script>
+        document.getElementById('uploadButton').addEventListener('click', async () => {
+            const fileInput = document.getElementById('fileInput');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                alert('Lütfen bir dosya seçin.');
+                return;
+            }
+
+            // Yükleme göstergesini aktif et
+            document.getElementById('loading').classList.add('active');
+
+            try {
+                // Sunucu listesini al
+                const serverResponse = await fetch('https://api.gofile.io/servers');
+                const serverData = await serverResponse.json();
+
+                if (!serverData.data || !serverData.data.servers || serverData.data.servers.length === 0) {
+                    throw new Error('Sunucu bulunamadı.');
+                }
+
+                const server = serverData.data.servers[0].name; // İlk sunucuyu seç
+
+                const formData = new FormData();
+                formData.append('file', file);
+
+                // Dosyayı yükle
+                const uploadResponse = await fetch(`https://${server}.gofile.io/contents/uploadfile`, {
+                    method: 'POST',
+                    body: formData
+                });
+
+                const uploadData = await uploadResponse.json();
+
+                // Yükleme başarılı ise
+                if (uploadData.status === 'ok') {
+                    document.getElementById('response').innerHTML = `<p class="success">${file.name} yüklendi! İndirme bağlantısı: <a href="${uploadData.data.downloadPage}" target="_blank">${uploadData.data.downloadPage}</a></p>`;
+                } else {
+                    document.getElementById('response').innerHTML = `<p class="error">Yükleme başarısız: ${uploadData.message}</p>`;
+                }
+            } catch (error) {
+                document.getElementById('response').innerHTML = `<p class="error">Hata oluştu: ${error.message}</p>`;
+            } finally {
+                // Yükleme işleminden sonra yükleme göstergesini kaldır
+                document.getElementById('loading').classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
