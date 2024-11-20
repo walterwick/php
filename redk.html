@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Resim Çekme</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        #imagesContainer {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        img {
+            width: 100%;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+            cursor: pointer;
+        }
+        button {
+            padding: 10px;
+            font-size: 16px;
+            margin-right: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reddit Resim Çekme</h1>
+    <input type="text" id="subreddit" placeholder="Subreddit adı girin" />
+    <button id="fetchNewButton">Yeni Gönderiler</button>
+    <button id="fetchTopButton">Popüler Gönderiler</button>
+    <div id="imagesContainer"></div>
+
+    <script>
+        let after = ''; // Sonraki gönderileri almak için kullanacağımız değişken
+        const imagesContainer = document.getElementById('imagesContainer');
+
+        // Yeni gönderiler butonuna tıklandığında
+        document.getElementById('fetchNewButton').addEventListener('click', function() {
+            const subreddit = document.getElementById('subreddit').value;
+            after = ''; // Yeni subreddit için 'after' değerini sıfırla
+            imagesContainer.innerHTML = ''; // Önceki resimleri temizle
+            fetchImages(subreddit, 'new');
+        });
+
+        // Popüler gönderiler butonuna tıklandığında
+        document.getElementById('fetchTopButton').addEventListener('click', function() {
+            const subreddit = document.getElementById('subreddit').value;
+            after = ''; // Yeni subreddit için 'after' değerini sıfırla
+            imagesContainer.innerHTML = ''; // Önceki resimleri temizle
+            fetchImages(subreddit, 'top');
+        });
+
+        // Resimleri fetch etme fonksiyonu
+        function fetchImages(subreddit, type) {
+            const url = `https://www.reddit.com/r/${subreddit}/${type}.json?after=${after}`;
+
+            fetch(url, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ağ hatası: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const posts = data.data.children;
+                posts.forEach(post => {
+                    const imageUrl = post.data.url;
+                    const isImage = /\.(jpg|jpeg|png|gif)$/.test(imageUrl); // Resim formatı kontrolü
+
+                    if (isImage) {
+                        const anchor = document.createElement('a');
+                        anchor.href = imageUrl;
+                        anchor.setAttribute('data-lightbox', 'reddit-images'); // Lightbox için
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        anchor.appendChild(img);
+                        imagesContainer.appendChild(anchor);
+                    }
+                });
+                after = data.data.after; // Sonraki gönderi için 'after' değerini güncelle
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+            });
+        }
+
+        // Sonsuz kaydırma işlevselliği
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                const subreddit = document.getElementById('subreddit').value;
+                if (after) { // 'after' değeri varsa yeni gönderileri yükle
+                    const type = document.getElementById('fetchNewButton').classList.contains('active') ? 'new' : 'top';
+                    fetchImages(subreddit, type);
+                }
+            }
+        });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox-plus-jquery.min.js"></script>
+</body>
+</html>
