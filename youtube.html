@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>YouTube Video Oynatıcı</title>
+    <style>
+        /* Genel sayfa stilleri */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        /* Container */
+        .container {
+            width: 90%;
+            max-width: 900px;
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Başlık stili */
+        h1 {
+            font-size: 2rem;
+            color: #4CAF50;
+            margin-bottom: 20px;
+        }
+
+        /* Video URL input alanı */
+        input[type="text"] {
+            width: 70%;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus {
+            border-color: #4CAF50;
+        }
+
+        /* Oynat butonu */
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        /* Pano butonu */
+        #pasteButton {
+            padding: 10px 20px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            margin-left: 10px;
+            transition: background-color 0.3s ease;
+        }
+
+        #pasteButton:hover {
+            background-color: #1E88E5;
+        }
+
+        /* Video player */
+        #player {
+            width: 100%;
+            height: 500px;
+            margin-top: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Responsive tasarım */
+        @media (max-width: 768px) {
+            .container {
+                width: 100%;
+                padding: 15px;
+            }
+
+            input[type="text"] {
+                width: 80%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>YouTube Video Oynatıcı</h1>
+    <div>
+        <input type="text" id="videoUrl" placeholder="YouTube video linkini girin">
+        <button id="pasteButton">Pano İzni Al ve Yapıştır</button>
+    </div>
+    <button id="playButton">Oynat</button>
+    <div id="player"></div>
+</div>
+
+<script>
+    // YouTube iframe API'yi yükle
+    var tag = document.createElement('script');
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+
+    // API yüklendiğinde çalışacak fonksiyon
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '500',
+            width: '100%',
+            events: {
+                'onReady': onPlayerReady
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        // Oynatma işlemi burada yapılacak
+    }
+
+    // Pano butonuna tıklandığında çalışacak fonksiyon
+    document.getElementById('pasteButton').addEventListener('click', async function() {
+        try {
+            // Pano'dan metin okuma
+            const text = await navigator.clipboard.readText();
+            // Eğer metin bir YouTube URL'si ise input'a yapıştır
+            if (getVideoId(text)) {
+                document.getElementById('videoUrl').value = text;
+            } else {
+                alert('Geçersiz YouTube linki!');
+            }
+        } catch (err) {
+            alert('Pano verisini okurken bir hata oluştu: ' + err);
+        }
+    });
+
+    // Oynat butonuna tıklandığında çalışacak fonksiyon
+    document.getElementById('playButton').addEventListener('click', function() {
+        var url = document.getElementById('videoUrl').value;
+        var videoId = getVideoId(url);
+        if (videoId) {
+            player.loadVideoById(videoId);
+        } else {
+            alert('Geçersiz YouTube linki!');
+        }
+    });
+
+    // YouTube video ID'sini almak için fonksiyon
+    function getVideoId(url) {
+        var videoId = null;
+        var regex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/(?:[^\/\n\s]+\/\S+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^&\n]{11})/;
+        var match = url.match(regex);
+        if (match) {
+            videoId = match[1];
+        }
+        return videoId;
+    }
+</script>
+
+</body>
+</html>
