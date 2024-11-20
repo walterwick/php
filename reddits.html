@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Resim Çekme</title>
+    <style>
+        :root {
+            --bg-primary: #ffffff;
+            --text-primary: #000000;
+            --bg-secondary: #f0f0f0;
+            --button-bg: #4CAF50;
+            --button-hover: #45a049;
+            --overlay-bg: rgba(0,0,0,0.8);
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg-primary: #121212;
+                --text-primary: #ffffff;
+                --bg-secondary: #1e1e1e;
+                --button-bg: #388E3C;
+                --button-hover: #2E7D32;
+                --overlay-bg: rgba(0,0,0,0.9);
+            }
+        }
+
+        body { 
+            font-family: Arial, sans-serif; 
+            margin: 20px; 
+            background-color: var(--bg-primary);
+            color: var(--text-primary);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        #buttonContainer {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+        #subreddit {
+            background-color: var(--bg-secondary);
+            color: var(--text-primary);
+            border: 1px solid var(--text-primary);
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        #imagesContainer { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
+            gap: 10px; 
+        }
+        #imagesContainer img { 
+            width: 100%; 
+            height: 250px;
+            object-fit: cover;
+            border-radius: 5px; 
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); 
+            cursor: pointer; 
+        }
+        #fullImageOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--overlay-bg);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        #fullImageOverlay img {
+            max-width: 90%;
+            max-height: 90%;
+            object-fit: contain;
+        }
+        button {
+            padding: 10px;
+            background-color: var(--button-bg);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        button:hover {
+            background-color: var(--button-hover);
+        }
+    </style>
+</head>
+<body>
+    <h1>Reddit Resim Çekme</h1>
+    <input type="text" id="subreddit" placeholder="Subreddit adı girin" />
+    <div id="buttonContainer">
+        <button id="newButton">Yeni Gönderiler</button>
+        <button id="topButton">En İyi Gönderiler</button>
+    </div>
+    <div id="imagesContainer"></div>
+    <div id="fullImageOverlay" onclick="this.style.display='none'">
+        <img id="fullImage" />
+    </div>
+
+    <script>
+        let after = ''; 
+        let currentSorting = 'new';
+        const imagesContainer = document.getElementById('imagesContainer');
+        const fullImageOverlay = document.getElementById('fullImageOverlay');
+        const fullImage = document.getElementById('fullImage');
+
+        document.getElementById('newButton').addEventListener('click', function() {
+            currentSorting = 'new';
+            resetAndFetchImages();
+        });
+
+        document.getElementById('topButton').addEventListener('click', function() {
+            currentSorting = 'top';
+            resetAndFetchImages();
+        });
+
+        function resetAndFetchImages() {
+            const subreddit = document.getElementById('subreddit').value;
+            after = ''; 
+            imagesContainer.innerHTML = ''; 
+            fetchImages(subreddit);
+        }
+
+        function fetchImages(subreddit) {
+            const url = currentSorting === 'new' 
+                ? `https://www.reddit.com/r/${subreddit}/new.json?after=${after}` 
+                : `https://www.reddit.com/r/${subreddit}/top.json?after=${after}`;
+
+            fetch(url, { 
+                headers: { 
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3' 
+                } 
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ağ hatası: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const posts = data.data.children;
+                posts.forEach(post => {
+                    const imageUrl = post.data.url;
+                    const isImage = /\.(jpg|jpeg|png|gif)$/.test(imageUrl);
+                    if (isImage) {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        img.addEventListener('click', () => {
+                            fullImage.src = imageUrl;
+                            fullImageOverlay.style.display = 'flex';
+                        });
+                        imagesContainer.appendChild(img);
+                    }
+                });
+                after = data.data.after;
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+            });
+        }
+
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                const subreddit = document.getElementById('subreddit').value;
+                if (after) {
+                    fetchImages(subreddit);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
