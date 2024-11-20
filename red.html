@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reddit Resim Çekme</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        img {
+            max-width: 300px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Reddit Resim Çekme</h1>
+    <input type="text" id="subreddit" placeholder="Subreddit adı girin" />
+    <button id="fetchButton">Resimleri Getir</button>
+    <div id="imagesContainer"></div>
+
+    <script>
+        let after = ''; // Sonraki gönderileri almak için kullanacağımız değişken
+        const imagesContainer = document.getElementById('imagesContainer');
+
+        document.getElementById('fetchButton').addEventListener('click', function() {
+            const subreddit = document.getElementById('subreddit').value;
+            after = ''; // Yeni subreddit için 'after' değerini sıfırla
+            imagesContainer.innerHTML = ''; // Önceki resimleri temizle
+            fetchImages(subreddit);
+        });
+
+        function fetchImages(subreddit) {
+            const url = `https://www.reddit.com/r/${subreddit}/new.json?after=${after}`;
+
+            fetch(url, {
+                headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.3'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Ağ hatası: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                const posts = data.data.children;
+                posts.forEach(post => {
+                    const imageUrl = post.data.url;
+                    const isImage = /\.(jpg|jpeg|png|gif)$/.test(imageUrl); // Resim formatı kontrolü
+
+                    if (isImage) {
+                        const img = document.createElement('img');
+                        img.src = imageUrl;
+                        imagesContainer.appendChild(img);
+                    }
+                });
+                after = data.data.after; // Sonraki gönderi için 'after' değerini güncelle
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+            });
+        }
+
+        // Sonsuz kaydırma işlevselliği
+        window.addEventListener('scroll', () => {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
+                const subreddit = document.getElementById('subreddit').value;
+                if (after) { // 'after' değeri varsa yeni gönderileri yükle
+                    fetchImages(subreddit);
+                }
+            }
+        });
+    </script>
+</body>
+</html>
