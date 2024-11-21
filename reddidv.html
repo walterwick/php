@@ -49,7 +49,7 @@
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); 
             gap: 10px; 
         }
-        #imagesContainer img, #imagesContainer video, #imagesContainer iframe { 
+        #imagesContainer img, #imagesContainer video { 
             width: 100%; 
             height: 250px;
             object-fit: cover;
@@ -60,7 +60,7 @@
             transform: scale(0.9);
             transition: opacity 0.3s, transform 0.3s;
         }
-        #imagesContainer img.loaded, #imagesContainer video.loaded, #imagesContainer iframe.loaded {
+        #imagesContainer img.loaded, #imagesContainer video.loaded {
             opacity: 1;
             transform: scale(1);
         }
@@ -117,41 +117,11 @@
     </div>
 
     <script>
-        let after = ''; 
-        let currentSorting = 'new';
-        let isFetching = false;
-        const imagesContainer = document.getElementById('imagesContainer');
-        const message = document.getElementById('message');
-        const fullImageOverlay = document.getElementById('fullImageOverlay');
-        const fullImage = document.getElementById('fullImage');
-
-        document.getElementById('newButton').addEventListener('click', function() {
-            currentSorting = 'new';
-            resetAndFetchImages();
-        });
-
-        document.getElementById('topButton').addEventListener('click', function() {
-            currentSorting = 'top';
-            resetAndFetchImages();
-        });
-
-        function resetAndFetchImages() {
-            const subreddit = document.getElementById('subreddit').value.trim();
-            if (!subreddit) {
-                message.textContent = 'Lütfen bir subreddit adı girin.';
-                return;
-            }
-            message.textContent = 'Yükleniyor...';
-            after = ''; 
-            imagesContainer.innerHTML = ''; 
-            fetchImages(subreddit);
-        }
-
         function fetchImages(subreddit) {
             const url = currentSorting === 'new' 
                 ? `https://www.reddit.com/r/${subreddit}/new.json?after=${after}` 
                 : `https://www.reddit.com/r/${subreddit}/top.json?after=${after}`;
-
+    
             return fetch(url)
                 .then(response => {
                     if (!response.ok) {
@@ -168,33 +138,12 @@
                     message.textContent = '';
                     posts.forEach(post => {
                         const postData = post.data;
-
-                        // Resim URL'si
-                        const imageUrl = postData.url;
-                        const isImage = /\.(jpg|jpeg|png|gif|webp)$/.test(imageUrl);
-
-                        // Video kontrolü
-                        const videoUrl = postData.media?.reddit_video?.fallback_url;
-
+    
                         // iFrame kontrolü
                         const iframeHtml = postData.media_embed?.content || postData.secure_media_embed?.content;
-
-                        if (isImage) {
-                            const img = document.createElement('img');
-                            img.src = imageUrl;
-                            img.addEventListener('load', () => img.classList.add('loaded'));
-                            img.addEventListener('click', () => {
-                                fullImage.src = imageUrl;
-                                fullImageOverlay.style.display = 'flex';
-                            });
-                            imagesContainer.appendChild(img);
-                        } else if (videoUrl) {
-                            const video = document.createElement('video');
-                            video.src = videoUrl;
-                            video.controls = true;
-                            video.classList.add('loaded');
-                            imagesContainer.appendChild(video);
-                        } else if (iframeHtml) {
+    
+                        if (iframeHtml) {
+                            // iframe varsa, sadece iframe içeriğini ekler.
                             const iframeContainer = document.createElement('div');
                             iframeContainer.innerHTML = iframeHtml;
                             const iframe = iframeContainer.querySelector('iframe');
@@ -202,17 +151,39 @@
                             iframe.style.height = '250px';
                             iframe.classList.add('loaded');
                             imagesContainer.appendChild(iframe);
-                        } else if (postData.preview?.images) {
-                            const previewImage = postData.preview.images[0]?.source.url.replace(/&amp;/g, '&');
-                            if (previewImage) {
+                        } else {
+                            // iframe yoksa diğer medya türlerini ekler.
+                            const imageUrl = postData.url;
+                            const isImage = /\.(jpg|jpeg|png|gif|webp)$/.test(imageUrl);
+                            const videoUrl = postData.media?.reddit_video?.fallback_url;
+    
+                            if (isImage) {
                                 const img = document.createElement('img');
-                                img.src = previewImage;
+                                img.src = imageUrl;
                                 img.addEventListener('load', () => img.classList.add('loaded'));
                                 img.addEventListener('click', () => {
-                                    fullImage.src = previewImage;
+                                    fullImage.src = imageUrl;
                                     fullImageOverlay.style.display = 'flex';
                                 });
                                 imagesContainer.appendChild(img);
+                            } else if (videoUrl) {
+                                const video = document.createElement('video');
+                                video.src = videoUrl;
+                                video.controls = true;
+                                video.classList.add('loaded');
+                                imagesContainer.appendChild(video);
+                            } else if (postData.preview?.images) {
+                                const previewImage = postData.preview.images[0]?.source.url.replace(/&amp;/g, '&');
+                                if (previewImage) {
+                                    const img = document.createElement('img');
+                                    img.src = previewImage;
+                                    img.addEventListener('load', () => img.classList.add('loaded'));
+                                    img.addEventListener('click', () => {
+                                        fullImage.src = previewImage;
+                                        fullImageOverlay.style.display = 'flex';
+                                    });
+                                    imagesContainer.appendChild(img);
+                                }
                             }
                         }
                     });
@@ -225,22 +196,7 @@
                     message.textContent = 'Bir hata oluştu: ' + error.message;
                 });
         }
-
-        let debounceTimeout;
-        window.addEventListener('scroll', () => {
-            clearTimeout(debounceTimeout);
-            debounceTimeout = setTimeout(() => {
-                if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 200) {
-                    const subreddit = document.getElementById('subreddit').value.trim();
-                    if (subreddit && after && !isFetching) {
-                        isFetching = true;
-                        fetchImages(subreddit).finally(() => {
-                            isFetching = false;
-                        });
-                    }
-                }
-            }, 100);
-        });
     </script>
+    
 </body>
 </html>
