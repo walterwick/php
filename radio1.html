@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>F1 2024 Team Radio</title>
+    <style>
+        /* Dark Mode */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color */
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+        }
+
+        header {
+            background-color: #1f1f1f; /* Darker header */
+            color: #fff;
+            padding: 10px 20px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .container {
+            width: 80%;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2a2a2a; /* Darker content background */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+        }
+
+        /* Input and button style */
+        .input-container {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .input-container input {
+            width: 70%;
+            padding: 8px;
+            font-size: 16px;
+            border: 1px solid #00bfff;
+            background-color: #333;
+            color: #e0e0e0;
+            border-radius: 5px;
+        }
+
+        .input-container button {
+            padding: 8px 12px;
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .input-container button:hover {
+            background-color: #009ac9;
+        }
+
+        .session-info, .team-radio {
+            margin-bottom: 20px;
+        }
+
+        .session-info h3, .team-radio h3 {
+            margin-bottom: 10px;
+        }
+
+        /* Styling for the list of team radio recordings */
+        .team-radio ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .team-radio li {
+            background-color: #333; /* Dark background for list items */
+            margin: 10px 0;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .team-radio li a {
+            text-decoration: none;
+            color: #00bfff; /* Lighter blue for the links */
+        }
+
+        .team-radio li a:hover {
+            text-decoration: underline;
+        }
+
+        .date {
+            color: #bbb; /* Lighter date text */
+            font-size: 12px;
+        }
+
+        /* Play button styling */
+        .play-btn {
+            background-color: #00bfff; /* Green for play button */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .play-btn:hover {
+            background-color: #009ac9;
+        }
+
+        /* Red for stop button */
+        .stop-btn {
+            background-color: #e74c3c; /* Red for stop button */
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+        }
+
+        .stop-btn:hover {
+            background-color: #c0392b;
+        }
+
+        /* Additional styling for session info and error messages */
+        .session-info, .team-radio p {
+            color: #ddd;
+        }
+
+        /* Loader styles */
+        .loading {
+            color: #f39c12;
+        }
+    </style>
+    <script>
+        async function getRaceIdByKey(raceKey) {
+            try {
+                const url = `https://api.openf1.org/v1/sessions?session_key=${raceKey}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                if (data && data.length > 0) {
+                    const sessionKey = data[0].session_key;
+                    fetchTeamRadio(sessionKey);  // Veriyi al
+                } else {
+                    document.getElementById('race-info').innerText = 'Geçersiz race key girildi veya veri bulunamadı.';
+                }
+            } catch (error) {
+                console.error('API Hatası:', error);
+                document.getElementById('race-info').innerText = 'API verisi alınırken hata oluştu.';
+            }
+        }
+
+        async function fetchTeamRadio(sessionKey) {
+            try {
+                const url = `https://api.openf1.org/v1/team_radio?session_key=${sessionKey}`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                // Verileri tarihe göre sıralıyoruz (en yeni önce)
+                data.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                displayTeamRadio(data);
+            } catch (error) {
+                console.error('Radyo Hatası:', error);
+                document.getElementById('team-radio').innerText = 'Takım Radyo verisi alınırken hata oluştu.';
+            }
+        }
+
+        function displayTeamRadio(data) {
+            const teamRadioContainer = document.getElementById('team-radio');
+            teamRadioContainer.innerHTML = ''; // Temizle
+
+            if (data.length === 0) {
+                teamRadioContainer.innerHTML = 'Takım radyo kaydı bulunamadı.';
+                return;
+            }
+
+            const ul = document.createElement('ul');
+
+            data.forEach(item => {
+                const li = document.createElement('li');
+
+                // Oynatma butonu
+                const playButton = document.createElement('button');
+                playButton.classList.add('play-btn');
+                playButton.textContent = 'Oynat';
+
+                // Durma butonu
+                const stopButton = document.createElement('button');
+                stopButton.classList.add('stop-btn');
+                stopButton.textContent = 'Durdur';
+                stopButton.style.display = 'none'; // Başlangıçta görünmez
+
+                // Ses kaydını oynatmak için audio element (başlangıçta yüklenmeyecek)
+                const audio = document.createElement('audio');
+                audio.src = item.recording_url;  // Kaydın URL'si
+                audio.preload = 'none';  // Başlangıçta yüklemeyi engelle
+
+                // Butona tıklandığında sesi yükleyip oynat
+                playButton.onclick = function() {
+                    if (audio.paused) {
+                        audio.load();  // Ses kaydını yükle
+                        audio.play();  // Oynat
+                        playButton.style.display = 'none';  // Oynat butonunu gizle
+                        stopButton.style.display = 'inline-block';  // Durdur butonunu göster
+                    }
+                };
+
+                // Butona tıklandığında sesi durdur
+                stopButton.onclick = function() {
+                    audio.pause();  // Ses kaydını durdur
+                    playButton.style.display = 'inline-block';  // Oynat butonunu göster
+                    stopButton.style.display = 'none';  // Durdur butonunu gizle
+                };
+
+                const recordingLink = document.createElement('a');
+                recordingLink.href = item.recording_url;
+                recordingLink.textContent = `Driver #${item.driver_number} - Radio`;
+                recordingLink.target = '_blank';
+
+                const date = document.createElement('span');
+                date.classList.add('date');
+                date.textContent = new Date(item.date).toLocaleString();
+
+                li.appendChild(recordingLink);
+                li.appendChild(playButton);
+                li.appendChild(stopButton);
+                li.appendChild(date);
+                ul.appendChild(li);
+            });
+
+            teamRadioContainer.appendChild(ul);
+        }
+
+        function handleSearch() {
+            const raceKey = document.getElementById('race-key').value;
+            if (raceKey) {
+                getRaceIdByKey(raceKey); // Girilen race key ile verileri al
+            } else {
+                alert('Lütfen bir race key girin.');
+            }
+        }
+
+        window.onload = function() {
+            getLastRaceId(); // Sayfa yüklendiğinde en son yarış verisini al
+        };
+
+        // Sayfa ilk yüklendiğinde en son yarış ID'si ile veriyi al
+        async function getLastRaceId() {
+            try {
+                const url = 'https://api.openf1.org/v1/sessions?year=2024';
+                const response = await fetch(url);
+                const data = await response.json();
+                const lastRace = data[data.length - 1];
+
+                if (lastRace && lastRace.session_key) {
+                    fetchTeamRadio(lastRace.session_key);
+                } else {
+                    document.getElementById('race-info').innerText = 'Son yarış ID bulunamadı.';
+                }
+            } catch (error) {
+                console.error('API Hatası:', error);
+                document.getElementById('race-info').innerText = 'API verisi alınırken hata oluştu.';
+            }
+        }
+    </script>
+</head>
+<body>
+    <header>
+        <h1>F1 2024 Son Yarış Takım Radyo</h1>
+    </header>
+    <div class="container">
+        <div class="input-container">
+            <input type="text" id="race-key" placeholder="Race Key girin...">
+            <button onclick="handleSearch()">Ara</button>
+        </div>
+        <div id="race-info" class="session-info">
+            <h3 class="loading">Yarış Bilgisi Yükleniyor...</h3>
+        </div>
+
+        <div id="team-radio" class="team-radio">
+            <h3>Takım Radyo Kayıtları</h3>
+            <p class="loading">Radyo verileri yükleniyor...</p>
+        </div>
+    </div>
+</body>
+</html>
