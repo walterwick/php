@@ -143,6 +143,7 @@
         .loading {
             color: #f39c12;
         }
+        a{text-decoration: none;}
     </style>
     <script>
         async function getRaceIdByKey(raceKey) {
@@ -288,7 +289,8 @@
             <button onclick="handleSearch()">Ara</button>
         </div>
         <div id="race-info" class="session-info">
-            <h3 class="loading">Yarış Bilgisi Yükleniyor...</h3>
+            <a href="https://api.openf1.org/v1/sessions" target="_blank" ><h3 class="loading">Yarış Bilgisi Yükleniyor...</h3></a>
+            
         </div>
 
         <div id="team-radio" class="team-radio">
