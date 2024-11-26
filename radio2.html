@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Radyo Oynatıcı</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color */
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s, color 0.3s;
+            font-size: 16px; /* Default text size */
+        }
+
+        header {
+            background-color: #1f1f1f;
+            color: #fff;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px; /* Title size */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #result {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2a2a2a;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 8px;
+            font-size: 14px; /* Adjusted text size */
+        }
+
+        .radio-item {
+            background-color: #333;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: flex-start;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .radio-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .radio-item p {
+            margin: 5px 0; /* Spacing between lines of text */
+        }
+
+        button {
+            background-color: #00bfff;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px; /* Button font size */
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background-color: #009ac9;
+        }
+
+        .play-btn, .stop-btn {
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s;
+            margin-top: 10px;
+        }
+
+        .play-btn {
+            background-color: #00bfff;
+            color: white;
+        }
+
+        .play-btn:hover {
+            background-color: #009ac9;
+        }
+
+        .stop-btn {
+            background-color: #e74c3c;
+            color: white;
+            display: none; /* Hidden initially */
+        }
+
+        .stop-btn:hover {
+            background-color: #c0392b;
+        }
+
+        audio {
+            display: block;
+            margin-top: 10px;
+            width: 100%; /* Make audio player full width */
+        }
+
+        .loading {
+            color: #f39c12;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Radyo Oynatıcı</h1>
+    </header>
+
+    <div id="result">Yükleniyor...</div>
+
+    <script>
+        // Sayfa yüklendiğinde verileri al
+        window.addEventListener('load', async () => {
+            try {
+                const sessionResponse = await fetch('https://f1-apii.vercel.app/static/SessionInfo.json');
+                const sessionData = await sessionResponse.json();
+                const path = sessionData.Path; // path değerini al
+
+                const teamRadioUrl = `https://f1-apii.vercel.app/static/${path}TeamRadio.json`;
+
+                const radioResponse = await fetch(teamRadioUrl);
+                const radioData = await radioResponse.json();
+
+                radioData.Captures.sort((a, b) => new Date(b.Utc) - new Date(a.Utc));
+
+                const resultDiv = document.getElementById('result');
+                resultDiv.innerHTML = ''; // "Yükleniyor..." mesajını temizle
+
+                radioData.Captures.forEach(capture => {
+                    const radioPath = capture.Path;
+                    const finalUrl = `https://f1-apii.vercel.app/static/${path}${radioPath}`;
+                    const utcTime = capture.Utc;
+                    const racingNumber = capture.RacingNumber;
+
+                    // Radyo bilgileri için bir div oluştur
+                    const radioItem = document.createElement('div');
+                    radioItem.className = 'radio-item';
+                    radioItem.innerHTML = `
+                        <p><strong>Yarış Numarası:</strong> ${radioPath}</p>
+                        <p><strong>Yarış Numarası:</strong> ${racingNumber}</p>
+                        <p><strong>UTC Zamanı:</strong> ${new Date(utcTime).toLocaleString()}</p>
+                        <button class="play-btn">Oynat</button>
+                        <button class="stop-btn">Durdur</button>
+                        <audio src="${finalUrl}" preload="none"></audio>
+                    `;
+
+                    // Radyo öğesini ekle
+                    resultDiv.appendChild(radioItem);
+                });
+
+                resultDiv.addEventListener('click', (event) => {
+                    if (event.target.classList.contains('play-btn')) {
+                        const button = event.target;
+                        const audio = button.parentElement.querySelector('audio');
+                        const stopButton = button.parentElement.querySelector('.stop-btn');
+
+                        if (audio.paused) {
+                            audio.play();
+                            button.style.display = 'none'; // Oynat butonunu gizle
+                            stopButton.style.display = 'inline-block'; // Durdur butonunu göster
+                        }
+                    } else if (event.target.classList.contains('stop-btn')) {
+                        const button = event.target;
+                        const audio = button.parentElement.querySelector('audio');
+                        const playButton = button.parentElement.querySelector('.play-btn');
+
+                        audio.pause();
+                        playButton.style.display = 'inline-block'; // Oynat butonunu göster
+                        button.style.display = 'none'; // Durdur butonunu gizle
+                    }
+                });
+            } catch (error) {
+                console.error('Hata:', error);
+                const errorMessage = document.createElement('p');
+                errorMessage.innerText = 'Bir hata oluştu.';
+                document.getElementById('result').appendChild(errorMessage);
+            }
+        });
+    </script>
+</body>
+</html>
