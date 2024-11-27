@@ -64,39 +64,48 @@
     <div id="messages">Yükleniyor...</div>
 
     <script>
-        // Sayfa yüklendiğinde verileri al
         window.addEventListener('load', async () => {
             try {
+                // Yarış bilgilerini al
                 const sessionResponse = await fetch('https://f1-apii.vercel.app/static/SessionInfo.json');
                 const sessionData = await sessionResponse.json();
                 const path = sessionData.Path; // path değerini al
 
+                // Mesaj URL'sini oluştur
                 const messagesUrl = `https://f1-apii.vercel.app/static/${path}RaceControlMessages.json`;
 
+                // Yarış kontrol mesajlarını al
                 const messagesResponse = await fetch(messagesUrl);
                 const messagesData = await messagesResponse.json();
 
                 const messagesDiv = document.getElementById('messages');
                 messagesDiv.innerHTML = ''; // "Yükleniyor..." mesajını temizle
 
-                // Mesajları sırala (zamanlarına göre)
+                // Mesajları sırala (UTC zamanına göre azalan)
                 messagesData.Messages.sort((a, b) => new Date(b.Utc) - new Date(a.Utc));
 
                 messagesData.Messages.forEach(message => {
-                    const utcTime = new Date(message.Utc).toLocaleString();
-                    const lap = message.Lap;
-                    const category = message.Category;
-                    const content = message.Message;
+                    const localTime = new Date(message.Utc).toLocaleString('tr-TR', {
+                        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone, // Kullanıcının saat dilimine göre çevir
+                    });
 
                     // Mesaj bilgileri için bir div oluştur
                     const messageItem = document.createElement('div');
                     messageItem.className = 'message-item';
-                    messageItem.innerHTML = `
-                        <p><strong>UTC Zamanı:</strong> ${utcTime}</p>
-                        <p><strong>Tur:</strong> ${lap}</p>
-                        <p><strong>Kategori:</strong> ${category}</p>
-                        <p><strong>Mesaj:</strong> ${content}</p>
+
+                    // Değişkeni yalnızca veri varsa ekle
+                    const fields = `
+                        <p><strong>Yerel Zaman:</strong> ${localTime}</p>
+                        ${message.Lap ? `<p><strong>Tur:</strong> ${message.Lap}</p>` : ''}
+                        ${message.Category ? `<p><strong>Kategori:</strong> ${message.Category}</p>` : ''}
+                        ${message.Flag ? `<p><strong>Bayrak:</strong> ${message.Flag}</p>` : ''}
+                        ${message.Scope ? `<p><strong>Kapsam:</strong> ${message.Scope}</p>` : ''}
+                        ${message.Sector ? `<p><strong>Kesim:</strong> ${message.Sector}</p>` : ''}
+                        ${message.RacingNumber ? `<p><strong>Numara:</strong> ${message.RacingNumber}</p>` : ''}
+                        ${message.Message ? `<p><strong>Mesaj:</strong> ${message.Message}</p>` : ''}
                     `;
+
+                    messageItem.innerHTML = fields;
 
                     // Mesajı ekle
                     messagesDiv.appendChild(messageItem);
