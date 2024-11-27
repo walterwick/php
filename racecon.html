@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarış Kontrol Mesajları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1f1f1f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #messages {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .message-item {
+            background-color: #333;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .message-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-item p {
+            margin: 5px 0;
+        }
+
+        .loading {
+            color: #f39c12;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Yarış Kontrol Mesajları</h1>
+    </header>
+
+    <div id="messages">Yükleniyor...</div>
+
+    <script>
+        // Sayfa yüklendiğinde verileri al
+        window.addEventListener('load', async () => {
+            try {
+                const sessionResponse = await fetch('https://f1-apii.vercel.app/static/SessionInfo.json');
+                const sessionData = await sessionResponse.json();
+                const path = sessionData.Path; // path değerini al
+
+                const messagesUrl = `https://f1-apii.vercel.app/static/${path}RaceControlMessages.json`;
+
+                const messagesResponse = await fetch(messagesUrl);
+                const messagesData = await messagesResponse.json();
+
+                const messagesDiv = document.getElementById('messages');
+                messagesDiv.innerHTML = ''; // "Yükleniyor..." mesajını temizle
+
+                // Mesajları sırala (zamanlarına göre)
+                messagesData.Messages.sort((a, b) => new Date(b.Utc) - new Date(a.Utc));
+
+                messagesData.Messages.forEach(message => {
+                    const utcTime = new Date(message.Utc).toLocaleString();
+                    const lap = message.Lap;
+                    const category = message.Category;
+                    const content = message.Message;
+
+                    // Mesaj bilgileri için bir div oluştur
+                    const messageItem = document.createElement('div');
+                    messageItem.className = 'message-item';
+                    messageItem.innerHTML = `
+                        <p><strong>UTC Zamanı:</strong> ${utcTime}</p>
+                        <p><strong>Tur:</strong> ${lap}</p>
+                        <p><strong>Kategori:</strong> ${category}</p>
+                        <p><strong>Mesaj:</strong> ${content}</p>
+                    `;
+
+                    // Mesajı ekle
+                    messagesDiv.appendChild(messageItem);
+                });
+            } catch (error) {
+                console.error('Hata:', error);
+                const messagesDiv = document.getElementById('messages');
+                messagesDiv.innerHTML = `<p class="error">Bir hata oluştu. Mesajlar yüklenemedi.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
