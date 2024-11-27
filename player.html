@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clappr Video Player</title>
+  <script type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@clappr/player@latest/dist/clappr.plainhtml5.min.js">
+  </script>
+</head>
+<body>
+  <h1>Clappr Video Player</h1>
+  <div id="player" style="width: 100%; height: 400px;"></div>
+
+  <script>
+    // Clappr video player ayarları
+    var player = new Clappr.Player({
+      source: "https://www.w3schools.com/html/mov_bbb.mp4", // Örnek video URL'si
+      parentId: "#player", // Player'ı bağladığımız div'in ID'si
+      autoPlay: false, // Otomatik oynatmayı açmak için true yapabilirsiniz
+      mute: false, // Sesli başlatmak için false yapabilirsiniz
+      height: "100%", // Player yüksekliği
+      width: "100%"   // Player genişliği
+    });
+  </script>
+</body>
+</html>
