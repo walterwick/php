@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M3U8 Oynatıcı</title>
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <style>
+        #videoPlayer {
+            width: 100%;
+            height: 500px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>M3U8 Oynatıcı</h1>
+    <input type="text" id="m3u8Link" placeholder="M3U8 linkini girin" />
+    <button id="playButton">Oynat</button>
+
+    <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto">
+        <source id="videoSource" src="" type="application/x-mpegURL">
+        Your browser does not support the video tag.
+    </video>
+
+    <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+    <script>
+        document.getElementById('playButton').addEventListener('click', function() {
+            var m3u8Link = document.getElementById('m3u8Link').value;
+            var videoPlayer = document.getElementById('videoPlayer');
+            var videoSource = document.getElementById('videoSource');
+
+            if (m3u8Link) {
+                videoSource.src = m3u8Link;
+                videoPlayer.load();
+                videoPlayer.play();
+            } else {
+                alert('Lütfen geçerli bir M3U8 linki girin.');
+            }
+        });
+    </script>
+
+</body>
+</html>
