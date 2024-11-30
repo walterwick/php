@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yarış Kontrol Mesajları</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #e0e0e0;
+            margin: 0;
+            padding: 0;
+        }
+
+        header {
+            background-color: #1f1f1f;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            font-size: 24px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        #messages {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #2a2a2a;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+
+        .message-item {
+            background-color: #333;
+            margin-bottom: 15px;
+            padding: 15px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.5);
+        }
+
+        .message-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .message-item p {
+            margin: 5px 0;
+        }
+
+        .loading {
+            color: #f39c12;
+        }
+
+        .error {
+            color: #e74c3c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Yarış Kontrol Mesajları</h1>
+    </header>
+
+    <div id="messages">Yükleniyor...</div>
+
+    <script>
+        window.addEventListener('load', async () => {
+            try {
+                // Yarış bilgilerini al
+                const sessionResponse = await fetch('https://f1-apii.vercel.app/static/SessionInfo.json');
+                const sessionData = await sessionResponse.json();
+                const path = sessionData.Path; // path değerini al
+
+                // Mesaj URL'sini oluştur
+                const messagesUrl = `https://f1-apii.vercel.app/static/${path}RaceControlMessages.json`;
+
+                // Yarış kontrol mesajlarını al
+                const messagesResponse = await fetch(messagesUrl);
+                const messagesData = await messagesResponse.json();
+
+                const messagesDiv = document.getElementById('messages');
+                messagesDiv.innerHTML = ''; // "Yükleniyor..." mesajını temizle
+
+                // Mesajları sırala (UTC zamanına göre azalan)
+                messagesData.Messages.sort((a, b) => new Date(b.Utc) - new Date(a.Utc));
+
+                messagesData.Messages.forEach(message => {
+                    // UTC zamanını yerel zamana çevir
+                    const utcDate = new Date(message.Utc);
+                    
+                    // Kullanıcının yerel saat diliminde göster
+                    const localTime = utcDate.toLocaleString('tr-TR', {
+                        timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        second: '2-digit'
+                    });
+
+                    // Mesaj bilgileri için bir div oluştur
+                    const messageItem = document.createElement('div');
+                    messageItem.className = 'message-item';
+
+                    // Değişkeni yalnızca veri varsa ekle
+                    const fields = `
+                        <p><strong>Yerel Zaman:</strong> ${localTime}</p>
+                        ${message.Lap ? `<p><strong>Tur:</strong> ${message.Lap}</p>` : ''}
+                        ${message.Category ? `<p><strong>Kategori:</strong> ${message.Category}</p>` : ''}
+                        ${message.Flag ? `<p><strong>Bayrak:</strong> ${message.Flag}</p>` : ''}
+                        ${message.Scope ? `<p><strong>Kapsam:</strong> ${message.Scope}</p>` : ''}
+                        ${message.Sector ? `<p><strong>Kesim:</strong> ${message.Sector}</p>` : ''}
+                        ${message.RacingNumber ? `<p><strong>Numara:</strong> ${message.RacingNumber}</p>` : ''}
+                        ${message.Message ? `<p><strong>Mesaj:</strong> ${message.Message}</p>` : ''}
+                    `;
+
+                    messageItem.innerHTML = fields;
+
+                    // Mesajı ekle
+                    messagesDiv.appendChild(messageItem);
+                });
+            } catch (error) {
+                console.error('Hata:', error);
+                const messagesDiv = document.getElementById('messages');
+                messagesDiv.innerHTML = `<p class="error">Bir hata oluştu. Mesajlar yüklenemedi.</p>`;
+            }
+        });
+    </script>
+</body>
+</html>
