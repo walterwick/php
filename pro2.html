@@ -1,0 +1,2619 @@
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>DAZN F1 - Rustico TV</title>
+    <link rel="shortcut icon" type="image/x-icon" href="https://www.dazn.com/favicon.svg">
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <script type='text/javascript'>
+      document.oncontextmenu = function(){return false}
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/console-ban@4.1.0/dist/console-ban.min.js"></script>
+  <script>
+      // default options
+      ConsoleBan.init()
+      // custom options
+      ConsoleBan.init({
+        redirect: '/'
+      })
+    </script>  
+    <style>
+      /* Estilo para el fondo */
+      body {
+        background-color: #3F4354;
+        font-family: 'Open Sans', sans-serif;
+      }
+      /* Estilo para el título */
+      h1 {
+        text-align: center;
+        background-color: rgb(0, 0, 0);
+        color: white;
+        padding: 10px;
+        border-radius: 10px;
+      }
+
+      /* Estilo para el reproductor de vídeo */
+      #video-player {
+        width: 80%;
+        margin: 0 auto;
+        display: block;
+      }
+
+      button {
+ border: none;
+ color: #fff;
+ background-image: linear-gradient(30deg, #0400ff, #4ce3f7);
+ border-radius: 20px;
+ background-size: 100% auto;
+ font-family: inherit;
+ font-size: 17px;
+ padding: 0.6em 1.5em;
+}
+
+button:hover {
+ background-position: right center;
+ background-size: 200% auto;
+ -webkit-animation: pulse 2s infinite;
+ animation: pulse512 1.5s infinite;
+}
+
+@-webkit-keyframes pulse512 {
+ 0% {
+  -webkit-box-shadow: 0 0 0 0 #05bada66;
+          box-shadow: 0 0 0 0 #05bada66;
+ }
+
+ 70% {
+  -webkit-box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+          box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+ }
+
+ 100% {
+  -webkit-box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+          box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+ }
+}
+
+@keyframes pulse512 {
+ 0% {
+  -webkit-box-shadow: 0 0 0 0 #05bada66;
+          box-shadow: 0 0 0 0 #05bada66;
+ }
+
+ 70% {
+  -webkit-box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+          box-shadow: 0 0 0 10px rgb(218 103 68 / 0%);
+ }
+
+ 100% {
+  -webkit-box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+          box-shadow: 0 0 0 0 rgb(218 103 68 / 0%);
+ }
+}
+
+
+    </style>
+     <style>
+
+      /* Cuerpo */
+      body {
+        background-color: black; /* Fondo negro */
+        color: white; /* Color de texto blanco */
+      }
+    
+    /* Clasificación */
+    .container2 {
+        text-align: center; /* Centrar contenido */
+        width: 80%; /* Ancho del 60% de la pantalla */
+        margin: 0 auto; /* Centrar el contenido */
+        margin-top: 100px; /* Espacio superior para separar contenedores */
+      }
+    
+    /* Vídeo */
+      .container {
+        text-align: center; /* Centrar contenido */
+      width: 46%; /* Ancho del 80% de la pantalla */
+        height: 80%; /* Alto del 80% de la pantalla */
+        margin: 0 auto; /* Centrar el contenido */
+        margin-top: 100px; /* Espacio superior para separar contenedores */
+      }
+      h1 {
+        text-align: center; /* Centrar el texto */
+      }
+      table {
+        border-collapse: separate; /* Cambiar a 'separate' para permitir bordes redondeados */
+        width: 100%; /* Ancho del 100% del contenedor */
+        margin: 0 auto; /* Centrar la tabla */
+        border-radius: 10px; /* Bordes redondeados */
+        overflow: hidden; /* Asegurar que los bordes redondeados se apliquen correctamente */
+      }
+      th, td {
+        border: none;
+        padding: 6px;
+        text-align: left;
+      }
+      th {
+        font-weight: bold;
+        background-color: maroon; /* Cabecera granate */
+        color: white;
+        text-align: center; /* Centrar el texto en la cabecera */
+        border-radius: 10px 10px 0 0; /* Bordes redondeados en la cabecera */
+      }
+      .separator {
+        margin-top: 20px;
+      }
+      #race-name {
+        margin: 20px 0;
+        font-size: 24px;
+        color: white;
+        text-align: center; /* Centrar el texto */
+      }
+      .tables-container {
+        display: flex;
+        flex-wrap: wrap; /* Permitir que los contenedores se envuelvan en dispositivos estrechos */
+        justify-content: space-between;
+        margin-top: 20px;
+      }
+      .table-container {
+        width: 30%; /* Ajustar el ancho para que quepan tres tablas en horizontal */
+        margin-bottom: 20px;
+      }
+      .table-container table {
+        width: 100%;
+        border-collapse: separate; /* Cambiar a 'separate' para permitir bordes redondeados */
+        margin-bottom: 20px;
+      }
+      .table-container th,
+      .table-container td {
+        padding: 8px;
+        border: 1px solid #ddd;
+        border-radius: 5px; /* Bordes redondeados */
+      }
+      .table-container th {
+        background-color: maroon; /* Cabecera granate */
+        color: white;
+      }
+      .highlight {
+        font-weight: bold;
+      }
+  
+      /* Estilos para dispositivos móviles */
+      @media (max-width: 768px) {
+        .table-container {
+          width: 100%; /* Ancho completo para dispositivos móviles */
+        }
+      }
+  
+      /* Estilos para pantallas más pequeñas */
+      @media (max-width: 1200px) {
+        .table-container {
+          width: 60%; /* Ajustar el ancho para que quepan dos tablas en horizontal */
+        }
+      }
+  
+      @media (max-width: 992px) {
+        .table-container {
+          width: 100%; /* Ancho completo para pantallas más pequeñas */
+        }
+      }
+    
+    
+  
+      /* Estilos para la información del circuito */
+      .circuit-info {
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        padding: 10px;
+        margin: 10px auto; /* Centrado horizontalmente */
+        max-width: 300px;
+      }
+      .circuit-info img {
+        max-width: 100%;
+        display: block;
+        margin: 0 auto; /* Centrado horizontalmente */
+      }
+  
+      /* Estilos para los títulos */
+      h2 {
+        text-align: center; /* Centrar el texto */
+      }
+  
+      /* Estilos para los contenedores de carreras */
+      .race-container {
+        max-width: 100%; /* Ancho máximo igual al del dispositivo */
+        margin: 0 auto; /* Centrado horizontalmente */
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Columnas adaptables */
+        grid-gap: 20px;
+        padding: 20px;
+      }
+      .race-card {
+        border: 1px solid #ccc;
+        padding: 20px;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        color: black;
+      }
+  
+      .race-name {
+        font-weight: bold;
+        font-size: 18px;
+        margin-bottom: 10px;
+      }
+  
+      .race-info {
+        font-style: italic;
+        margin-bottom: 5px;
+      }
+  
+      /* Estilo para el video */
+      .video-container {
+        display: flex;
+        justify-content: center; /* Centramos horizontalmente el iframe */
+        margin-bottom: 20px;
+      }
+  
+      .video-container iframe {
+        width: 100%;
+        max-width: 900px; /* Máximo ancho para pantallas grandes */
+        height: 450px; /* Altura fija */
+        border: none;
+      }
+  
+      .content {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-top: 20px;
+        gap: 10px; /* Espacio entre los iframes */
+      }
+  
+         /* Estilos para el contenedor del iframe */
+          #movistarContainer {
+              margin: 20px auto; /* Margen superior e inferior de 20px, centrado horizontalmente */
+              max-width: 600px; /* Ancho máximo del contenedor */
+              border: 1px solid #ccc; /* Borde para el contenedor */
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra ligera */
+          }
+  
+          /* Estilos para el iframe dentro del contenedor */
+          #movistarContainer iframe {
+              width: 100%; /* Ancho completo del contenedor */
+              height: 400px; /* Altura fija del iframe */
+              border: none; /* Sin borde en el iframe */
+          }
+  
+      .iframe-container {
+        width: 49%; /* Ancho del 49% del contenedor para hacer espacio para ambos iframes */
+        height: 400px; /* Altura de los iframes */
+        margin-top: 10px; /* Espacio superior para separar contenedores */
+      }
+  
+      .iframe-container iframe {
+        width: 100%; /* Ancho del 100% del contenedor */
+        height: 100%; /* Altura del 100% del contenedor */
+      }
+  
+      .iframe-title {
+        text-align: center;
+        margin-bottom: 10px;
+        font-size: 18px;
+        color: white;
+      }
+  
+      .dashboard-container {
+        width: 100%; /* Ancho del 100% del contenedor */
+        height: 600px; /* Altura del iframe del dashboard */
+        margin-top: 75px; /* Espacio superior */
+      }
+  
+      .spacer {
+        margin-top: 40px; /* Espacio superior para separar contenedores */
+      }
+      .dashboard-container iframe {
+        width: 100%; /* Ancho del 100% del contenedor */
+        height: 100%; /* Altura del 100% del contenedor */
+        border: none; /* Eliminar borde del iframe */
+        margin-top: 40px; /* Espacio superior para separar contenedores */
+      }
+      
+     /* Media query para dispositivos móviles */
+      @media (max-width: 768px) {
+        .container {
+          width: 90%; /* Ancho del 90% de la pantalla en dispositivos móviles */
+        }
+  
+        .table-container {
+          width: 95%; /* Utiliza el 80% del ancho disponible en dispositivos móviles */
+          margin-left: auto; /* Centra el contenedor en dispositivos móviles */
+          margin-right: auto; /* Centra el contenedor en dispositivos móviles */
+       }
+  
+        .race-container {
+          grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Columnas adaptables en dispositivos móviles */
+        }
+  
+        .circuit-info {
+          max-width: 250px; /* Tamaño máximo del contenedor en dispositivos móviles */
+        }
+        .table-wrapper {
+          margin-bottom: 10px; /* Ajusta según sea necesario */
+        }
+      }
+       
+  
+      /* Estilos información circuito */
+      .containert {
+              background-color: #1a1a1a;
+              padding: 20px;
+              border-radius: 8px;
+              border: 3px solid #8B0000; /* Borde rojo oscuro */
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+              max-width: 550px;
+              width: 100%;
+              margin: 0 auto;
+              background-color: transparent; /* Fondo transparente */
+          }
+          h1 {
+              text-align: center;
+              color: #ffffff;
+              font-weight: bold;
+          }
+          .current-circuit {
+              margin-top: 0px;
+              padding: 10px;
+              border: 0px solid #444444;
+              border-radius: 8px;
+              text-align: center;
+              font-size: 14px; /* Tamaño de fuente reducido */
+              background-color: transparent; /* Fondo transparente */
+          }
+          .current-circuit p {
+              margin: 5px 0;
+              font-weight: bold;
+              color: #ffffff;
+          }
+          .data-cell {
+              background-color: transparent;
+              border: 1px solid #444444;
+              padding: 10px;
+              border-radius: 8px;
+              margin: 5px 0;
+          }
+          .race-name {
+              font-size: 1.5em; /* Tamaño más grande */
+              margin: 10px 0;
+          }
+          a {
+              color: #ffffff;
+              text-decoration: underline;
+          }
+  
+          .data-boxt {
+              margin-top: 0px;
+              padding: 10px;
+              border: 1px solid #444444;
+              border-radius: 8px;
+              background-color: #2a2a2a;
+              flex: 2; /* Más pequeño */
+          }
+          .data-boxt p {
+              margin: 5px 0;
+              font-weight: bold;
+          }
+          a {
+              color: #ffffff;
+              text-decoration: underline;
+          }
+          .data-boxt .info-line {
+              display: flex;
+              justify-content: space-between;
+              margin: 5px 0;
+              padding: 5px;
+              border: 1px solid #444444;
+              border-radius: 4px;
+              background-color: rgba(0, 0, 0, 0.5); /* Fondo transparente */
+          }
+          .data-boxt .info-line span {
+              flex: 1;
+              text-align: left;
+              font-weight: bold;
+              font-size: 13px; /* Tamaño de fuente reducido */
+          }
+          .data-boxt .info-line span.value {
+              text-align: right;
+              font-weight: normal;
+              font-size: 13px; /* Tamaño de fuente reducido */
+          }
+          a {
+              color: #ffffff;
+              text-decoration: underline;
+          }
+  
+         .creditos {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              flex-direction: column;
+              text-align: center;
+          }
+  
+  
+          /* Contenedor horizontal con flex-wrap */
+          .horizontal-container {
+              display: flex;
+              flex-direction: row; /* Horizontal por defecto */
+              justify-content: space-between; /* Opcional: para espaciar los elementos */
+              flex-wrap: wrap; /* Permite que los elementos se ajusten en pantallas pequeñas */
+          }
+  
+          .current-circuit {
+              flex: 3; /* Más ancho */
+              width: 280px;
+              margin-right: 10px; /* Espacio entre los divs */
+          }
+  
+          .data-boxt {
+              flex: 2; /* Más pequeño */
+              height: 200px; /* Ajusta la altura según tus necesidades */
+              padding: 5px; /* Reduce el padding para disminuir la altura */
+              position: relative; /* Posicionamiento relativo */
+              top: 70px; /* Ajusta la posición superior para subirlo */
+              background-color: transparent; /* Fondo transparente */
+              border: 0px solid #444444; /* Mantén el borde si lo deseas */
+          }
+  
+          /* Media query para pantallas pequeñas */
+          @media (max-width: 768px) {
+              .containert {
+                  max-width: 300px; /* Reduce el ancho máximo en pantallas pequeñas */
+                  padding: 10px; /* Reduce el padding en pantallas pequeñas */
+                  border-width: 2px; /* Reduce el ancho del borde en pantallas pequeñas */
+              }
+  
+              .horizontal-container {
+                  flex-direction: column; /* Cambia a vertical en pantallas pequeñas */
+              }
+  
+              .current-circuit {
+                  margin-right: 0; /* Elimina el margen derecho en pantallas pequeñas */
+                  margin-bottom: 2px; /* Añade margen inferior para separar los divs */
+              }
+  
+              .data-boxt {
+                  width: 95%; /* Ajusta el ancho para pantallas pequeñas */
+                  height: auto; /* Ajusta la altura para pantallas pequeñas */
+                  top: 0; /* Elimina la posición superior en pantallas pequeñas */
+                  margin-top: 0px; /* Añade margen superior para separar los divs */
+                  background-color: transparent; /* Fondo transparente en pantallas pequeñas */
+              }
+          }
+  
+          
+           .containerN {
+              text-align: center;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              gap: 10px; /* Espacio entre el texto y la imagen */
+          }
+          .logo-small {
+              width: 100px; /* Puedes ajustar el tamaño aquí */
+              height: auto; /* Mantiene la proporción de la imagen */
+          }
+          .containerl {
+              max-width: 450px;
+              margin: 0px auto;
+              background-color: #fff;
+              padding: 0px;
+              border-radius: 8px;
+              box-shadow: 0 0 0px rgba(0, 0, 0, 0.1);
+              text-align: center;
+          }
+  
+          /* Información circuito */
+          .circuit-card {
+              background-color: #666; /* Fondo gris más oscuro */
+              color: #fff; /* Letras blancas */
+              margin: 10px;
+              padding: 10px;
+              border-radius: 5px;
+              border: 2px solid #8B0000; /* Borde rojo oscuro */
+              box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+              display: inline-block;
+              width: calc(15% - 20px); /* Distribuye en 5 columnas en PC */
+              vertical-align: top;
+              text-align: center; /* Centra el contenido */
+              background-color: transparent; /* Fondo transparente */
+          }
+          .circuit-name {
+              font-size: 1rem; /* Tamaño de letra más pequeño */
+              margin-bottom: 10px;
+          }
+          .circuit-info {
+              font-size: 0.8rem; /* Tamaño de letra más pequeño */
+              text-align: center;
+          }
+          @media (max-width: 1200px) {
+              .circuit-card {
+                  width: calc(20% - 20px); /* Distribuye en 4 columnas en pantallas medianas */
+              }
+          }
+          @media (max-width: 992px) {
+              .circuit-card {
+                  width: calc(26% - 20px); /* Distribuye en 3 columnas en pantallas más pequeñas */
+              }
+          }
+          @media (max-width: 768px) {
+              .circuit-card {
+                  width: calc(40% - 20px); /* Distribuye en 2 columnas en móvil */
+              }
+          }
+          @media (max-width: 576px) {
+              .circuit-card {
+                  width: calc(90% - 20px); /* Una columna en pantallas muy pequeñas */
+              }
+          }
+  
+          .boton {
+              background-color: #8B0000; /* Rojo oscuro */
+              color: white;
+              padding: 10px 20px;
+              margin: 5px;
+              border: none;
+              border-radius: 10px; /* Bordes redondeados */
+              box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3); /* Sombra */
+              cursor: pointer;
+          }
+          .boton:hover {
+              background-color: #A52A2A; /* Rojo más claro al pasar el ratón */
+          }
+          .botones-container {
+              display: flex;
+              justify-content: center; /* Centrar los botones horizontalmente */
+              margin-top: 20px;
+          }
+          .seccion {
+              margin-top: 50px;
+          }
+          /* Estilos específicos para móviles */
+          @media (max-width: 600px) {
+              .botones-container {
+                  flex-direction: row; /* Cambiar la dirección a fila */
+                  flex-wrap: wrap; /* Permitir que los botones se envuelvan */
+                  justify-content: space-around; /* Espacio alrededor de los botones */
+              }
+              .boton {
+                  width: 45%; /* Ajustar el ancho de los botones */
+                  margin: 5px; /* Ajustar el margen */
+              }
+          }
+  
+          /* Estilo del botón */
+          .boton-flotante {
+              position: fixed;
+              bottom: 20px;
+              right: 20px;
+              background-color: #8B0000; /* Rojo oscuro */
+              color: white;
+              border: none;
+              padding: 10px; /* Tamaño reducido */
+              width: 45px; /* Ancho del botón */
+              height: 45px; /* Alto del botón */
+              cursor: pointer;
+              font-size: 16px; /* Tamaño de fuente reducido */
+              box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              border-radius: 10px; /* Bordes redondeados */
+          }
+  
+          .boton-flotante:hover {
+              background-color: #A52A2A; /* Rojo más claro al pasar el ratón */
+          }
+  
+          .flecha {
+              width: 0;
+              height: 0;
+              border-left: 10px solid transparent;
+              border-right: 10px solid transparent;
+              border-bottom: 15px solid white; /* Cabeza de flecha normal */
+          }
+      
+      #particles-js {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        top: 0;
+        left: 0;
+        z-index: -1;
+      }
+      .content {
+        height: 200vh; /* Ajusta esta altura según el contenido de tu página */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: white;
+        font-family: Arial, sans-serif;
+      }
+          .button-container {
+              display: flex;
+              justify-content: center;
+              margin-bottom: 10px;
+          }
+          .video-button {
+              padding: 10px 20px;
+              margin-right: 10px;
+              cursor: pointer;
+              background-color: #800000; /* Color granate */
+              color: white; /* Letras blancas */
+              border: none;
+              border-radius: 5px;
+          }
+          .video-button:hover {
+              background-color: #a00000; /* Color granate más claro al pasar el ratón */
+          }
+          .video-container {
+              width: 100%;
+              height: 400px;
+          }
+      
+      /* Proximos circuitos */
+         .upcoming-circuits-container {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center;
+              padding: 20px;
+          }
+          .upcoming-circuit-box {
+              border: 2px solid maroon;
+              background-color: transparent;
+              margin: 10px;
+              padding: 10px;
+              width: calc(20% - 40px); /* 5 boxes per row */
+              box-sizing: border-box;
+              text-align: center;
+              color: white;
+              border-radius: 10px;
+          }
+          .upcoming-data-cell {
+              margin: 5px 0;
+              border: 1px solid white;
+              border-radius: 5px;
+              padding: 5px;
+          }
+          .upcoming-race-name {
+              font-weight: bold;
+          }
+          @media (max-width: 1200px) {
+              .upcoming-circuit-box {
+                  width: calc(25% - 40px); /* 4 boxes per row */
+              }
+          }
+          @media (max-width: 992px) {
+              .upcoming-circuit-box {
+                  width: calc(33.33% - 40px); /* 3 boxes per row */
+              }
+          }
+          @media (max-width: 768px) {
+              .upcoming-circuit-box {
+                  width: calc(50% - 40px); /* 2 boxes per row */
+              }
+          }
+          @media (max-width: 576px) {
+              .upcoming-circuit-box {
+                  width: calc(100% - 40px); /* 1 box per row */
+              }
+          }
+      
+      /* Status Api */
+          .statusContainer {
+          width: 300px;
+              margin: auto;
+              padding-bottom: 20px; /* Espacio adicional debajo de la tabla */
+          }
+          .customTable {
+              background-color: transparent;
+              border-collapse: separate; /* Cambiado a separate para que las esquinas redondeadas sean visibles */
+              border-spacing: 0;
+              text-align: left;
+              border-radius: 10px;
+              overflow: hidden;
+              width: auto;
+          }
+          th, td {
+              padding: 5px;
+              text-align: center;
+              white-space: nowrap;
+              width: 100px;
+              border: 1px solid white; /* Borde blanco */
+              border-radius: 10px; /* Bordes redondeados */
+          }
+          th {
+              background-color: maroon;
+              color: white;
+          }
+          .status {
+              display: flex;
+              justify-content: center;
+              align-items: center;
+          }
+          .tick {
+              color: green;
+              margin-left: 10px;
+          }
+          .cross {
+              color: red;
+              margin-left: 10px;
+          }
+      a {
+              text-decoration: none; /* Quitar subrayado */
+              color: inherit; /* Mantener el color del texto */
+          }
+      
+      /* Juego */
+          .containerGame {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              background-color: transparent;
+              color: #fff;
+              font-family: Arial, sans-serif;
+              margin: 0;
+          }
+          .title {
+              font-size: 1.5em; /* Reducir tamaño de fuente */
+              margin-bottom: 10px;
+          }
+          .description {
+              margin-bottom: 15px; /* Reducir margen inferior */
+              text-align: center; /* Centrar el texto */
+          }
+          .game-area {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              border: 2px solid #fff;
+              border-radius: 20px;
+              padding: 15px; /* Reducir padding */
+              margin-bottom: 15px; /* Reducir margen inferior */
+              width: 90%;
+              max-width: 400px; /* Reducir ancho máximo */
+              margin: 0 auto; /* Centrar el contenedor */
+          }
+          .lights {
+              display: flex;
+              justify-content: center;
+              margin-bottom: 15px; /* Reducir margen inferior */
+              flex-wrap: wrap;
+          }
+          .column {
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              margin: 5px;
+              border: 2px solid #fff;
+              border-radius: 10px;
+              padding: 5px;
+              background-color: #333; /* Fondo gris oscuro */
+          }
+          .light {
+              width: 30px; /* Reducir tamaño */
+              height: 30px; /* Reducir tamaño */
+              margin: 5px;
+              border-radius: 50%;
+              background-color: black; /* Mantener en negro */
+              opacity: 0.3;
+              border: 2px solid #fff;
+          }
+          .light.on {
+          background-color: red; /* Cambiar a rojo cuando esté encendida */
+              opacity: 1;
+          }
+          .message {
+              margin-top: 15px; /* Reducir margen superior */
+              text-align: center;
+          }
+          .best-time {
+              background-color: #000;
+              border: 2px solid #fff;
+              padding: 10px; /* Reducir padding */
+              border-radius: 10px;
+              width: 250px; /* Reducir ancho */
+              height: 20px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin: 15px auto 0; /* Reducir margen superior y centrar */
+          }		
+          @media (max-width: 600px) {
+              .containerGame {
+                  justify-content: center;
+                  align-items: center;
+              }
+              .light {
+                  width: 20px; /* Reducir tamaño */
+                  height: 20px; /* Reducir tamaño */
+              }
+          }
+      
+      /* Custom pilots */
+      .custom-container {
+              background-color: transparent; /* Fondo transparente */
+              color: white;
+              display: flex;
+              justify-content: center;
+              align-items: center;
+              margin: 0;
+              text-align: center;
+          }
+          .custom-pilot-container {
+              background-color: transparent;
+              padding: 1px;
+              border-radius: 1px;
+              display: flex;
+              flex-direction: column;
+              align-items: center;
+              justify-content: center;
+              width: auto;
+              max-width: 100%;
+          }
+          .custom-driver-cell {
+              margin: -20px;
+              display: inline-block;
+        justify-content: center; /* Centrar horizontalmente */
+        align-items: center; /* Centrar verticalmente */
+              text-align: center;
+              background-color: transparent;
+              border: 2px solid white;
+              border-radius: 10px;
+              position: relative;
+              transform: scale(0.75);
+              transform-origin: top center;
+        font-size: 1.2em; /* Aumentar tamaño del texto */
+          }
+          .custom-driver-cell img {
+              display: table-cell; /* Cambiar a display table-cell */
+              vertical-align: middle; /* Centrar verticalmente */
+              margin: 0 auto; /* Centrar horizontalmente */
+              width: 150px;
+              height: auto;
+          }
+          .custom-select, .custom-button {
+              margin: 5px;
+              padding: 10px;
+              border: none;
+              border-radius: 5px;
+        font-size: 0.9em; /* Aumentar tamaño del texto */
+          }
+          .custom-select {
+              background-color: #800000;
+              color: white;
+          }
+          .custom-button {
+              background-color: #800000;
+              color: white;
+              cursor: pointer;
+          }
+          .custom-add-driver-button {
+              background-color: #800000;
+              width: 40px;
+              height: 40px;
+              display: inline-block;
+              text-align: center;
+              line-height: 40px;
+              font-size: 26px;
+              border-radius: 5px;
+              cursor: pointer;
+          }
+          .custom-delete-button {
+              position: absolute;
+              top: 5px;
+              right: 5px;
+              background-color: #800000;
+              width: 20px;
+              height: 20px;
+              text-align: center;
+              line-height: 20px;
+              font-size: 14px;
+              border-radius: 50%;
+              cursor: pointer;
+          }
+          .custom-info {
+              margin-top: 10px;
+          }
+          .custom-info.custom-date {
+              margin-bottom: 10px;
+          }
+          .custom-driver-selectors {
+              display: flex;
+              flex-wrap: wrap;
+              justify-content: center; /* Centrar horizontalmente */
+              align-items: center; /* Centrar verticalmente */
+          }
+
+
+          .button {
+  display: inline-block;
+  font-size: 20px; /* Tamaño de fuente más grande */
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+  text-decoration: none;
+  background-color: #3a82f6; /* Color azul brillante */
+  padding: 15px 15px;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.icon {
+  display: inline-block;
+  vertical-align: middle;
+  width: 25px;  /* Tamaño del icono aumentado */
+  height: 25px;
+  margin-right: 10px;
+  background-image: url("/img/casa.png");
+  background-size: contain;
+  background-repeat: no-repeat;
+}
+
+.button:hover {
+  background-color: #0056b3; /* Azul más oscuro en hover */
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+}
+
+.button:active {
+  background-color: #003f7f; /* Azul aún más oscuro en active */
+  box-shadow: inset 0 3px 5px rgba(0, 0, 0, 0.6);
+  transform: translateY(1px);
+}
+
+/* Contenedor de radio y control */
+        /* Radio y control */
+        .radiocon-container {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            max-width: 1200px;
+            margin: 0 auto 80px auto; /* Reducir el espacio debajo del contenedor */
+			gap: 20px; /* Espacio entre la tabla y el contenedor de radios */
+        }
+
+        .radiocon {
+            background-color: rgba(255, 255, 255, 0.1); /* Fondo transparente */
+            border: 1px solid rgba(255, 255, 255, 0.3); /* Borde blanco y semi-transparente */
+            padding: 10px;
+            border-radius: 8px; /* Bordes redondeados para el contenedor */
+            margin-bottom: 20px; /* Espacio entre las secciones */
+            flex: 1; /* Para que ambas secciones ocupen el mismo espacio */
+            max-height: 370px; /* Limitar la altura máxima del contenedor */
+            overflow: hidden; /* Ocultar la barra de desplazamiento */
+        }
+
+        #race-control, #team-radio {
+            max-height: 350px; /* Limitar la altura a 350px */
+            overflow-y: auto; /* Mantener el desplazamiento */
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+			padding-bottom: 15px; /* Espacio inferior adicional para visibilidad completa del último elemento */
+        }
+
+		/* Asegurar espacio adicional en el último elemento de cada sección */
+		#race-control .race-message:last-child, #team-radio .radio-message:last-child {
+			margin-bottom: 30px; /* Espacio extra al último mensaje */
+		}
+		
+        /* Estilos para la barra de desplazamiento */
+        #race-control::-webkit-scrollbar,
+        #team-radio::-webkit-scrollbar {
+            width: 10px; /* Ancho de la barra de desplazamiento */
+        }
+
+        #race-control::-webkit-scrollbar-track,
+        #team-radio::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.1); /* Color de fondo de la pista */
+            border-radius: 10px; /* Bordes redondeados para la pista */
+        }
+
+        #race-control::-webkit-scrollbar-thumb,
+        #team-radio::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.6); /* Color del pulgar */
+            border-radius: 10px; /* Bordes redondeados para el pulgar */
+        }
+
+        #race-control::-webkit-scrollbar-thumb:hover,
+        #team-radio::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.8); /* Color del pulgar al pasar el mouse */
+        }
+
+        .race-message, .radio-message {
+            margin-bottom: 15px;
+        }
+
+        .race-message time, .radio-message time {
+            display: block;
+            font-size: 12px;
+            color: #fff; /* Color blanco para el tiempo */
+        }
+
+        .race-message p, .radio-message p {
+            font-weight: bold;
+            margin: 0;
+            color: #fff; /* Color blanco para el texto */
+        }
+
+        audio {
+            width: 100%;
+        }
+
+        .radio-message {
+            background-color: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1); /* Sombra blanca y semi-transparente */
+            display: flex;
+        }
+
+        .radio-message table {
+            width: 100%; /* Full width for the table */
+            border-collapse: collapse; /* Collapsing borders */
+        }
+
+        .radio-message td {
+            border: 1px solid transparent; /* Transparent borders */
+            vertical-align: center; /* Align cells at the top */
+            padding: 3px; /* Space around text */
+        }
+
+        .radio-message td:first-child {
+            width: 5%; /* Width for time and acronym column */
+        }
+
+        .radio-message td:last-child {
+            width: 30%; /* Width for audio column */
+        }
+
+        .radio-message audio {
+            height: 30px; /* Ajusta la altura del elemento de audio */
+            width: 100%; /* Mantenerlo en 100% para que ocupe toda la celda */
+        }
+
+        .radio-message time {
+            font-size: 14px; /* Smaller font for time */
+            margin-bottom: 8px; /* Space between time and acronym */
+        }
+
+        .radio-message .acronym-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center; /* Center acronym */
+            margin: 10px 0; /* Space between acronym and audio */
+        }
+
+        .radio-message .acronym-container p {
+            font-size: 18px; /* Increase font size for the acronym */
+            margin: 2; /* Remove margin */
+            color: #fff; /* Color blanco para el acrónimo */
+        }
+
+        audio {
+            margin: 2px 0; /* Space around audio */
+        }
+
+        .race-message {
+            background-color: rgba(255, 255, 255, 0.2); /* Fondo semi-transparente */
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(255, 255, 255, 0.1); /* Sombra blanca y semi-transparente */
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 18px;
+            color: #fff; /* Color blanco para el título */
+        }
+
+        @media (min-width: 768px) {
+            .radiocon {
+                width: 100%; /* Asegurar que ocupen todo el ancho en pantallas grandes */
+            }
+        }
+
+
+        /* Consulta de medios para dispositivos móviles */
+        @media (max-width: 767px) {
+             .radiocon-container {
+                margin: 5px auto; /* Margen más pequeño alrededor del contenedor y centrar */
+				flex-direction: column;
+                max-width: 90%; /* Asegúrate de que ocupe casi todo el ancho */
+            }
+        }
+
+    </style>
+  </head>
+  <a href="/" class="button">
+    <center><span class="icon"></span></center>
+    </a>
+  </head>
+  <body>
+    <center><img class="logo" src="https://upload.wikimedia.org/wikipedia/commons/f/f2/New_era_F1_logo.png" alt="Logo Dazn" style="width: 250px; height: auto;"></center>
+    <p></p>
+    <center><script src='https://content.jwplatform.com/libraries/KB5zFt7A.js'></script>
+<script> jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';</script>
+</head>
+ <body>
+</head>
+<body>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            // Obtener el hash de la URL (#opcion-4, etc.)
+            const hash = window.location.hash;
+
+            // Obtener los parámetros de consulta (?opcion=4, etc.)
+            const urlParams = new URLSearchParams(window.location.search);
+            const opcion = urlParams.get('opcion');
+
+            // Variable para el iframe
+            const iframe = document.getElementById('streamframe');
+
+            // Determinar qué cargar según el hash o el parámetro de consulta
+            if (hash === "#opcion-4" || opcion === '4') {
+                iframe.src = 'https://dtvlivegratis.com/dash.html?get=aHR0cHM6Ly90djEuc3RybTIyMzQueHl6L2YxL2luZGV4Lm0zdTg=';
+            } else if (hash === "#opcion-1" || opcion === '1') {
+                iframe.src = 'https://dtvlivegratis.com/cn.php?id=DAZN_F1';
+            } else if (hash === "#opcion-2" || opcion === '2') {
+                iframe.src = 'https://enz.gdplayertv.to/live-tv/dazn-f1/?alt=0&embed=1';
+            } else if (hash === "#opcion-3" || opcion === '3') {
+                iframe.src = 'https://dtvlivegratis.com/cn.php?id=DAZNF1';
+            } else {
+                // Valor por defecto si no hay hash o parámetro (opción 1)
+                iframe.src = 'https://dtvlivegratis.com/cn.php?id=DAZN_F1';
+            }
+        });
+    </script>
+</head>
+<body>
+    <center>
+        <div id="sse50">
+            <div id="boton">
+                <a class="boton" href="#opcion-1" onclick="document.getElementById('streamframe').src = 'https://dtvlivegratis.com/cn.php?id=DAZN_F1'" style="text-align: left;">
+                    <boton>Opción 1</boton>
+                </a>
+                <span>&nbsp;</span>
+                <a class="boton" href="#opcion-2" onclick="document.getElementById('streamframe').src = 'https://dtvlivegratis.com/sawlive.html?get=https://embedme.top/embed/alpha/sky-sports-f1-sky-f1/1'" style="text-align: left;">
+                    <boton>Opción 2</boton>
+                </a>
+                <span>&nbsp;</span>
+                <a class="boton" href="#opcion-3" onclick="document.getElementById('streamframe').src = 'https://dtvlivegratis.com/cn.php?id=DAZNF1'" style="text-align: left;">
+                    <boton>Opción 3</boton>
+                </a>
+                <span>&nbsp;</span>
+                <a class="boton" href="#opcion-4" onclick="document.getElementById('streamframe').src = 'https://dtvlivegratis.com/dash.html?get=aHR0cHM6Ly90djEuc3RybTIyMzQueHl6L2YxL2luZGV4Lm0zdTg='" style="text-align: left;">
+                    <boton>Opción 4 | iPhone</boton>
+                </a>
+                <span>&nbsp;</span>
+                <p></p>
+            </div>
+            <div class="video" style="text-align: center;">
+                <!-- Iframe del contenido -->
+                <iframe allow="encrypted-media" scroll="no" allowfullscreen="true" frameborder="1" height="500" id="streamframe" name="streamframe" scrolling="no" src="" width="900"></iframe>
+            </div>
+            <div class="player" style="text-align: center;"><br></div>
+            <div class="player" style="text-align: center;"><br></div>
+        </div>
+        <center>
+            <button type="button" class="btn btn-lg btn-block btn-fl" onclick="location.reload();">Recargar página</button>
+        </center>
+    </center>
+<div class="botones-container">
+  <button class="boton" onclick="document.getElementById('clasificacion').scrollIntoView();">Clasificación</button>
+  <button class="boton" onclick="document.getElementById('calendario').scrollIntoView();">Calendario</button>
+  <button class="boton" onclick="document.getElementById('juego').scrollIntoView();">Juego</button>
+</div> 
+
+<!-- Botón flotante -->
+  <button class="boton-flotante" onclick="irArriba()">
+      <div class="flecha"></div>
+  </button>
+
+<main>
+      <h1>Fórmula 1</h1>
+<div class="containert">
+  <div class="horizontal-container">
+  <div id="dataContainer">
+          <!-- Data will be inserted here -->
+      </div>
+      <div class="data-boxt">
+          <div id="weatherData">
+              <div class="info-line"><span>Cargando...</span></div>
+          </div>
+      </div>
+  </div>
+</div>
+  
+<div class="spacer"></div>
+
+<div class="radiocon-container">
+    <div class="radiocon">
+        <h1>Radios de Equipo F1</h1>
+        <div id="team-radio">
+            <!-- Radios se cargarán dinámicamente -->
+        </div>
+    </div>
+
+    <div class="radiocon">
+        <h1>Control de Carrera F1</h1>
+        <div id="race-control">
+            <!-- Mensajes de control de carrera se cargarán dinámicamente -->
+        </div>
+    </div>
+</div>
+
+
+  <!-- Dashboard -->
+<div class="dashboard-container">
+  <h2>Dashboard personalizable</h2>
+  <iframe src="https://f1-dash.com/dashboard" frameborder="0" allowfullscreen></iframe>
+</div>
+
+
+<!-- Clasificación -->
+<div id="clasificacion" class="seccion">
+<div class="container2">
+  <div class="spacer"></div>
+  <h2>Clasificación</h2>
+  <div class="tables-container" id="tables-container">
+    <!-- Las tablas se generarán aquí -->
+  </div>
+</div>
+</div>
+
+<div id="calendario" class="seccion">
+  <h2>Próximos circuitos</h2>
+  <div class="upcoming-circuits-container" id="upcomingDataContainer"></div>
+</div>
+
+
+
+<!-- Juego -->
+<div id="juego" class="seccion">
+ <div class="containerGame">
+    <h1>Juego F1</h1>
+    <div class="description">Pulsar dentro del área</div>
+    <div class="game-area" id="gameArea">
+        <div class="lights">
+            <div class="column">
+                <div class="light" id="light1-1"></div>
+                <div class="light" id="light1-2"></div>
+                <div class="light" id="light1-3"></div>
+                <div class="light" id="light1-4"></div>
+            </div>
+            <div class="column">
+                <div class="light" id="light2-1"></div>
+                <div class="light" id="light2-2"></div>
+                <div class="light" id="light2-3"></div>
+                <div class="light" id="light2-4"></div>
+            </div>
+            <div class="column">
+                <div class="light" id="light3-1"></div>
+                <div class="light" id="light3-2"></div>
+                <div class="light" id="light3-3"></div>
+                <div class="light" id="light3-4"></div>
+            </div>
+            <div class="column">
+                <div class="light" id="light4-1"></div>
+                <div class="light" id="light4-2"></div>
+                <div class="light" id="light4-3"></div>
+                <div class="light" id="light4-4"></div>
+            </div>
+            <div class="column">
+                <div class="light" id="light5-1"></div>
+                <div class="light" id="light5-2"></div>
+                <div class="light" id="light5-3"></div>
+                <div class="light" id="light5-4"></div>
+            </div>
+        </div>
+        <div class="message" id="message">Pulsa en el área de juego para iniciar o reiniciar</div>
+    </div>
+    <div class="message best-time" id="bestTime" style="display: none;">Mejor tiempo: -- segundos</div>
+</div>
+</div>
+
+  <!-- Status -->
+<h2>API</h2>
+<div class="statusContainer" id="tableContainer"></div>
+
+
+
+<!-- Coche -->
+<script>
+    const headerImage = document.getElementById('headerImage');
+    const overlay = document.getElementById('overlay');
+    const caption = document.getElementById('caption');
+
+    headerImage.addEventListener('click', () => {
+        headerImage.classList.toggle('enlarged');
+        overlay.classList.toggle('active');
+        caption.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+        headerImage.classList.remove('enlarged');
+        overlay.classList.remove('active');
+        caption.classList.remove('active');
+    });
+</script>
+
+  <!-- Vídeo -->
+<script>
+    const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+    const defaultUrl = isMobile ? 'https://antuanct78.github.io/-016-ES-DAZN-F1/' : 'https://embed.sdfgnksbounce.com/embed2/daznf1.html';
+    const alternateUrl = isMobile ? 'https://embed.sdfgnksbounce.com/embed2/daznf1.html' : 'https://antuanct78.github.io/-016-ES-DAZN-F1/';
+
+    window.onload = function() {
+        loadVideo(defaultUrl, 'videoFrame');
+    };
+
+    function loadVideo(url, frameId) {
+        if (frameId === 'videoFrame') {
+            document.getElementById('videoFrame').style.display = 'block';
+            document.getElementById('iframe-container').style.display = 'none';
+            document.getElementById('videoFrame').src = url;
+        } else {
+            document.getElementById('videoFrame').style.display = 'none';
+            document.getElementById('iframe-container').style.display = 'block';
+            document.getElementById('iframe-container').src = url;
+        }
+    }
+
+    function toggleDropdown() {
+        const dropdown = document.getElementById('dropdownContainer');
+        dropdown.style.display = dropdown.style.display === 'none' || dropdown.style.display === '' ? 'flex' : 'none';
+    }
+
+    function selectOption(url, frameId) {
+        loadVideo(url, frameId);
+        toggleDropdown();
+    }
+
+    window.onclick = function(event) {
+        const dropdown = document.getElementById('dropdownContainer');
+        if (event.target !== dropdown && !dropdown.contains(event.target) && event.target !== document.querySelector('.main-button')) {
+            dropdown.style.display = 'none';
+        }
+    }
+</script>
+
+<!-- Pilotos -->
+<script>
+    let customDriverCount = 0; // Inicializar sin pilotos por defecto
+    const customSelectedDrivers = new Set();
+    const customIntervals = {};
+    let customDriverData = JSON.parse(localStorage.getItem('customDriverData')) || {}; // Cargar datos de pilotos desde localStorage
+
+    async function customFetchDrivers() {
+        const response = await fetch('https://api.openf1.org/v1/drivers?session_key=latest');
+        const drivers = await response.json();
+        for (let i = 1; i <= customDriverCount; i++) {
+            const driverSelect = document.getElementById(`custom-driver-select-${i}`);
+            if (driverSelect) {
+                const selectedValue = driverSelect.value;
+                driverSelect.innerHTML = '<option value="">Selecciona un piloto</option>'; // Reset options
+                drivers.forEach(driver => {
+                    const option = document.createElement('option');
+                    option.value = driver.driver_number;
+                    option.textContent = driver.full_name;
+                    option.dataset.headshotUrl = driver.headshot_url;
+                    driverSelect.appendChild(option);
+                });
+                driverSelect.value = selectedValue; // Mantener el valor seleccionado
+            }
+        }
+        // Cargar datos de posición para los pilotos almacenados
+        Object.keys(customDriverData).forEach(key => {
+            const driverNumber = customDriverData[key].driverNumber;
+            const driverSelect = document.getElementById(`custom-driver-select-${key}`);
+            if (driverSelect) {
+                driverSelect.value = driverNumber;
+                customSelectDriver(key);
+            }
+        });
+    }
+
+    async function customSelectDriver(selectNumber) {
+        const driverSelect = document.getElementById(`custom-driver-select-${selectNumber}`);
+        if (!driverSelect) return; // Verificar si el elemento existe
+
+        const selectedOption = driverSelect.options[driverSelect.selectedIndex];
+        const driverImage = document.getElementById(`custom-driver-image-${selectNumber}`);
+        const positionInfo = document.getElementById(`custom-position-info-${selectNumber}`);
+
+        // Limpiar información anterior
+        if (driverImage) driverImage.style.display = 'none';
+        if (positionInfo) positionInfo.textContent = '';
+
+        // Limpiar intervalos anteriores
+        if (customIntervals[selectNumber]) {
+            clearInterval(customIntervals[selectNumber]);
+        }
+
+        if (selectedOption && selectedOption.value) {
+            if (driverImage) {
+                driverImage.src = selectedOption.dataset.headshotUrl;
+                driverImage.style.display = 'block';
+            }
+            customSelectedDrivers.add(selectedOption.value);
+            customUpdateDriverPosition(selectNumber, selectedOption.value);
+            customIntervals[selectNumber] = setInterval(() => customUpdateDriverPosition(selectNumber, selectedOption.value), 25000); // Cambiado a 25 segundos
+
+            // Almacenar datos del piloto
+            customDriverData[selectNumber] = {
+                id: `custom-driver-cell-${selectNumber}`,
+                driverNumber: selectedOption.value
+            };
+            localStorage.setItem('customDriverData', JSON.stringify(customDriverData));            
+        } else {
+            customSelectedDrivers.delete(selectedOption.value);
+        }
+    }
+
+async function customUpdateDriverPosition(selectNumber, driverNumber) {
+const apiURL = `https://api.openf1.org/v1/position?meeting_key=latest&driver_number=${driverNumber}`;
+const positionInfo = document.getElementById(`custom-position-info-${selectNumber}`);
+
+try {
+    const response = await fetch(apiURL);
+
+    if (response.status === 429) {
+        console.error('Too Many Requests - slowing down requests.');
+        // Esperar un tiempo antes de intentar de nuevo
+        setTimeout(() => {
+            customUpdateDriverPosition(selectNumber, driverNumber); // Retry after a delay
+        }, 10000); // Esperar 10 segundos antes de reintentar
+        return;
+    }
+
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+
+    const dataArray = await response.json();
+
+    if (!Array.isArray(dataArray) || dataArray.length === 0) {
+        throw new Error('No contents found in response.');
+    }
+
+    const latestData = dataArray[dataArray.length - 1];
+
+    // Verificar que el objeto tiene las propiedades 'position' y 'date'
+    if (!latestData.position || !latestData.date) {
+        throw new Error('Position or date data not found in the latest record.');
+    }
+
+    // Actualizar el DOM con la posición y la fecha
+    const dateObj = new Date(latestData.date);
+    const formattedDate = new Intl.DateTimeFormat('es-ES', {
+        day: '2-digit',
+        month: '2-digit',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hourCycle: 'h23',
+        timeZone: 'Europe/Madrid'
+    }).format(dateObj);
+
+    positionInfo.innerHTML = `Posición: ${latestData.position}<br> ${formattedDate.replace(',', ' -')}`;
+    
+} catch (error) {
+    console.error('Error fetching driver position data:', error);
+    positionInfo.innerHTML = `Error al obtener la posición: ${error.message}`;
+}
+}
+
+
+    function customAddDriver() {
+        customDriverCount++;
+        const driverSelectors = document.getElementById('custom-driver-selectors');
+        const newCell = document.createElement('div');
+        newCell.className = 'custom-driver-cell';
+        newCell.id = `custom-driver-cell-${customDriverCount}`;
+        newCell.innerHTML = `
+            <img id="custom-driver-image-${customDriverCount}" src="" alt="Imagen del piloto" onerror="this.style.display='none'">
+            <select id="custom-driver-select-${customDriverCount}" class="custom-select" onchange="customSelectDriver(${customDriverCount})">
+                <option value="">Selecciona un piloto</option>
+            </select>
+            <div id="custom-position-info-${customDriverCount}" class="custom-info"></div>
+            <div class="custom-delete-button" onclick="customDeleteDriver(${customDriverCount})">×</div>
+        `;
+        driverSelectors.appendChild(newCell);
+        customFetchDrivers();
+    }
+
+    function customDeleteDriver(selectNumber) {
+        const driverCell = document.getElementById(`custom-driver-cell-${selectNumber}`);
+        if (driverCell) {
+            driverCell.remove(); // Eliminar la celda del DOM
+            clearInterval(customIntervals[selectNumber]);
+            delete customIntervals[selectNumber];
+            delete customDriverData[selectNumber];
+
+            // Reorganizar las celdas y los datos
+            const newCustomDriverData = {};
+            let newCustomDriverCount = 0;
+            document.querySelectorAll('.custom-driver-cell').forEach((cell, index) => {
+                newCustomDriverCount++;
+                cell.id = `custom-driver-cell-${newCustomDriverCount}`;
+                cell.querySelector('img').id = `custom-driver-image-${newCustomDriverCount}`;
+                const select = cell.querySelector('select');
+                select.id = `custom-driver-select-${newCustomDriverCount}`;
+                select.setAttribute('onchange', `customSelectDriver(${newCustomDriverCount})`);
+                newCustomDriverData[newCustomDriverCount] = {
+                    id: `custom-driver-cell-${newCustomDriverCount}`,
+                    driverNumber: select.value
+                };
+            });
+            customDriverData = newCustomDriverData;
+            customDriverCount = newCustomDriverCount;
+            localStorage.setItem('customDriverData', JSON.stringify(customDriverData));
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        // Cargar pilotos almacenados en localStorage
+        if (Object.keys(customDriverData).length === 0) {
+            // Si no hay datos en localStorage, cargar pilotos 14 y 55 por defecto
+            customDriverData = {
+                1: { id: 'custom-driver-cell-1', driverNumber: '14' },
+                2: { id: 'custom-driver-cell-2', driverNumber: '55' }
+            };
+            localStorage.setItem('customDriverData', JSON.stringify(customDriverData));
+        }
+        Object.keys(customDriverData).forEach(key => {
+            customDriverCount++;
+            const driverSelectors = document.getElementById('custom-driver-selectors');
+            const newCell = document.createElement('div');
+            newCell.className = 'custom-driver-cell';
+            newCell.id = `custom-driver-cell-${key}`;
+            newCell.innerHTML = `
+                <img id="custom-driver-image-${key}" src="" alt="Imagen del piloto" onerror="this.style.display='none'">
+                <select id="custom-driver-select-${key}" class="custom-select" onchange="customSelectDriver(${key})">
+                    <option value="">Selecciona un piloto</option>
+                </select>
+                <div id="custom-position-info-${key}" class="custom-info"></div>
+                <div class="custom-delete-button" onclick="customDeleteDriver(${key})">×</div>
+            `;
+            driverSelectors.appendChild(newCell);
+        });
+        customFetchDrivers();
+    });
+</script>
+
+
+
+
+
+
+
+<!-- Clasificaciones -->
+<script>
+// Variables para almacenar datos
+let qualifyingData = null;
+let championshipData = null;
+let constructorData = null;
+
+// Función para crear una tabla
+function createTable(id, header, columns) {
+    const tableContainer = document.createElement('div');
+    tableContainer.classList.add('table-container');
+    const table = document.createElement('table');
+    table.id = id;
+
+    const thead = document.createElement('thead');
+    const headerRow = document.createElement('tr');
+    const headerCell = document.createElement('th');
+    headerCell.colSpan = columns.length;
+    headerCell.textContent = header;
+    headerRow.appendChild(headerCell);
+    thead.appendChild(headerRow);
+
+    const columnRow = document.createElement('tr');
+    columns.forEach(col => {
+        const th = document.createElement('th');
+        th.textContent = col;
+        columnRow.appendChild(th);
+    });
+    thead.appendChild(columnRow);
+
+    table.appendChild(thead);
+    const tbody = document.createElement('tbody');
+    table.appendChild(tbody);
+
+    tableContainer.appendChild(table);
+    return tableContainer;
+}
+
+// Añadir las tablas al contenedor
+const tablesContainer = document.getElementById('tables-container');
+tablesContainer.appendChild(createTable('qualifying-table', 'Clasificación de la Última Carrera', ['Puesto', 'Piloto']));
+tablesContainer.appendChild(createTable('championship-table', 'Clasificación del Campeonato', ['Puesto', 'Piloto', 'Puntos']));
+tablesContainer.appendChild(createTable('constructor-table', 'Clasificación de Constructores', ['Puesto', 'Equipo', 'Puntos']));
+
+// Retrasos en milisegundos
+const retryDelay = 30000; // 30 segundos para reintentos
+const fetchDelay = 5000; // 5 segundos para el reintento
+
+async function fetchWithRetry(url, useProxy = true) {
+    const proxyUrl = 'https://api.allorigins.win/get?url=';
+    const fullUrl = useProxy ? proxyUrl + encodeURIComponent(url) : url;
+
+    try {
+        const response = await fetch(fullUrl);
+        if (!response.ok) throw new Error('Network response was not ok');
+
+        const data = await response.json();
+        let jsonData;
+        try {
+            jsonData = useProxy ? JSON.parse(data.contents) : data;
+        } catch (jsonError) {
+            console.warn("Error al analizar JSON, intentando con proxy...");
+            return useProxy ? fetchWithRetry(url, false) : null; // Retornar null si falla en ambos
+        }
+
+        return jsonData;
+    } catch (error) {
+        console.error('Error fetching data:', error);
+        throw error; // Volver a lanzar el error para manejarlo en la función que llama
+    }
+}
+
+// Función datos clasificación carrera
+async function fetchLastF1Qualifying() {
+    if (qualifyingData) {
+        updateQualifyingTable(qualifyingData);
+        return;
+    }
+
+    try {
+        // Intentar sin proxy primero
+        qualifyingData = await fetchWithRetry('https://api.jolpi.ca/ergast/f1/current/last/qualifying.json', false);
+        if (!qualifyingData) {
+            // Si no hay datos después de intentar sin proxy, intenta con proxy
+            qualifyingData = await fetchWithRetry('https://api.jolpi.ca/ergast/f1/current/last/qualifying.json', true);
+        }
+        updateQualifyingTable(qualifyingData);
+    } catch (error) {
+        console.error('Error fetching last F1 qualifying:', error);
+        document.getElementById('qualifying-table').querySelector('tbody').textContent = 'Hubo un error al obtener la información de la última clasificación de F1.';
+    }
+}
+
+function updateQualifyingTable(data) {
+    const raceName = data.MRData.RaceTable.Races[0].raceName;
+    const qualifyingResults = data.MRData.RaceTable.Races[0].QualifyingResults;
+
+    // Mostrar el nombre del Gran Premio en la tabla de clasificación
+    document.getElementById('qualifying-table').rows[0].cells[0].textContent = raceName;
+
+    // Construir la tabla con los resultados de la clasificación
+    const tableBody = document.getElementById('qualifying-table').querySelector('tbody');
+    let html = '';
+    qualifyingResults.forEach(result => {
+        const driverName = `${result.Driver.givenName} ${result.Driver.familyName}`;
+        const position = result.position;
+        const isFernandoOrCarlos = driverName.includes('Fernando Alonso') || driverName.includes('Carlos Sainz');
+        html += `<tr${isFernandoOrCarlos ? ' class="highlight"' : ''}><td>${position}</td><td>${driverName}</td></tr>`;
+    });
+    tableBody.innerHTML = html;
+}
+
+// Función datos clasificación del campeonato
+async function fetchChampionshipStandings() {
+    if (championshipData) {
+        updateChampionshipTable(championshipData);
+        return;
+    }
+
+    try {
+        championshipData = await fetchWithRetry('https://api.jolpi.ca/ergast/f1/2024/driverstandings.json', false);
+        if (!championshipData) {
+            championshipData = await fetchWithRetry('https://api.jolpi.ca/ergast/f1/2024/driverstandings.json', true);
+        }
+        updateChampionshipTable(championshipData);
+    } catch (error) {
+        console.error('Error fetching championship standings:', error);
+        document.getElementById('championship-table').querySelector('tbody').textContent = 'Hubo un error al obtener la clasificación del campeonato de F1.';
+    }
+}
+
+function updateChampionshipTable(data) {
+    const standings = data.MRData.StandingsTable.StandingsLists[0].DriverStandings;
+
+    // Construir la tabla con los resultados del campeonato
+    const tableBody = document.getElementById('championship-table').querySelector('tbody');
+    let html = '';
+    standings.forEach(standing => {
+        const position = standing.position;
+        const driverName = `${standing.Driver.givenName} ${standing.Driver.familyName}`;
+        const points = standing.points;
+        html += `<tr><td>${position}</td><td>${driverName}</td><td>${points}</td></tr>`;
+    });
+    tableBody.innerHTML = html;
+}
+
+// Función para obtener datos de clasificación de constructores
+async function fetchConstructorStandings() {
+    if (constructorData) {
+        updateConstructorTable(constructorData);
+        return;
+    }
+
+    try {
+        constructorData = await fetchWithRetry('https://api.jolpi.ca/ergast/f1/2024/constructorstandings.json', false);
+        if (!constructorData) {
+            constructorData = await fetchWithRetry('https://api.jolpi.ca/ergast/f1/2024/constructorstandings.json', true);
+        }
+        updateConstructorTable(constructorData);
+    } catch (error) {
+        console.error('Error fetching constructor standings:', error);
+        document.getElementById('constructor-table').querySelector('tbody').textContent = 'Hubo un error al obtener la clasificación de constructores de F1.';
+    }
+}
+
+function updateConstructorTable(data) {
+    const standings = data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
+
+    const tableBody = document.getElementById('constructor-table').querySelector('tbody');
+    let html = '';
+    standings.forEach(standing => {
+        const position = standing.position;
+        const teamName = standing.Constructor.name;
+        const points = standing.points;
+        html += `<tr><td>${position}</td><td>${teamName}</td><td>${points}</td></tr>`;
+    });
+    tableBody.innerHTML = html;
+}
+
+// Llamadas a las funciones para cargar los datos
+async function loadF1Data() {
+    while (true) {
+        try {
+            await fetchLastF1Qualifying();
+            await fetchChampionshipStandings();
+            await fetchConstructorStandings();
+            break; // Salir del bucle si se obtienen los datos correctamente
+        } catch (error) {
+            console.error('Fallo en la obtención de datos. Esperando 30 segundos para volver a intentar...', error);
+            await new Promise(resolve => setTimeout(resolve, retryDelay)); // Esperar 30 segundos antes del siguiente intento
+        }
+    }
+}
+
+loadF1Data(); // Cargar los datos al inicio
+</script>
+
+
+<!-- Horarios y datos carrera actual -->
+<script>
+// Datos próxima carrera
+let lastRaceData = null;
+
+// Función datos carrera actual
+async function fetchF1Data() {
+    const dataContainer = document.getElementById('dataContainer');
+    const proxyUrl = 'https://api.allorigins.win/get?url=';
+    const targetUrl = encodeURIComponent('https://api.jolpi.ca/ergast/f1/current.json');
+
+    // Función interna para realizar la solicitud
+    const fetchData = async (url) => {
+        const response = await fetch(url);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
+        return JSON.parse(data.contents);
+    };
+
+    // Verificar si ya tenemos datos válidos almacenados y no realizar más solicitudes
+    if (lastRaceData) {
+        return; // Detener la función si ya se tienen datos
+    }
+
+    let storedData = null;
+
+    try {
+        // Intentar obtener datos usando el proxy
+        const jsonData = await fetchData(proxyUrl + targetUrl);
+        storedData = jsonData;
+    } catch (error) {
+        console.warn('Error al usar el proxy, intentando directamente:', error);
+        try {
+            // Si falla, intentar obtener datos directamente de la API
+            const response = await fetch('https://api.jolpi.ca/ergast/f1/current.json');
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            const jsonData = await response.json();
+            storedData = jsonData;
+        } catch (error) {
+            console.error('Error al obtener datos:', error);
+            dataContainer.textContent = 'Error: ' + error.message;
+            return; // Salir de la función si ambos intentos fallan
+        }
+    }
+
+    // Limpiar cualquier mensaje de error antes de cargar datos
+    dataContainer.textContent = '';
+
+    // Obtener la fecha y hora actual en Madrid
+    const now = new Date().toLocaleString('en-US', { timeZone: 'Europe/Madrid' });
+    const today = new Date(now).toISOString().split('T')[0];
+
+    // Filtrar carreras por la fecha de hoy o la próxima carrera
+    const races = storedData.MRData.RaceTable.Races;
+    let nextRace = null;
+    for (let race of races) {
+        if (race.date === today) {
+            nextRace = race;
+            break;
+        } else if (new Date(race.date) > new Date(today)) {
+            nextRace = race;
+            break;
+        }
+    }
+
+    // Comprobar si hay datos nuevos
+    if (JSON.stringify(nextRace) !== JSON.stringify(lastRaceData)) {
+        lastRaceData = nextRace; // Actualizar los datos almacenados
+
+        // Limpiar el contenedor antes de agregar nuevos datos
+        dataContainer.innerHTML = '';
+
+        // Insertar datos en el contenedor
+        if (nextRace) {
+            const dataBox = document.createElement('div');
+            dataBox.className = 'current-circuit';
+
+            // Mantener la información del circuito, ubicación y enlace a Wikipedia
+            dataBox.innerHTML = `
+                <p class="race-name">${nextRace.raceName}</p>
+                <div class="data-cell"><strong>Carrera Nº ${nextRace.round}</strong></div>
+                <div class="details">
+                    <div class="data-cell">${nextRace.Circuit.circuitName}</div>
+                    <div class="data-cell">Ubicación: ${nextRace.Circuit.Location.locality}, ${nextRace.Circuit.Location.country}</div>
+                    <div class="data-cell"><a href="${nextRace.url}" target="_blank">Más información en Wikipedia</a></div>
+                </div>
+                <div class="show-more">Mostrar Horarios <strong>&#9660;</strong></div>
+            `;
+
+            // Crear una celda con todas las prácticas y sesiones
+            let carreraSessionsCell = `<div class="data-cell" style="border: 1px solid #006F62;"><strong>Carrera Nº ${nextRace.round}</strong><br>`;
+            let sprintSessionsCell = `<div class="data-cell" style="border: 1px solid lightblue;"><strong>Sprint</strong><br>`;
+
+            const sessions = [
+                { name: 'Libres 1', date: nextRace.FirstPractice?.date, time: nextRace.FirstPractice?.time },
+                { name: 'Libres 2', date: nextRace.SecondPractice?.date, time: nextRace.SecondPractice?.time },
+                { name: 'Libres 3', date: nextRace.ThirdPractice?.date, time: nextRace.ThirdPractice?.time },
+                { name: 'Clasificación', date: nextRace.Qualifying?.date, time: nextRace.Qualifying?.time },
+                { name: 'Sprint Clasificación', date: nextRace.SprintQualifying?.date, time: nextRace.SprintQualifying?.time },
+                { name: 'Sprint', date: nextRace.Sprint?.date, time: nextRace.Sprint?.time },
+                { name: 'Carrera', date: nextRace.date, time: nextRace.time }
+            ];
+
+            // Ordenar las sesiones por fecha y hora
+            sessions.sort((a, b) => new Date(`${a.date}T${a.time}`) - new Date(`${b.date}T${b.time}`));
+
+            let upcomingSessions = false;
+            let hasSprintSessions = false; // Variable para controlar si hay sesiones de Sprint
+
+            for (let session of sessions) {
+                if (session.date && session.time) {
+                    const sessionTime = new Date(`${session.date}T${session.time}`);
+                    const madridSessionTime = sessionTime.toLocaleTimeString('es-ES', { timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit' });
+                    const sessionDay = sessionTime.toLocaleDateString('es-ES', { weekday: 'long' });
+
+                    if (sessionTime >= new Date(now)) {
+                        upcomingSessions = true;
+
+                        if (session.name === 'Sprint Clasificación' || session.name === 'Sprint') {
+                            sprintSessionsCell += `${session.name}: ${sessionDay.charAt(0).toUpperCase() + sessionDay.slice(1)}, ${sessionTime.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' })} a las ${madridSessionTime}<br>`;
+                            hasSprintSessions = true; // Se encuentra al menos una sesión de Sprint
+                        } else {
+                            carreraSessionsCell += `${session.name}: ${sessionDay.charAt(0).toUpperCase() + sessionDay.slice(1)}, ${sessionTime.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit' })} a las ${madridSessionTime}<br>`;
+                        }
+                    }
+                }
+            }
+
+            carreraSessionsCell += `</div>`;
+            sprintSessionsCell += `</div>`;
+
+            if (upcomingSessions) {
+                dataBox.querySelector('.details').innerHTML += carreraSessionsCell;
+
+                // Solo añadir sprintSessionsCell si hay sesiones de Sprint
+                if (hasSprintSessions) {
+                    dataBox.querySelector('.details').innerHTML += sprintSessionsCell;
+                }
+            }
+
+            dataContainer.appendChild(dataBox);
+
+            // Añadir evento de clic para desplegar/contraer detalles
+            dataBox.querySelector('.show-more').addEventListener('click', function() {
+                dataBox.classList.toggle('show-details');
+                this.innerHTML = dataBox.classList.contains('show-details') ? 'Ocultar Horarios <strong>&#9650;</strong>' : 'Mostrar Horarios <strong>&#9660;</strong>';
+            });
+        } else {
+            dataContainer.textContent = 'No hay carreras próximas.';
+        }
+    }
+}
+
+// Llamar a la función al cargar la página
+fetchF1Data();
+</script>
+
+
+<!-- Próximas carreras -->
+<script>
+let cachedRaceData = null; // Variable para almacenar en caché los datos de la API
+
+async function fetchUpcomingF1Data(delay = 120000) { // Intervalo ajustado a 2 minutos
+    // Verificar si ya se han cargado los datos
+    if (cachedRaceData) {
+        displayRaces(cachedRaceData); // Muestra los datos en caché
+        return;
+    }
+
+    try {
+        const targetUrl = 'https://api.jolpi.ca/ergast/f1/current.json';
+        const response = await fetch(targetUrl);
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+
+        const jsonData = await response.json();
+        cachedRaceData = jsonData; // Almacenar en caché
+
+        // Mostrar carreras
+        displayRaces(jsonData);
+    } catch (error) {
+        console.error('Error al obtener los datos de F1:', error);
+        document.getElementById('upcomingDataContainer').textContent = 'Error al obtener datos de la API: ' + error.message;
+
+        // Reintentar después del retraso si hay un error
+        setTimeout(() => fetchUpcomingF1Data(delay), delay);
+    }
+}
+
+function displayRaces(jsonData) {
+    const today = new Date().toISOString().split('T')[0];
+    const races = jsonData.MRData.RaceTable.Races.filter(race => new Date(race.date) >= new Date(today));
+    const dataContainer = document.getElementById('upcomingDataContainer');
+    dataContainer.innerHTML = ''; // Limpiar contenedor
+
+    races.forEach(race => {
+        const dataBox = document.createElement('div');
+        dataBox.className = 'upcoming-circuit-box';
+
+        const raceTime = new Date(`${race.date}T${race.time}`);
+        const madridTime = raceTime.toLocaleTimeString('es-ES', { timeZone: 'Europe/Madrid', hour: '2-digit', minute: '2-digit' });
+        const raceDate = new Date(race.date).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+        dataBox.innerHTML = `
+            <p class="upcoming-race-name">${race.raceName}</p>
+            <div class="upcoming-data-cell">Fecha: ${raceDate}</div>
+            <div class="upcoming-data-cell">Hora: ${madridTime}</div>
+            <div class="upcoming-data-cell">Ubicación: ${race.Circuit.Location.locality}, ${race.Circuit.Location.country}</div>
+        `;
+
+        dataContainer.appendChild(dataBox);
+    });
+}
+
+// Llamada inicial a la función con 2 minutos (100000 ms) entre reintentos
+fetchUpcomingF1Data(120000);
+</script>
+
+
+
+
+<script>
+
+// Función para desplazarse al inicio de la página
+    function irArriba() {
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+</script>
+
+<!-- Meteorología tiempo -->
+<script>
+// Variables para almacenar datos
+let weatherDataCache = null;
+
+async function fetchWeatherData() {
+    const weatherDataDiv = document.getElementById('weatherData');
+    const targetUrl = 'https://api.openf1.org/v1/weather?meeting_key=latest';
+
+    try {
+        // Intentar obtener datos directamente de la API
+        const response = await fetch(targetUrl, { mode: 'cors' });
+        if (!response.ok) {
+            throw new Error('Error en la solicitud: ' + response.statusText);
+        }
+        const data = await response.json();
+        const penultimoElemento = data[data.length - 1];
+
+        // Solo actualizar si los datos han cambiado
+        if (JSON.stringify(data) !== JSON.stringify(weatherDataCache)) {
+            weatherDataCache = data;
+            updateWeatherData(weatherDataDiv, penultimoElemento);
+        }
+    } catch (error) {
+        console.warn('Error al intentar obtener datos directamente, usando proxy...', error);
+        const proxyUrl = 'https://api.allorigins.win/get?url=';
+
+        try {
+            // Intentar obtener datos usando un proxy
+            const response = await fetch(proxyUrl + encodeURIComponent(targetUrl), { mode: 'cors' });
+            if (!response.ok) {
+                throw new Error('Error en la solicitud: ' + response.statusText);
+            }
+            const data = await response.json();
+            const jsonData = JSON.parse(data.contents);
+            const penultimoElemento = jsonData[jsonData.length - 1];
+
+            // Solo actualizar si los datos han cambiado
+            if (JSON.stringify(jsonData) !== JSON.stringify(weatherDataCache)) {
+                weatherDataCache = jsonData;
+                updateWeatherData(weatherDataDiv, penultimoElemento);
+            }
+        } catch (error) {
+            // Manejar errores de la solicitud del proxy
+            if (!weatherDataDiv.hasChildNodes()) {
+                const errorDiv = document.createElement('div');
+                errorDiv.className = 'info-line';
+                errorDiv.innerHTML = `<span>Error al obtener los datos: ${error.message}</span>`;
+                weatherDataDiv.appendChild(errorDiv);
+            }
+        }
+    }
+}
+
+function updateWeatherData(weatherDataDiv, penultimoElemento) {
+    const keysToShow = {
+        "air_temperature": "Temp Aire",
+        "track_temperature": "Temp Pista",
+        "humidity": "Humedad",
+        "pressure": "Presión Atm",
+        "humidity_percentage": "Humedad",
+        "rainfall": "Lluvia",
+        "wind_speed": "Viento"
+    };
+
+    const tempDiv = document.createElement('div');
+
+    for (const [key, label] of Object.entries(keysToShow)) {
+        if (penultimoElemento[key] !== undefined) {
+            const infoLine = document.createElement('div');
+            infoLine.className = 'info-line';
+            const labelSpan = document.createElement('span');
+            const valueSpan = document.createElement('span');
+            labelSpan.textContent = label;
+            valueSpan.className = 'value';
+
+            // Formatear valores según el tipo de dato
+            if (key === "track_temperature" || key === "air_temperature") {
+                valueSpan.textContent = `${penultimoElemento[key]} ºC`;
+            } else if (key === "rainfall") {
+                valueSpan.textContent = `${penultimoElemento[key]} L`;
+            } else if (key === "wind_speed") {
+                valueSpan.textContent = `${penultimoElemento[key]} m/s`;
+            } else if (key === "humidity" || key === "humidity_percentage") {
+                valueSpan.textContent = `${penultimoElemento[key]} %`;
+            } else if (key === "pressure") {
+                valueSpan.textContent = `${penultimoElemento[key]} mbar`;
+            } else {
+                valueSpan.textContent = penultimoElemento[key];
+            }
+            infoLine.appendChild(labelSpan);
+            infoLine.appendChild(valueSpan);
+            tempDiv.appendChild(infoLine);
+        }
+    }
+
+    // Reemplazar el contenido solo si la llamada fue exitosa
+    weatherDataDiv.innerHTML = tempDiv.innerHTML;
+}
+
+function toggleWeatherData() {
+    const weatherDataDiv = document.getElementById('weatherData');
+    const button = document.querySelector('.show-weather-btn');
+    if (weatherDataDiv.style.display === 'none' || weatherDataDiv.style.display === '') {
+        weatherDataDiv.style.display = 'block';
+        button.textContent = 'Ocultar Meteorología ▲';
+    } else {
+        weatherDataDiv.style.display = 'none';
+        button.textContent = 'Mostrar Meteorología ▼';
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    fetchWeatherData(); // Cargar datos al inicio
+
+    // Llamar a la API cada 2 minutos si hay datos nuevos
+    setInterval(fetchWeatherData, 120000);
+});
+</script>
+
+
+<!-- Status API -->    
+<script>
+// Función para comprobar el estado de la API
+async function checkApiStatus(apiUrl, expectedResponse) {
+    try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+            throw new Error(`Network response was not ok: ${response.statusText}`);
+        }
+        const apiData = await response.text(); // Cambiar a text() para obtener respuesta sin parsear
+
+        // Inspecciona la respuesta de la API
+
+        // Verifica si es la API de Ergast
+        if (apiUrl === 'https://api.jolpi.ca/ergast/') {
+            return '✔️'; // Considera cualquier respuesta como válida
+        }
+
+        // Verifica si la respuesta es JSON
+        try {
+            const parsedData = JSON.parse(apiData);
+            // Ajusta según la estructura de respuesta de la API
+            return parsedData.status === 'OK' ? '✔️' : '❌';
+        } catch (e) {
+            // Si no es un JSON válido, comprueba si incluye el mensaje esperado
+            return apiData.includes(expectedResponse) ? '✔️' : '❌';
+        }
+    } catch (error) {
+        console.error('Error al verificar el estado de la API:', error);
+        return '❌'; // Indica que hubo un error
+    }
+}
+
+// Función para crear la tabla
+function createTable() {
+    const tableHTML = `
+        <table>
+            <thead>
+                <tr>
+                    <th>API</th>
+                    <th>Estado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="https://api.jolpi.ca/ergast/" target="_blank">Ergast</a></td>
+                    <td id="apiStatus1"></td>
+                </tr>
+                <tr>
+                    <td><a href="https://openf1.org/" target="_blank">OpenF1</a></td>
+                    <td id="apiStatus2"></td>
+                </tr>
+            </tbody>
+        </table>
+    `;
+    document.getElementById('tableContainer').innerHTML = tableHTML;
+}
+
+// Función para actualizar los estados de las APIs
+async function updateStatuses() {
+    const ergastStatus = await checkApiStatus('https://api.jolpi.ca/ergast/', 'OK');
+    document.getElementById('apiStatus1').innerHTML = ergastStatus;
+
+    const openF1Status = await checkApiStatus('https://api.openf1.org/', 'Welcome to OpenF1!');
+    document.getElementById('apiStatus2').innerHTML = openF1Status;
+}
+
+// Inicializar la tabla y los estados
+createTable();
+updateStatuses();
+setInterval(updateStatuses, 30000); // Actualiza cada 30 segundos
+</script>
+
+
+
+
+
+<!-- Control de carreras -->
+<script>
+
+// Radios y control carrera
+    const loadedRadioIds = new Set();
+    const loadedRaceControlIds = new Set();
+
+    async function fetchDriverAcronym(driverNumber) {
+        try {
+            const response = await fetch(`https://api.openf1.org/v1/drivers?session_key=latest&driver_number=${driverNumber}`);
+            const driverData = await response.json();
+            return driverData[0]?.name_acronym || driverNumber;
+        } catch (error) {
+            console.error(`Error al obtener el acrónimo para el piloto ${driverNumber}:`, error);
+            return driverNumber;
+        }
+    }
+
+    async function fetchTeamRadios() {
+        try {
+            const response = await fetch('https://api.openf1.org/v1/team_radio?session_key=latest');
+            const radios = await response.json();
+            const teamRadioDiv = document.querySelector('#team-radio');
+            radios.sort((a, b) => new Date(b.date) - new Date(a.date));
+            for (const radio of radios) {
+                const radioId = `${radio.session_key}-${radio.driver_number}`;
+                if (loadedRadioIds.has(radioId)) continue;
+                const driverAcronym = await fetchDriverAcronym(radio.driver_number);
+                loadedRadioIds.add(radioId);
+                const radioMessageDiv = document.createElement('div');
+                radioMessageDiv.classList.add('radio-message');
+                const tableElement = document.createElement('table');
+                const rowElement = document.createElement('tr');
+                const timeAcronymCell = document.createElement('td');
+                const timeElement = document.createElement('time');
+                const radioDate = radio.date ? new Date(radio.date) : null;
+                if (radioDate) {
+                    timeElement.textContent = radioDate.toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+                }
+                const timeAcronymContainer = document.createElement('div');
+                timeAcronymContainer.appendChild(timeElement);
+                const acronymElement = document.createElement('p');
+                acronymElement.textContent = driverAcronym || 'Desconocido';
+                timeAcronymContainer.appendChild(acronymElement);
+                timeAcronymCell.appendChild(timeAcronymContainer);
+                rowElement.appendChild(timeAcronymCell);
+                const audioCell = document.createElement('td');
+                const audioElement = document.createElement('audio');
+                audioElement.controls = true;
+                audioElement.src = radio.recording_url || '';
+                audioCell.appendChild(audioElement);
+                rowElement.appendChild(audioCell);
+                tableElement.appendChild(rowElement);
+                radioMessageDiv.appendChild(tableElement);
+                teamRadioDiv.prepend(radioMessageDiv); // Añadir al principio
+            }
+            const sortedRadios = Array.from(teamRadioDiv.children).sort((a, b) => {
+                const timeA = a.querySelector('time').textContent;
+                const timeB = b.querySelector('time').textContent;
+                return new Date(`1970-01-01T${timeB}Z`) - new Date(`1970-01-01T${timeA}Z`);
+            });
+            teamRadioDiv.innerHTML = '';
+            sortedRadios.forEach(radio => teamRadioDiv.appendChild(radio));
+            while (teamRadioDiv.children.length > 30) {
+                teamRadioDiv.removeChild(teamRadioDiv.lastChild); // Eliminar elementos sobrantes
+            }
+        } catch (error) {
+            console.error('Error al cargar las radios del equipo:', error);
+        }
+    }
+
+    async function fetchRaceControlMessages() {
+        try {
+            const response = await fetch('https://api.openf1.org/v1/race_control?session_key=latest');
+            const messages = await response.json();
+            const raceControlDiv = document.querySelector('#race-control');
+            messages.sort((a, b) => new Date(b.date) - new Date(a.date));
+            for (const message of messages) {
+                const messageId = `${message.session_key}-${message.date}`;
+                if (loadedRaceControlIds.has(messageId)) continue;
+                loadedRaceControlIds.add(messageId);
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('race-message');
+                const messageDate = message.date ? new Date(message.date) : null;
+                const madridOffset = 2;
+                if (messageDate) {
+                    messageDate.setHours(messageDate.getUTCHours() + madridOffset);
+                }
+                const timeElement = document.createElement('time');
+                timeElement.textContent = messageDate ? messageDate.toTimeString().split(' ')[0] : 'Hora desconocida';
+                messageDiv.appendChild(timeElement);
+                const messageElement = document.createElement('p');
+                messageElement.textContent = message.message || 'Sin mensaje';
+                messageDiv.appendChild(messageElement);
+                raceControlDiv.prepend(messageDiv);
+            }
+            const sortedMessages = Array.from(raceControlDiv.children).sort((a, b) => {
+                const timeA = a.querySelector('time').textContent;
+                const timeB = b.querySelector('time').textContent;
+                return new Date(`1970-01-01T${timeB}Z`) - new Date(`1970-01-01T${timeA}Z`);
+            });
+            raceControlDiv.innerHTML = '';
+            sortedMessages.forEach(message => raceControlDiv.appendChild(message));
+            while (raceControlDiv.children.length > 30) {
+                raceControlDiv.removeChild(raceControlDiv.lastChild);
+            }
+        } catch (error) {
+            console.error('Error al cargar los mensajes de control de carrera:', error);
+        }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+        fetchTeamRadios();
+        fetchRaceControlMessages();
+        setInterval(() => {
+            fetchTeamRadios();
+            fetchRaceControlMessages();
+        }, 5000);
+    });
+</script>
+
+
+
+<script>
+// Función para configurar las cookies del iframe
+function configurarCookiesIframe() {
+    var iframe = document.getElementById('movistarIframe');
+    if (iframe) {
+        // Configura las cookies del iframe
+        iframe.setAttribute('sandbox', 'allow-same-origin allow-scripts allow-popups allow-forms');
+    }
+}
+
+// Llama a la función al cargar la página
+configurarCookiesIframe();
+</script>
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+particlesJS("particles-js", {
+  "particles": {
+    "number": {
+      "value": 100,
+      "density": {
+        "enable": true,
+        "value_area": 800
+      }
+    },
+    "color": {
+      "value": "#ffffff"
+    },
+    "shape": {
+      "type": "circle",
+      "stroke": {
+        "width": 0,
+        "color": "#000000"
+      },
+      "polygon": {
+        "nb_sides": 5
+      },
+      "image": {
+        "src": "img/github.svg",
+        "width": 100,
+        "height": 100
+      }
+    },
+    "opacity": {
+      "value": 0.5,
+      "random": false,
+      "anim": {
+        "enable": false,
+        "speed": 1,
+        "opacity_min": 0.1,
+        "sync": false
+      }
+    },
+    "size": {
+      "value": 3,
+      "random": true,
+      "anim": {
+        "enable": false,
+        "speed": 40,
+        "size_min": 0.1,
+        "sync": false
+      }
+    },
+    "line_linked": {
+      "enable": true,
+      "distance": 150,
+      "color": "#ffffff",
+      "opacity": 0.4,
+      "width": 1
+    },
+    "move": {
+      "enable": true,
+      "speed": 6,
+      "direction": "none",
+      "random": false,
+      "straight": false,
+      "out_mode": "out",
+      "bounce": false,
+      "attract": {
+        "enable": false,
+        "rotateX": 600,
+        "rotateY": 1200
+      }
+    }
+  },
+  "interactivity": {
+    "detect_on": "canvas",
+    "events": {
+      "onhover": {
+        "enable": true,
+        "mode": "grab"
+      },
+      "onclick": {
+        "enable": true,
+        "mode": "push"
+      },
+      "resize": true
+    },
+    "modes": {
+      "grab": {
+        "distance": 140,
+        "line_linked": {
+          "opacity": 1
+        }
+      },
+      "bubble": {
+        "distance": 400,
+        "size": 40,
+        "duration": 2,
+        "opacity": 8,
+        "speed": 3
+      },
+      "repulse": {
+        "distance": 200,
+        "duration": 0.4
+      },
+      "push": {
+        "particles_nb": 4
+      },
+      "remove": {
+        "particles_nb": 2
+      }
+    }
+  },
+  "retina_detect": true
+});
+</script>
+
+<script>
+const columns = [
+    [document.getElementById('light1-1'), document.getElementById('light1-2'), document.getElementById('light1-3'), document.getElementById('light1-4')],
+    [document.getElementById('light2-1'), document.getElementById('light2-2'), document.getElementById('light2-3'), document.getElementById('light2-4')],
+    [document.getElementById('light3-1'), document.getElementById('light3-2'), document.getElementById('light3-3'), document.getElementById('light3-4')],
+    [document.getElementById('light4-1'), document.getElementById('light4-2'), document.getElementById('light4-3'), document.getElementById('light4-4')],
+    [document.getElementById('light5-1'), document.getElementById('light5-2'), document.getElementById('light5-3'), document.getElementById('light5-4')]
+];
+const gameArea = document.getElementById('gameArea');
+const message = document.getElementById('message');
+const bestTimeDisplay = document.getElementById('bestTime');
+let startTime, endTime, bestTime = Infinity;
+let gameStarted = false;
+let lightTimeouts = [];
+
+// Leer el mejor tiempo de localStorage al cargar la página
+document.addEventListener('DOMContentLoaded', () => {
+    const storedBestTime = localStorage.getItem('bestTime');
+    if (storedBestTime !== null) {
+        bestTime = parseFloat(storedBestTime);
+        bestTimeDisplay.textContent = `Mejor tiempo: ${bestTime} segundos`;
+        bestTimeDisplay.style.display = 'block';
+    }
+});
+
+gameArea.addEventListener('click', startGame);
+document.addEventListener('keydown', startGame);
+
+function startGame() {
+    if (gameStarted) {
+        message.textContent = 'Se paciente e inténtalo de nuevo';
+        gameArea.style.borderColor = 'red';
+        stopLights();
+        return;
+    }
+    message.textContent = 'Espera a que las luces se apaguen...';
+    gameArea.style.borderColor = '#fff';
+    gameArea.removeEventListener('click', startGame);
+    document.removeEventListener('keydown', startGame);
+    let delay = Math.random() * 4000 + 1000; // 1-5 segundos
+
+    columns.forEach((column, index) => {
+        lightTimeouts.push(setTimeout(() => {
+            column[2].classList.add('on');
+            column[3].classList.add('on');
+        }, index * 1000));
+    });
+
+    lightTimeouts.push(setTimeout(() => {
+        columns.forEach(column => {
+            column[2].classList.remove('on');
+            column[3].classList.remove('on');
+        });
+        startTime = new Date().getTime();
+        gameStarted = true;
+        gameArea.addEventListener('click', recordReactionTime);
+        document.addEventListener('keydown', recordReactionTime);
+    }, delay + 4000)); // 4 segundos para encender todas las luces
+
+    gameArea.addEventListener('click', tooEarly);
+    document.addEventListener('keydown', tooEarly);
+}
+
+function tooEarly() {
+    if (!gameStarted) {
+        message.textContent = 'Se paciente e inténtalo de nuevo';
+        gameArea.style.borderColor = 'red';
+        stopLights();
+        gameArea.addEventListener('click', restartGame);
+        document.addEventListener('keydown', restartGame);
+        gameArea.removeEventListener('click', tooEarly);
+        document.removeEventListener('keydown', tooEarly);
+    }
+}
+
+function recordReactionTime(event) {
+    endTime = new Date().getTime();
+    let reactionTime = (endTime - startTime) / 1000;
+    if (reactionTime < 0) {
+        message.textContent = 'Se paciente e inténtalo de nuevo';
+        gameArea.style.borderColor = 'red';
+        stopLights();
+        gameArea.addEventListener('click', restartGame);
+        document.addEventListener('keydown', restartGame);
+    } else {
+        message.textContent = `El tiempo de reacción ha sido: ${reactionTime} segundos`;
+        if (reactionTime < bestTime) {
+            bestTime = reactionTime;
+            bestTimeDisplay.textContent = `Mejor tiempo: ${bestTime} segundos`;
+            bestTimeDisplay.style.display = 'block';
+            gameArea.style.borderColor = 'green';
+            // Guardar el mejor tiempo en localStorage
+            localStorage.setItem('bestTime', bestTime);
+        } else {
+            gameArea.style.borderColor = 'red';
+        }
+        resetGame();
+    }
+}
+
+function stopLights() {
+    lightTimeouts.forEach(timeout => clearTimeout(timeout));
+    lightTimeouts = [];
+}
+
+function resetGame() {
+    gameStarted = false;
+    stopLights();
+    columns.forEach(column => {
+        column[2].classList.remove('on');
+        column[3].classList.remove('on');
+    });
+    gameArea.addEventListener('click', startGame);
+    document.addEventListener('keydown', startGame);
+    gameArea.removeEventListener('click', tooEarly);
+    document.removeEventListener('keydown', tooEarly);
+    gameArea.removeEventListener('click', recordReactionTime);
+    document.removeEventListener('keydown', recordReactionTime);
+    setTimeout(() => {
+        gameArea.style.borderColor = '#fff';
+    }, 500);
+}
+
+function restartGame() {
+    columns.forEach(column => {
+        column[2].classList.remove('on');
+        column[3].classList.remove('on');
+    });
+    gameArea.removeEventListener('click', restartGame);
+    document.removeEventListener('keydown', restartGame);
+    startGame();
+}
+</script>
+
+
+</body>
+</html>
