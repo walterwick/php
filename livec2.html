@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kripto Fiyatları</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: background-color 0.3s, color 0.3s;
+        }
+        :root {
+            --background-color: #ffffff;
+            --text-color: #000000;
+            --neutral-color: #808080;
+            --positive-color: #008000;
+            --negative-color: #FF0000;
+            --card-background: #f3f3f3;
+        }
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --background-color: #121212;
+                --text-color: #ffffff;
+                --neutral-color: #b0b0b0;
+                --card-background: #1f1f1f;
+            }
+        }
+
+        #prices, #dynamic-prices {
+            width: 90%;
+            max-width: 500px;
+            background-color: var(--card-background);
+            border-radius: 10px;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 10px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .price-card {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            background-color: var(--card-background);
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.15);
+            font-size: 1.2em;
+            transition: transform 0.2s;
+        }
+
+        .price-card:hover {
+            transform: scale(1.02);
+        }
+
+        .dynamic-input {
+            margin: 10px 0;
+        }
+
+        .dynamic-input input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .positive { color: var(--positive-color); }
+        .negative { color: var(--negative-color); }
+        .neutral { color: var(--neutral-color); }
+    </style>
+</head>
+<body>
+    <div id="prices">
+        <h1>Kripto Fiyatları</h1>
+        <div class="price-card" id="usdt-try">USDT/TRY: Yükleniyor...</div>
+        <div class="price-card" id="btc-usd">BTC/USD: Yükleniyor...</div>
+        <div class="price-card" id="doge-usd">DOGE/USD: Yükleniyor...</div>
+    </div>
+
+    <div id="dynamic-prices">
+        <h1>Dinamik Fiyat</h1>
+        <div class="dynamic-input">
+            <input type="text" id="crypto-input" placeholder="Örn: BTC, ETH, DOGE">
+        </div>
+        <div class="price-card" id="dynamic-price">Kripto Fiyatı: Yükleniyor...</div>
+    </div>
+
+    <script>
+        const usdtTryElement = document.getElementById('usdt-try');
+        const btcUsdElement = document.getElementById('btc-usd');
+        const dogeUsdElement = document.getElementById('doge-usd');
+        const dynamicPriceElement = document.getElementById('dynamic-price');
+        const cryptoInput = document.getElementById('crypto-input');
+
+        let dynamicSocket;
+
+        // Statik socket bağlantısı
+        function startStaticSocket() {
+            const staticSocket = new WebSocket('wss://stream.binance.com:9443/ws');
+            
+            const symbols = ['usdttry', 'btcusdt', 'dogeusdt'];
+            const streams = symbols.map(symbol => `${symbol}@trade`).join('/');
+
+            staticSocket.onopen = function() {
+                staticSocket.send(JSON.stringify({
+                    method: 'SUBSCRIBE',
+                    params: symbols.map(symbol => `${symbol}@trade`),
+                    id: 1
+                }));
+            };
+
+            staticSocket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                const symbol = data.s;
+                const price = data.p;
+
+                switch (symbol) {
+                    case 'USDTTRY':
+                        usdtTryElement.innerText = `USDT/TRY: ${price} TRY`;
+                        break;
+                    case 'BTCUSDT':
+                        btcUsdElement.innerText = `BTC/USD: ${price} USD`;
+                        break;
+                    case 'DOGEUSDT':
+                        dogeUsdElement.innerText = `DOGE/USD: ${price} USD`;
+                        break;
+                }
+            };
+        }
+
+        // Dinamik socket bağlantısı
+        function startDynamicSocket(symbol) {
+            if (dynamicSocket) dynamicSocket.close();
+
+            dynamicSocket = new WebSocket(`wss://stream.binance.com:9443/ws/${symbol.toLowerCase()}usdt@trade`);
+
+            dynamicSocket.onmessage = function(event) {
+                const data = JSON.parse(event.data);
+                const price = data.p;
+                dynamicPriceElement.innerText = `${symbol.toUpperCase()}/USDT: ${price} USD`;
+            };
+        }
+
+        cryptoInput.addEventListener('input', function() {
+            const symbol = cryptoInput.value.trim().toUpperCase();
+            if (symbol) {
+                dynamicPriceElement.innerText = "Yükleniyor...";
+                startDynamicSocket(symbol);
+            } else {
+                dynamicPriceElement.innerText = "Kripto Fiyatı: Yükleniyor...";
+            }
+        });
+
+        startStaticSocket();
+    </script>
+</body>
+</html>
+-
