@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NFC Okuyucu</title>
+</head>
+<body>
+    <h1>NFC Etiketi Oku</h1>
+    <button id="readNFC">NFC Etiketini Oku</button>
+    <p id="output"></p>
+
+    <script>
+        document.getElementById('readNFC').addEventListener('click', async () => {
+            try {
+                const ndef = new NDEFReader();
+                await ndef.scan();
+                document.getElementById('output').textContent = 'NFC tarayıcı başlatıldı. Etiketi yaklaştırın.';
+
+                ndef.onreading = event => {
+                    const message = event.message;
+                    let output = 'Okunan mesaj:\n';
+                    for (const record of message.records) {
+                        output += `Record type: ${record.recordType}\n`;
+                        output += `MIME type: ${record.mediaType}\n`;
+                        output += `Data: ${new TextDecoder().decode(record.data)}\n`;
+                    }
+                    document.getElementById('output').textContent = output;
+                };
+            } catch (error) {
+                console.error(error);
+                document.getElementById('output').textContent = 'Hata: ' + error;
+            }
+        });
+    </script>
+</body>
+</html>
