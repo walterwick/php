@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP Bilgileri</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .info {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>IP Bilgileri</h1>
+    <div id="ip-info"></div>
+
+    <script>
+        const apiKey = 'at_dpm6765qoMPl5PPAIeTP4S3QSyKpv';
+        const ipAddress = '188.132.143.120'; // Burada IP adresini belirtiyoruz
+        const url = `https://geo.ipify.org/api/v2/country,city,vpn?apiKey=${apiKey}&ipAddress=${ipAddress}`;
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                const ipInfoDiv = document.getElementById('ip-info');
+                ipInfoDiv.innerHTML = `
+                    <div class="info"><strong>IP:</strong> ${data.ip}</div>
+                    <div class="info"><strong>Ülke:</strong> ${data.location.country}</div>
+                    <div class="info"><strong>Bölge:</strong> ${data.location.region}</div>
+                    <div class="info"><strong>Şehir:</strong> ${data.location.city}</div>
+                    <div class="info"><strong>Enlem:</strong> ${data.location.lat}</div>
+                    <div class="info"><strong>Boylam:</strong> ${data.location.lng}</div>
+                    <div class="info"><strong>Posta Kodu:</strong> ${data.location.postalCode}</div>
+                    <div class="info"><strong>Zaman Dilimi:</strong> ${data.location.timezone}</div>
+                    <div class="info"><strong>GeoName ID:</strong> ${data.location.geonameId}</div>
+                    <div class="info"><strong>ASN:</strong> ${data.as.asn}</div>
+                    <div class="info"><strong>ASN Adı:</strong> ${data.as.name}</div>
+                    <div class="info"><strong>Route:</strong> ${data.as.route}</div>
+                    <div class="info"><strong>Domain:</strong> ${data.as.domain}</div>
+                    <div class="info"><strong>ISP:</strong> ${data.isp}</div>
+                    <div class="info"><strong>Proxy:</strong> ${data.proxy.proxy ? 'Evet' : 'Hayır'}</div>
+                    <div class="info"><strong>VPN:</strong> ${data.proxy.vpn ? 'Evet' : 'Hayır'}</div>
+                    <div class="info"><strong>Tor:</strong> ${data.proxy.tor ? 'Evet' : 'Hayır'}</div>
+                `;
+            })
+            .catch(error => {
+                console.error('Hata:', error);
+            });
+    </script>
+</body>
+</html>
