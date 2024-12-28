@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>İletişim Formu</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</head>
+<body data-bs-theme="dark">
+
+<div class="container mt-5">
+    <h1>Contact CIA</h1>
+    <form action="javascript:void(0);" method="post" enctype="multipart/form-data" onsubmit="submitForm()">
+        <div class="mb-3">
+            <label for="name">Ad Soyad:</label>
+            <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="email">E-posta Adresi:</label>
+            <input type="email" class="form-control" id="email" name="email" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="subject">Konu:</label>
+            <input type="text" class="form-control" id="subject" name="subject" required>
+        </div>
+
+        <div class="mb-3">
+            <label for="message">Mesaj:</label>
+            <textarea class="form-control" id="message" name="message" required></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="attachment">Dosya/Görsel Ekle (Maksimum 2MB) - Ctrl+V ile resim yapıştırabilirsiniz:</label>
+            <input type="file" class="form-control" id="attachment" name="attachment">
+        </div>
+
+        <button type="submit" class="btn btn-primary">Gönder</button>
+    </form>
+</div>
+
+<script>
+// Add clipboard paste functionality
+document.addEventListener('paste', function(e) {
+    const fileInput = document.getElementById('attachment');
+    const items = e.clipboardData?.items;
+    
+    if (!items) return;
+
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf('image') !== -1) {
+            const file = items[i].getAsFile();
+            if (file) {
+                // Create a new FileList-like object
+                const dataTransfer = new DataTransfer();
+                dataTransfer.items.add(file);
+                fileInput.files = dataTransfer.files;
+                
+                // Trigger change event
+                const event = new Event('change', { bubbles: true });
+                fileInput.dispatchEvent(event);
+            }
+        }
+    }
+});
+
+function submitForm() {
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var subject = document.getElementById("subject").value;
+    var message = document.getElementById("message").value;
+    var attachment = document.getElementById("attachment").files[0];
+
+    var formData = new FormData();
+    var messageText = "Yeni iletişim mesajı:\n\nAd Soyad: " + name + "\nE-posta: " + email + "\nKonu: " + subject + "\nMesaj: " + message;
+
+    if (attachment) {
+        formData.append("caption", messageText);
+        formData.append("document", attachment);
+
+        fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendDocument?chat_id=2090459804", {
+            method: "POST",
+            body: formData
+        })
+        .then(response => {
+            if (response.ok) {
+                swal("Dosya Gönderildi", "Teşekkür ederiz!", "success");
+            } else {
+                swal("Hata", "Dosya gönderilirken bir hata oluştu.", "error");
+            }
+        })
+        .catch(error => {
+            swal("Hata", "Dosya gönderilirken bir hata oluştu.", "error");
+        });
+    } else {
+        fetch("https://api.telegram.org/bot6435977146:AAExFsusLAtoivKFKW01Ca1hCsQOVIf2H7I/sendMessage?chat_id=2090459804&text=" + encodeURIComponent(messageText), {
+            method: "POST"
+        })
+        .then(response => {
+            if (response.ok) {
+                swal("Mesaj Gönderildi", "Teşekkür ederiz!", "success");
+            } else {
+                swal("Hata", "Mesaj gönderilirken bir hata oluştu.", "error");
+            }
+        })
+        .catch(error => {
+            swal("Hata", "Mesaj gönderilirken bir hata oluştu.", "error");
+        });
+    }
+}
+</script>
+
+</body>
+</html>
